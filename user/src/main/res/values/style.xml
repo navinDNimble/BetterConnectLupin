@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    <style name="smallText">-->
+<!--        <item name="android:textSize">@dimen/_14ssp</item>-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--        <item name="android:fontFamily">@font/rubik</item>-->
+<!--    </style>-->
+
+<!--    <style name="mediumText">-->
+<!--        <item name="android:textSize">@dimen/_16ssp</item>-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--        <item name="android:fontFamily">@font/rubik</item>-->
+<!--    </style>-->
+
+<!--    <style name="LargeText">-->
+<!--        <item name="android:textSize">@dimen/_14ssp</item>-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--        <item name="android:fontFamily">@font/rubik</item>-->
+<!--    </style>-->
+    
+</resources>

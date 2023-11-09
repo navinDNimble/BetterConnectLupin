@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">user</string>
+    <string name="title_task">Task</string>
+    <string name="title_home">Home</string>
+    <string name="title_report">Report</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="setting">Setting</string>
+    <string name="log_out">Logout</string>
+    <string name="navigation_drawer_open">Open Drawer</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout_message">Are You Sure Do You Want To Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="total_task_allotted">Total Task Allotted</string>
+    <string name="task_in_progress">Task In Progress</string>
+    <string name="task_completed">Task Completed</string>
+    <string name="growth_chart">Growth Chart</string>
+    <string name="task_progress">Task Progress</string>
+    <string name="review_the_activity_status">Review The Activity Status</string>
+    <string name="assigned_task_progress">Assigned Task Progress</string>
+    <string name="update_task_detail">Update Task Detail</string>
+    <string name="better_connect">BETTER CONNECT</string>
+    <string name="mobile_number_verification">Mobile Number Verification</string>
+    <string name="enter_mobile_number">Enter Mobile number</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="oops_n_no_internet_connection_n_please_check_your_connection">OOPS!\n No Internet Connection \n Please Check Your Connection</string>
+
+    <string name="date_combine_string">%1$s To %2$s</string>
+    <string name="retry">Retry</string>
+
+</resources>

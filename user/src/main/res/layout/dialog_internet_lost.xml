@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/oops_n_no_internet_connection_n_please_check_your_connection"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:lineSpacingExtra="5dp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/retryInternetConnection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_25sdp"
+        android:padding="@dimen/_13sdp"
+        android:text="@string/retry"
+        android:background="@drawable/corner_radius_10"/>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.home.task.TaskFragment"
+    android:background="@color/primaryColor"
+    >
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sample_id"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:paddingStart="60dp"
+        android:paddingTop="15dp"
+        android:text="@string/review_the_activity_status"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold"
+        tools:ignore="RtlSymmetry"
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_60sdp"
+        android:background="@drawable/top_curve_shape"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/progress_SelectionView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/corner_radius_10"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_25sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:text="@string/task_progress"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:drawableEndCompat="@drawable/arrow_drop_down_circle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/progressTask_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_19sdp"
+            tools:listitem="@layout/item_task"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/completed_SelectionView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/corner_radius_10"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_25sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:text="@string/task_completed"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:drawableEndCompat="@drawable/arrow_drop_down_circle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/completedTask_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:visibility="gone"
+            tools:listitem="@layout/item_task"
+            android:layout_marginTop="10dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

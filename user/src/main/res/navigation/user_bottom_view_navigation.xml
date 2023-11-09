@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.nimble.lupin.user.views.home.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home"
+        app:launchSingleTop="true"
+
+        />
+
+    <fragment
+        android:id="@+id/navigation_task"
+        android:name="com.nimble.lupin.user.views.home.task.TaskFragment"
+        android:label="@string/title_task"
+        tools:layout="@layout/fragment_task"
+        app:launchSingleTop="true"
+        >
+        <action
+            android:id="@+id/taskFragment_to_TaskDetailFragment"
+            app:destination="@id/taskDetailFragment"
+            >
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.user.models.TaskModel"
+                />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_report"
+        android:name="com.nimble.lupin.user.views.home.report.ReportFragment"
+        android:label="@string/title_report"
+        tools:layout="@layout/fragment_report"
+        app:launchSingleTop="true"/>
+
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.nimble.lupin.user.views.navigation.setting.SettingFragment"
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_home"
+        app:launchSingleTop="true"/>
+    <dialog
+        android:id="@+id/navigation_logout"
+    android:name="com.nimble.lupin.user.views.navigation.logout.LogoutDialog"
+    android:label="Logout"
+        app:launchSingleTop="true"
+    />
+
+
+    <!--other Fragments-->
+
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.nimble.lupin.user.views.home.task.taskDetail.TaskDetailFragment"
+        android:label="Task Detail"/>
+
+</navigation>

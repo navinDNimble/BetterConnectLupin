@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_user_list"
+            android:icon="@drawable/icon_user_list"
+            android:title="@string/tittle_user_list" />
+        <item
+            android:id="@+id/navigation_create_task"
+            android:icon="@drawable/icon_create_task"
+            android:title="@string/tittle_create_task" />
+        <item
+            android:id="@+id/navigation_setting"
+            android:icon="@drawable/icon_setting"
+            android:title="@string/setting" />
+        <item
+            android:id="@+id/navigation_logout"
+            android:icon="@drawable/icon_logout"
+            android:title="@string/log_out" />
+    </group>
+</menu>
