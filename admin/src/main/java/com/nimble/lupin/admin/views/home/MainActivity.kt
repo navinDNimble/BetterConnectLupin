@@ -23,45 +23,60 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var networkBroadcaster :NetworkChangeListener
+    private lateinit var networkBroadcaster: NetworkChangeListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-       val controller = findNavController(R.id.nav_host_fragment_activity_main)
-        networkBroadcaster =  NetworkChangeListener(this@MainActivity)
+        val controller = findNavController(R.id.nav_host_fragment_activity_main)
+        networkBroadcaster = NetworkChangeListener(this@MainActivity)
 
-             binding.bottomBarView.setupWithNavController(controller)
+        binding.bottomBarView.setupWithNavController(controller)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         val drawerLayout: DrawerLayout = binding.adminDrawerLayout
         val navigationController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_home, R.id.navigation_report, R.id.navigation_schedule), drawerLayout)
-        val navigationView : NavigationView = binding.adminNavigationView
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_report,
+                R.id.navigation_schedule
+            ), drawerLayout
+        )
+        val navigationView: NavigationView = binding.adminNavigationView
         navigationView.setupWithNavController(navigationController)
-         actionBarDrawerToggle = object : ActionBarDrawerToggle(this, drawerLayout,binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {}
+        actionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        ) {}
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
         actionBarDrawerToggle.syncState()
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-       return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     fun hideBottomView() {
-        binding.bottomBarView.animate().translationY(binding.bottomBarView.height.toFloat()).setDuration(800).withEndAction {
+        binding.bottomBarView.animate().translationY(binding.bottomBarView.height.toFloat())
+            .setDuration(800).withEndAction {
             binding.bottomBarView.visibility = View.GONE
         }.start()
         actionBarDrawerToggle.isDrawerIndicatorEnabled = false
     }
-   fun showBottomView(){
-       binding.bottomBarView.visibility = View.VISIBLE
-       binding.bottomBarView.animate().translationY(0f).setDuration(800).start()
-       actionBarDrawerToggle.isDrawerIndicatorEnabled = true
-   }
+
+    fun showBottomView() {
+        binding.bottomBarView.visibility = View.VISIBLE
+        binding.bottomBarView.animate().translationY(0f).setDuration(800).start()
+        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
+    }
 
     override fun onStart() {
         super.onStart()
@@ -70,8 +85,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        applicationContext.registerReceiver(networkBroadcaster,filter)
+        applicationContext.registerReceiver(networkBroadcaster, filter)
     }
+
     override fun onStop() {
         super.onStop()
         unregisterReceiver(networkBroadcaster)

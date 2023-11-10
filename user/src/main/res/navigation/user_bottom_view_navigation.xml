@@ -9,8 +9,8 @@
         android:id="@+id/navigation_home"
         android:name="com.nimble.lupin.user.views.home.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home"
         app:launchSingleTop="true"
+        tools:layout="@layout/fragment_home"
 
         />
 
@@ -18,17 +18,14 @@
         android:id="@+id/navigation_task"
         android:name="com.nimble.lupin.user.views.home.task.TaskFragment"
         android:label="@string/title_task"
-        tools:layout="@layout/fragment_task"
         app:launchSingleTop="true"
-        >
+        tools:layout="@layout/fragment_task">
         <action
             android:id="@+id/taskFragment_to_TaskDetailFragment"
-            app:destination="@id/taskDetailFragment"
-            >
+            app:destination="@id/taskDetailFragment">
             <argument
                 android:name="TaskDetail"
-                app:argType="com.nimble.lupin.user.models.TaskModel"
-                />
+                app:argType="com.nimble.lupin.user.models.TaskModel" />
         </action>
     </fragment>
 
@@ -36,22 +33,22 @@
         android:id="@+id/navigation_report"
         android:name="com.nimble.lupin.user.views.home.report.ReportFragment"
         android:label="@string/title_report"
-        tools:layout="@layout/fragment_report"
-        app:launchSingleTop="true"/>
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_report" />
 
 
     <fragment
         android:id="@+id/navigation_setting"
         android:name="com.nimble.lupin.user.views.navigation.setting.SettingFragment"
         android:label="@string/setting"
-        tools:layout="@layout/fragment_home"
-        app:launchSingleTop="true"/>
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_home" />
+
     <dialog
         android:id="@+id/navigation_logout"
-    android:name="com.nimble.lupin.user.views.navigation.logout.LogoutDialog"
-    android:label="Logout"
-        app:launchSingleTop="true"
-    />
+        android:name="com.nimble.lupin.user.views.navigation.logout.LogoutDialog"
+        android:label="Logout"
+        app:launchSingleTop="true" />
 
 
     <!--other Fragments-->
@@ -59,6 +56,6 @@
     <fragment
         android:id="@+id/taskDetailFragment"
         android:name="com.nimble.lupin.user.views.home.task.taskDetail.TaskDetailFragment"
-        android:label="Task Detail"/>
+        android:label="Task Detail" />
 
 </navigation>

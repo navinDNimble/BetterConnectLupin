@@ -18,7 +18,6 @@ class NetworkChangeListener (private val activity : Activity): BroadcastReceiver
     override fun onReceive(context: Context?, intent: Intent?) {
 
           if (dialog==null){
-
                    dialog = Dialog(activity)
                     dialog!!.setContentView(R.layout.dialog_internet_lost)
                    dialog!!.setCancelable(false)

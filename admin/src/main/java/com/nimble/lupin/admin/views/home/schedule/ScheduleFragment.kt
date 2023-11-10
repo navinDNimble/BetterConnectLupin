@@ -17,12 +17,13 @@ class ScheduleFragment : Fragment() {
 
     private val binding get() = _binding!!
     private lateinit var paginationScrollListener: PaginationScrollListener
-    private var isLastPage  = false
-    private var isLoading =false
+    private var isLastPage = false
+    private var isLoading = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,13 +49,14 @@ class ScheduleFragment : Fragment() {
             override fun loadMoreItems() {
                 if (isLastPage) {
                     isLoading = true
-                    page += Constant.PAGE_SIZE
-                    patientsViewModel.patientListRequest?.searchKeyword =
-                        getDataBinding().lytSearchPatient.edtSearch?.text.toString()
-                    patientsViewModel.callPatientListApi(page = page)
-                }
-                else
-                {
+//                    page += Constant.PAGE_SIZE
+//                    patientsViewModel.patientListRequest?.searchKeyword =
+//                        getDataBinding().lytSearchPatient.edtSearch?.text.toString()
+//                    patientsViewModel.callPatientListApi(page = page)
+
+                    //TODO : Call a Api
+
+                } else {
                     isLastPage = true
                 }
             }

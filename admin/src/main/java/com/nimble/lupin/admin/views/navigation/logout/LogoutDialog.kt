@@ -17,8 +17,6 @@ import com.nimble.lupin.admin.views.home.MainActivity
 class LogoutDialog : BottomSheetDialogFragment() {
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -20,6 +20,7 @@ class ScheduleDetailFragment : Fragment() {
 
         val task = arguments?.getParcelable<TaskModel>("TaskDetail")
         _binding = FragmentScheduleDetailBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 

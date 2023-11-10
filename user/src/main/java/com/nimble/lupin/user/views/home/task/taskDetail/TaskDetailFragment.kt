@@ -21,6 +21,7 @@ class TaskDetailFragment : Fragment() {
 
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +29,8 @@ class TaskDetailFragment : Fragment() {
         val task = arguments?.getParcelable<TaskModel>("TaskDetail")
         _binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
         binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
-        binding.includedLayout.textViewAssignTaskStartDateIn.text = getString(R.string.date_combine_string,task?.startDate,task?.endDate)
+        binding.includedLayout.textViewAssignTaskStartDateIn.text =
+            getString(R.string.date_combine_string, task?.startDate, task?.endDate)
         return binding.root
     }
 
@@ -37,7 +39,6 @@ class TaskDetailFragment : Fragment() {
         super.onResume()
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
-
     }
 
 }
