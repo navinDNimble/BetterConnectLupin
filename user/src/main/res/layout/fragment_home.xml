@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primaryColor"
     tools:context=".views.home.home.HomeFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/profile_admin_appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="60dp"
             android:layout_marginTop="10dp"
-            >
+            android:orientation="horizontal">
+
             <com.nimble.lupin.user.utils.CircleImageView
                 android:id="@+id/admin_profile_view"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
-                android:src="@drawable/icon_profile"
-                />
+                android:src="@drawable/icon_profile" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textViewAdminProfileName"
                 android:layout_width="match_parent"
@@ -41,9 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/profile_admin_appBar"
+            android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="30dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -52,21 +53,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:background="@drawable/corner_radius_20"
-                android:backgroundTint="#FCF0F1"
+                android:backgroundTint="#FEFFD6"
                 android:elevation="1dp"
-                app:layout_constraintTop_toTopOf="parent"
-               >
+                app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
                     android:id="@+id/task_total_count_value_view"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:background="@drawable/corner_radius_20"
-                    android:backgroundTint="#FFB4B8"
+                    android:backgroundTint="@color/lime_A100"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold"
                     tools:text="123456" />
+
                 <TextView
                     android:id="@+id/task_completed_count_tittle_view"
                     android:layout_width="match_parent"
@@ -87,8 +89,7 @@
                 android:background="@drawable/top_curve_shape"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -96,15 +97,14 @@
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:background="@drawable/corner_radius_20"
-                    android:backgroundTint="#FCF0F1"
-                    >
+                    android:backgroundTint="#F3FCFD">
 
                     <TextView
                         android:id="@+id/task_progress_count_value_view"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:background="@drawable/corner_radius_20"
-                        android:backgroundTint="#FFB4B8"
+                        android:backgroundTint="@color/cyan_101"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_16ssp"
@@ -131,8 +131,7 @@
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/corner_radius_20"
-                    android:backgroundTint="#FCF0F1"
-                    >
+                    android:backgroundTint="#FCF0F1">
 
                     <TextView
                         android:id="@+id/task_completed_count_value_view"
