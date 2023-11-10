@@ -56,21 +56,22 @@ class MainActivity : AppCompatActivity() {
             binding.bottomBarView.visibility = View.GONE
         }.start()
         actionBarDrawerToggle.isDrawerIndicatorEnabled = false
-
     }
    fun showBottomView(){
        binding.bottomBarView.visibility = View.VISIBLE
        binding.bottomBarView.animate().translationY(0f).setDuration(800).start()
        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
-
    }
 
     override fun onStart() {
         super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         applicationContext.registerReceiver(networkBroadcaster,filter)
     }
-
     override fun onStop() {
         super.onStop()
         unregisterReceiver(networkBroadcaster)

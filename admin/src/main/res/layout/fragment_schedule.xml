@@ -88,7 +88,7 @@
             app:drawableEndCompat="@drawable/arrow_drop_down_circle" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/progressTask_recyclerView"
+            android:id="@+id/adminAllTaskRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_19sdp"
