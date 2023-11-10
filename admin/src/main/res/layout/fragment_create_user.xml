@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.home.schedule.assignTask.AssignTaskFragment">
+    android:layout_height="match_parent">
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -17,19 +14,22 @@
             android:layout_marginHorizontal="20dp"
 
             android:orientation="vertical">
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold"
                 android:gravity="center"
+                android:text="@string/create_user"
                 android:textColor="@color/primaryColor"
-                android:text="@string/create_user"/>
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold" />
+
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/firstName_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/first_name"
                 android:inputType="text"
@@ -38,9 +38,10 @@
 
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/lastName_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/last_name"
                 android:inputType="text"
@@ -49,22 +50,23 @@
 
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/mobileNumber_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/mobile_number"
                 android:inputType="number"
                 android:maxLength="10"
                 android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
-            
 
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/emailId_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/email_id"
                 android:inputType="textEmailAddress"
@@ -72,47 +74,52 @@
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/workStation_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/work_station"
-                android:padding="@dimen/_10sdp"
                 android:inputType="text"
+                android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/post_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/post"
                 android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/empIdNumber_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/emp_id_number"
-                android:padding="@dimen/_10sdp"
                 android:inputType="number"
+                android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/reportAuthority_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/report_authority"
                 android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/joiningDate_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/joining_date"
                 android:padding="@dimen/_10sdp"
@@ -125,16 +132,17 @@
                 android:paddingBottom="@dimen/_3sdp">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/createUser_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginHorizontal="@dimen/_30sdp"
                     android:background="@drawable/corner_radius_10"
                     android:backgroundTint="@color/light_green_300"
+                    android:paddingVertical="@dimen/_5sdp"
                     android:text="@string/create_users"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16ssp"
-                    android:paddingVertical="@dimen/_5sdp"
                     android:textStyle="bold" />
 
                 <ProgressBar
