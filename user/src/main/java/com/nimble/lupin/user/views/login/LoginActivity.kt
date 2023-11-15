@@ -24,8 +24,6 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity()  {
-
-
         private lateinit var binding: ActivityLoginBinding
         private lateinit var mAuth: FirebaseAuth
 //        private lateinit var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -102,8 +100,6 @@ class LoginActivity : AppCompatActivity()  {
                 signInWithPhoneAuthCredential(credentials)
 
             }
-
-
 
         }
 

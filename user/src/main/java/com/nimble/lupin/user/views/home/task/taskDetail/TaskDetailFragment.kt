@@ -29,7 +29,11 @@ class TaskDetailFragment : Fragment() {
         val task = arguments?.getParcelable<TaskModel>("TaskDetail")
         _binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
         binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
-        binding.includedLayout.textViewAssignTaskStartDateIn.text =
+//        binding.includedLayout.textViewAssignTaskStartDateIn.text = task?.startDate
+//        binding.includedLayout.textViewAssignTaskStartDateIn.text = task?.endDate
+//        binding.includedLayout.textViewActivityNameIn.text = task?.activityName
+//        binding.includedLayout.textViewActivityNameIn.text = task?.subActivityName
+        binding.includedLayout
             getString(R.string.date_combine_string, task?.startDate, task?.endDate)
         return binding.root
     }

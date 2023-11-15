@@ -30,7 +30,6 @@ class TaskViewModel : ViewModel()  {
 //                 if (response.isSuccessful) {
 //                     val result = response.body()
 //                     if (result != null ) {
-//                         Log.d("sachin",result.string())
 //                        // taskList.postValue()
 //                     }
 //                 }
@@ -40,8 +39,6 @@ class TaskViewModel : ViewModel()  {
 //
 //                 }
              }
-
     }
-
 
 }

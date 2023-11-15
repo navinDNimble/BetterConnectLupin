@@ -61,4 +61,8 @@
     <string name="create_task">Create Task</string>
     <string name="oops_n_no_internet_connection_n_please_check_your_connection">OOPS!\n No Internet Connection \n Please Check Your Connection</string>
     <string name="retry">Retry</string>
+    <string name="project_manager">Project Manager</string>
+    <string name="pu_manager">PU Manager</string>
+    <string name="project_coordinator">Project Coordinator</string>
+    <string name="field_facilitator">Field Facilitator</string>
 </resources>

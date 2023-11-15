@@ -36,7 +36,6 @@ class TaskFragment : Fragment() ,OnTaskSelected {
 
         binding.progressTaskRecyclerView.adapter =progressAdapter
         binding.completedTaskRecyclerView.adapter = completedAdapter
-
         binding.progressSelectionView.setOnClickListener {
             //false : Visibility Gone
             if (viewModel.progressRecyclerVisibility.get() ==true){
@@ -117,11 +116,8 @@ class TaskFragment : Fragment() ,OnTaskSelected {
         viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         taskListProgress = mutableListOf()
         progressAdapter = TaskAdapter(taskListProgress,this)
-
         taskListCompleted = mutableListOf()
         completedAdapter = TaskAdapter(taskListCompleted , this)
-
-
         viewModel.taskList.observe(this) { it ->
             it.forEach {
                 if (it.completedUnits>=it.TotalUnits){

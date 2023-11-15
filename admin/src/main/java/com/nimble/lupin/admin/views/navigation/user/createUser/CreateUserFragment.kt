@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nimble.lupin.admin.databinding.FragmentCreateUserBinding
 import java.util.regex.Pattern
 
 
-class CreateUserFragment : Fragment() {
+class CreateUserFragment : PostBottomSheetFragment.BottomSheetListenerPost {
 
     private lateinit var binding: FragmentCreateUserBinding
 
-    override fun onCreateView(
+    fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -87,6 +89,7 @@ class CreateUserFragment : Fragment() {
 
         //TODO : Call Api
 
+        postBottomSheet()
         return binding.root
 
     }
@@ -103,5 +106,12 @@ class CreateUserFragment : Fragment() {
         return Pattern.compile(regex).matcher(email).matches()
     }
 
+    fun postBottomSheet() {
+
+    }
+
+    override fun onPostSelected(value: String, id: String) {
+
+    }
 
 }

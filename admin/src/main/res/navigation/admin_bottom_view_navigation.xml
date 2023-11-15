@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
@@ -10,85 +9,96 @@
         android:id="@+id/navigation_home"
         android:name="com.nimble.lupin.admin.views.home.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home"
-        app:launchSingleTop="true"/>
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_schedule"
         android:name="com.nimble.lupin.admin.views.home.schedule.ScheduleFragment"
         android:label="@string/title_schedule"
-        tools:layout="@layout/fragment_schedule" >
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_schedule">
         <action
             android:id="@+id/scheduleFragment_to_TaskDetailFragment"
-            app:destination="@+id/scheduleDetailFragment"
-            >
+            app:destination="@+id/scheduleDetailFragment">
             <argument
                 android:name="TaskDetail"
-                app:argType="com.nimble.lupin.admin.models.TaskModel"
-                />
+                app:argType="com.nimble.lupin.admin.models.TaskModel" />
         </action>
         <action
             android:id="@+id/scheduleFragment_to_AssignTaskFragment"
-            app:destination="@+id/assignTaskFragment"
-            >
-
-        </action>
-
+            app:destination="@+id/assignTaskFragment"></action>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_report"
         android:name="com.nimble.lupin.admin.views.home.report.ReportFragment"
         android:label="@string/title_report"
-        tools:layout="@layout/fragment_report"
-        app:launchSingleTop="true"/>
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        app:launchSingleTop="true"
+        tools:layout="@layout/fragment_report" />
+
     <fragment
         android:id="@+id/navigation_user_list"
         android:name="com.nimble.lupin.admin.views.navigation.user.UserListFragment"
         android:label="User List"
-        tools:layout="@layout/fragment_user_list"
-        >
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_user_list">
         <action
             android:id="@+id/userListFragment_to_createUserFragment"
-            app:destination="@+id/createUserFragment"
-            >
-
-        </action>
+            app:destination="@+id/createUserFragment"></action>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_create_task"
         android:name="com.nimble.lupin.admin.views.navigation.task.CreateTaskFragment"
         android:label="Create Task"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         tools:layout="@layout/fragment_user_list" />
 
     <fragment
         android:id="@+id/navigation_setting"
         android:name="com.nimble.lupin.admin.views.navigation.setting.SettingFragment"
         android:label="@string/title_report"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         tools:layout="@layout/fragment_setting" />
+
     <dialog
         android:id="@+id/navigation_logout"
-    android:name="com.nimble.lupin.admin.views.navigation.logout.LogoutDialog"
-    android:label="Logout"
-    tools:layout="@layout/fragment_logout_dialog"
-        />
+        android:name="com.nimble.lupin.admin.views.navigation.logout.LogoutDialog"
+        android:label="Logout"
+        tools:layout="@layout/fragment_logout_dialog" />
+
     <fragment
         android:id="@+id/scheduleDetailFragment"
         android:name="com.nimble.lupin.admin.views.home.schedule.scheduleDetail.ScheduleDetailFragment"
         android:label="Schedule Detail"
-        tools:layout="@layout/fragment_schedule_detail"
-        />
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_schedule_detail" />
+
     <fragment
         android:id="@+id/assignTaskFragment"
         android:name="com.nimble.lupin.admin.views.home.schedule.assignTask.AssignTaskFragment"
         android:label="Assign Task"
-        tools:layout="@layout/fragment_assign_task"
-        />
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_assign_task" />
+
     <fragment
         android:id="@+id/createUserFragment"
         android:name="com.nimble.lupin.admin.views.navigation.user.createUser.CreateUserFragment"
-        android:label="Assign Task"
-        tools:layout="@layout/fragment_create_user"
-        />
+        android:label="Create User"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_create_user" />
+
+
 </navigation>

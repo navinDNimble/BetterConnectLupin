@@ -12,30 +12,30 @@ import androidx.appcompat.widget.AppCompatButton
 import com.nimble.lupin.admin.R
 
 
-class NetworkChangeListener (private val activity : Activity): BroadcastReceiver() {
-    private  var dialog: Dialog? =null
+class NetworkChangeListener(private val activity: Activity) : BroadcastReceiver() {
+    private var dialog: Dialog? = null
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
-          if (dialog==null){
-                   dialog = Dialog(activity)
-                    dialog!!.setContentView(R.layout.dialog_internet_lost)
-                   dialog!!.setCancelable(false)
-                   dialog!!.setCanceledOnTouchOutside(false)
-                   val retryButton =  dialog!!.findViewById<AppCompatButton>(R.id.retryInternetConnection)
-                    retryButton.setOnClickListener {
-                        if (isNetworkAvailable(context)){
-                            dialog!!.cancel()
-                        }
-                    }
+        if (dialog == null) {
+            dialog = Dialog(activity)
+            dialog!!.setContentView(R.layout.dialog_internet_lost)
+            dialog!!.setCancelable(false)
+            dialog!!.setCanceledOnTouchOutside(false)
+            val retryButton = dialog!!.findViewById<AppCompatButton>(R.id.retryInternetConnection)
+            retryButton.setOnClickListener {
+                if (isNetworkAvailable(context)) {
+                    dialog!!.cancel()
+                }
+            }
 
-          }
+        }
 
         if (isNetworkAvailable(context)) {
-            Log.d("sachin","network connected")
-           if (dialog?.isShowing!!){
-               dialog?.cancel()
-           }
+            Log.d("sachin", "network connected")
+            if (dialog?.isShowing!!) {
+                dialog?.cancel()
+            }
 
         } else {
             dialog?.show()

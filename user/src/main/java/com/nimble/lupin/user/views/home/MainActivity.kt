@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun showBottomView(){
-
         bottomView.visibility = View.VISIBLE
         bottomView.animate().translationY(0f).setDuration(800).start()
         actionBarDrawerToggle.isDrawerIndicatorEnabled = true

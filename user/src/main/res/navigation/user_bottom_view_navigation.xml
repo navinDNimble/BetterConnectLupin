@@ -9,6 +9,8 @@
         android:id="@+id/navigation_home"
         android:name="com.nimble.lupin.user.views.home.home.HomeFragment"
         android:label="@string/title_home"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         app:launchSingleTop="true"
         tools:layout="@layout/fragment_home"
 
@@ -18,6 +20,8 @@
         android:id="@+id/navigation_task"
         android:name="com.nimble.lupin.user.views.home.task.TaskFragment"
         android:label="@string/title_task"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         app:launchSingleTop="true"
         tools:layout="@layout/fragment_task">
         <action
@@ -33,6 +37,8 @@
         android:id="@+id/navigation_report"
         android:name="com.nimble.lupin.user.views.home.report.ReportFragment"
         android:label="@string/title_report"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         app:launchSingleTop="true"
         tools:layout="@layout/fragment_report" />
 
@@ -41,6 +47,8 @@
         android:id="@+id/navigation_setting"
         android:name="com.nimble.lupin.user.views.navigation.setting.SettingFragment"
         android:label="@string/setting"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         app:launchSingleTop="true"
         tools:layout="@layout/fragment_home" />
 
@@ -48,14 +56,16 @@
         android:id="@+id/navigation_logout"
         android:name="com.nimble.lupin.user.views.navigation.logout.LogoutDialog"
         android:label="Logout"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
         app:launchSingleTop="true" />
 
-
-    <!--other Fragments-->
 
     <fragment
         android:id="@+id/taskDetailFragment"
         android:name="com.nimble.lupin.user.views.home.task.taskDetail.TaskDetailFragment"
-        android:label="Task Detail" />
+        android:label="Task Detail"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right" />
 
 </navigation>
