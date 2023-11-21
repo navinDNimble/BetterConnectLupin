@@ -1,14 +1,14 @@
-package com.nimble.lupin.user.adapters
+package com.nimble.lupin.admin.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.nimble.lupin.user.databinding.ItemTaskBinding
-import com.nimble.lupin.user.interfaces.OnTaskSelected
-import com.nimble.lupin.user.models.TaskModel
+import com.nimble.lupin.admin.databinding.ItemTaskBinding
+import com.nimble.lupin.admin.interfaces.OnUsersSelected
+import com.nimble.lupin.admin.models.UserModel
 
-class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSelected: OnTaskSelected) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
+class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSelected: OnUsersSelected) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val adapterItemMedicineBinding = ItemTaskBinding.inflate(
@@ -23,7 +23,7 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
         holder.bind(itemList[position], position)
     }
 
-    fun updateList(newList: List<TaskModel>) {
+    fun updateList(newList: List<UserModel>) {
         val diffResult = DiffUtil.calculateDiff(TaskDiffCallback(itemList, newList))
         itemList = newList
         diffResult.dispatchUpdatesTo(this)
@@ -34,11 +34,11 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
 
     class ViewHolder(val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: TaskModel, position: Int) {
-          binding.textViewActivityNameIn.text = item.task?.activityName
+        fun bind(item: UserModel, position: Int) {
+            binding.textViewActivityNameIn.text = item.name
         }
     }
-    class TaskDiffCallback(private val oldList: List<TaskModel>, private val newList: List<TaskModel>) : DiffUtil.Callback() {
+    class TaskDiffCallback(private val oldList: List<UserModel>, private val newList: List<UserModel>) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldList.size
         }
@@ -48,7 +48,7 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].task?.id == newList[newItemPosition].task?.id
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

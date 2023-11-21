@@ -69,13 +69,15 @@ class MainActivity : AppCompatActivity() {
             .setDuration(800).withEndAction {
             binding.bottomBarView.visibility = View.GONE
         }.start()
-        actionBarDrawerToggle.isDrawerIndicatorEnabled = false
+        binding.toolbar.visibility = View.GONE
     }
 
     fun showBottomView() {
+
+        binding.toolbar.visibility = View.VISIBLE
         binding.bottomBarView.visibility = View.VISIBLE
         binding.bottomBarView.animate().translationY(0f).setDuration(800).start()
-        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
+
     }
 
     override fun onStart() {
@@ -90,6 +92,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        unregisterReceiver(networkBroadcaster)
+        try {
+            unregisterReceiver(networkBroadcaster)
+        }
+        catch (_: Exception){
+
+        }
     }
 }

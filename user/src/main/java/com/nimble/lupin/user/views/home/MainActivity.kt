@@ -1,6 +1,7 @@
 package com.nimble.lupin.user.views.home
 
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
@@ -14,8 +15,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.nimble.lupin.user.R
+import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.databinding.ActivityMainBinding
+import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.utils.NetworkChangeListener
+import org.koin.java.KoinJavaComponent
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
+        Constants.userId = sharedPref.getInt(Constants.User_ID,0)
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkChangeListener = NetworkChangeListener(this@MainActivity)
         bottomView = binding.bottomBarView

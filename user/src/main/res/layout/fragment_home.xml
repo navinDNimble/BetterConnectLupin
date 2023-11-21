@@ -1,204 +1,219 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primaryColor"
-    tools:context=".views.home.home.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+<data>
+    <variable
+        name="viewModel"
+        type="com.nimble.lupin.user.views.home.home.HomeViewModel" />
+</data>
+
+    <FrameLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/primaryColor"
+        tools:context=".views.home.home.HomeFragment">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/profile_admin_appBar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <com.nimble.lupin.user.utils.CircleImageView
-                android:id="@+id/admin_profile_view"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:src="@drawable/icon_profile" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewAdminProfileName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold"
-                tools:text="Ankit" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/profile_admin_appBar"
-            android:layout_marginTop="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/task_total_parentView"
+                android:id="@+id/profile_admin_appBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:background="@drawable/corner_radius_20"
-                android:backgroundTint="#FEFFD6"
-                android:elevation="1dp"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/task_total_count_value_view"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:background="@drawable/corner_radius_20"
-                    android:backgroundTint="@color/lime_A100"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_16ssp"
+                <com.nimble.lupin.user.utils.CircleImageView
+                    android:id="@+id/admin_profile_view"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:src="@drawable/icon_profile" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewAdminProfileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp"
+                    android:text="@{viewModel.userName}"
                     android:textStyle="bold"
-                    tools:text="123456" />
-
-                <TextView
-                    android:id="@+id/task_completed_count_tittle_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:text="@string/total_task_allotted"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold" />
-
+                    tools:text="Ankit" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:background="@drawable/top_curve_shape"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/profile_admin_appBar"
+                android:layout_marginTop="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/task_total_parentView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
                     android:background="@drawable/corner_radius_20"
-                    android:backgroundTint="#F3FCFD">
+                    android:backgroundTint="#FEFFD6"
+                    android:elevation="1dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/task_progress_count_value_view"
+                        android:id="@+id/task_total_count_value_view"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:background="@drawable/corner_radius_20"
-                        android:backgroundTint="@color/cyan_101"
+                        android:backgroundTint="@color/lime_A100"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold"
+                        android:text="@{viewModel.totalTask}"
                         tools:text="123456" />
 
                     <TextView
+                        android:id="@+id/task_completed_count_tittle_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:text="@string/task_in_progress"
+                        android:text="@string/total_task_allotted"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
-
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/corner_radius_20"
-                    android:backgroundTint="#FCF0F1">
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:background="@drawable/top_curve_shape"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/task_completed_count_value_view"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:background="@drawable/corner_radius_20"
-                        android:backgroundTint="#FFB4B8"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_16ssp"
-                        android:textStyle="bold"
-                        tools:text="123456" />
-
-                    <TextView
-
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:text="@string/task_completed"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold" />
+                        android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:background="@drawable/corner_radius_20"
+                        android:backgroundTint="#F3FCFD">
+
+                        <TextView
+                            android:id="@+id/task_progress_count_value_view"
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:background="@drawable/corner_radius_20"
+                            android:backgroundTint="@color/cyan_101"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16ssp"
+                            android:textStyle="bold"
+                            android:text="@{viewModel.pendingTask}"
+                            tools:text="123456" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:text="@string/task_in_progress"
+                            android:textColor="@color/black"
+
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
 
 
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/corner_radius_20"
+                        android:backgroundTint="#FCF0F1">
+
+                        <TextView
+                            android:id="@+id/task_completed_count_value_view"
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:background="@drawable/corner_radius_20"
+                            android:backgroundTint="#FFB4B8"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16ssp"
+                            android:textStyle="bold"
+                            android:text="@{viewModel.completedTask}"
+                            tools:text="123456" />
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:text="@string/task_completed"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_25sdp"
+                            android:text="@string/growth_chart"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            tools:ignore="RelativeOverlap" />
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/_25sdp" />
+
+                    </RelativeLayout>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_25sdp"
-                        android:text="@string/growth_chart"
-                        android:textColor="@color/primaryColor"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold"
-                        tools:ignore="RelativeOverlap" />
+        </RelativeLayout>
+    </FrameLayout>
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/_25sdp" />
-
-                </RelativeLayout>
-
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-
-                    />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </RelativeLayout>
-</FrameLayout>
+</layout>

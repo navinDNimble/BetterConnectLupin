@@ -22,7 +22,7 @@
         android:label="@string/title_task"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
-        app:launchSingleTop="true"
+
         tools:layout="@layout/fragment_task">
         <action
             android:id="@+id/taskFragment_to_TaskDetailFragment"
