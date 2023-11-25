@@ -4,44 +4,43 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class UserModel(
-
-    var emailId: String?,
-    var employeeId: String?,
-    var firstName:  String?,
-    var joiningDate:  String?,
-    var lastName:  String?,
-    var mobileNumber:  String?,
-    var post: Int,
-    var reportAuthority: Int,
     var userId: Int,
-    var workStation:  String?,
+    var firstName:  String,
+    var lastName:  String,
+    var mobileNumber:  String,
+    var emailId: String,
+    var workStation:  String,
+    var post: Int,
+    var employeeId: Int,
+    var reportAuthority: Int,
+    var joiningDate:  String,
 
     ):Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString()
+        parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(emailId)
-        parcel.writeString(employeeId)
+        parcel.writeInt(userId)
         parcel.writeString(firstName)
-        parcel.writeString(joiningDate)
         parcel.writeString(lastName)
         parcel.writeString(mobileNumber)
-        parcel.writeInt(post)
-        parcel.writeInt(reportAuthority)
-        parcel.writeInt(userId)
+        parcel.writeString(emailId)
         parcel.writeString(workStation)
+        parcel.writeInt(post)
+        parcel.writeInt(employeeId)
+        parcel.writeInt(reportAuthority)
+        parcel.writeString(joiningDate)
     }
 
     override fun describeContents(): Int {

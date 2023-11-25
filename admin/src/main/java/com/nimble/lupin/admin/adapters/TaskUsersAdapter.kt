@@ -23,6 +23,9 @@ class TaskUsersAdapter(private var itemList: List<TaskUsersModel> , private val 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(itemList[position],position)
+        holder.binding.root.setOnClickListener {
+            onTaskUserSelected.onTaskUserSelected(itemList[position])
+        }
     }
     fun updateList(newList: List<TaskUsersModel>) {
         Log.d("sachinnewlis",newList.toString())
@@ -38,8 +41,8 @@ class TaskUsersAdapter(private var itemList: List<TaskUsersModel> , private val 
     class ViewHolder(val binding: ItemUserAllocatedToTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskUsersModel, position: Int) {
-            binding.textViewUsername.text = item.user.firstName + " " + item.user.lastName
-            binding.unitsUser.text = item.userTask.completedUnit.toString() + " / " + item.userTask.totalUnits.toString()
+            binding.textViewUsername.text = item.user?.firstName + " " + (item.user?.lastName )
+            binding.unitsUser.text = item.userTask?.completedUnit.toString() + " / " + item.userTask?.totalUnits.toString()
         }
     }
     class TaskDiffCallback(private val oldList: List<TaskUsersModel>, private val newList: List<TaskUsersModel>) : DiffUtil.Callback() {
@@ -52,7 +55,7 @@ class TaskUsersAdapter(private var itemList: List<TaskUsersModel> , private val 
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].user.userId == newList[newItemPosition].user.userId
+            return oldList[oldItemPosition].user?.userId == newList[newItemPosition].user?.userId
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

@@ -15,6 +15,8 @@ data class TaskModel(
     val modeId: Int,
     val startDate: String?,
     val endDate: String?,
+    val user_alloted: Int?,
+    val user_completed_task: Int?,
     val createdBy: Int?, ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -27,6 +29,8 @@ data class TaskModel(
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int
     ) {
     }
@@ -42,6 +46,8 @@ data class TaskModel(
         parcel.writeInt(modeId)
         parcel.writeString(startDate)
         parcel.writeString(endDate)
+        parcel.writeValue(user_alloted)
+        parcel.writeValue(user_completed_task)
         parcel.writeValue(createdBy)
     }
 

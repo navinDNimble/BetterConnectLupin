@@ -1,5 +1,6 @@
 package com.nimble.lupin.admin.utils
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -33,6 +34,8 @@ abstract class PaginationScrollListener(
             if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                 loadMoreItems()
             }
+        }else{
+            Log.e("sachin", "Not Able to load")
         }
     }
     abstract fun loadMoreItems()

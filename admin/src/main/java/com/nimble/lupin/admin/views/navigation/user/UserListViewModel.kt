@@ -41,13 +41,13 @@ class UserListViewModel :ViewModel(){
                         }
                         404 -> {
                             isLastPage = result.isLastPage
-                            responseError.postValue("No Tasks Available" + result.message)
+                            responseError.postValue("No Users Available" + result.message)
                         }
                         409 -> {
                             isLastPage = result.isLastPage
                         }
                         500 -> {
-                            responseError.postValue("Error in Loading Task" + result.message)
+                            responseError.postValue("Error in Loading Users" + result.message)
                         }
                     }
                 }

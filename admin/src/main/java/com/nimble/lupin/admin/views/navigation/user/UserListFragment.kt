@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,9 +38,26 @@ class UserListFragment : Fragment()  ,OnUserSelected {
     private val binding get() = _binding!!
     private val handler = Handler(Looper.getMainLooper())
     private var searchDelayMillis = 500L  // 500 milliseconds
+    private val textListener =  object : SearchView.OnQueryTextListener{
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return true
+        }
 
+        override fun onQueryTextChange(searchText: String?): Boolean {
+            handler.removeCallbacksAndMessages(null)
+            handler.postDelayed({
+                userListViewModel!!.page=0
+                userListViewModel!!.searchKey=searchText.toString()
+                userListViewModel!!.getUsersList()
+            }, searchDelayMillis)
+
+            return true
+        }
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         userListViewModel = ViewModelProvider(this)[UserListViewModel::class.java]
         userListViewModel!!.responseError.observe(this) {
             showSnackBar(it)
@@ -114,23 +132,7 @@ class UserListFragment : Fragment()  ,OnUserSelected {
                 progressPaginationScrollListener
             )
         }
-       binding.searchViewUserList.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-           override fun onQueryTextSubmit(query: String?): Boolean {
-             return true
-           }
 
-           override fun onQueryTextChange(searchText: String?): Boolean {
-               handler.removeCallbacksAndMessages(null)
-               handler.postDelayed({
-                   userListViewModel!!.page=0
-                   userListViewModel!!.searchKey=searchText.toString()
-                   userListViewModel!!.getUsersList()
-               }, searchDelayMillis)
-
-               return true
-           }
-
-       })
 
     }
 
@@ -139,9 +141,13 @@ class UserListFragment : Fragment()  ,OnUserSelected {
         super.onResume()
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
-
+        binding.searchViewUserList.setOnQueryTextListener(textListener)
     }
 
+    override fun onStop() {
+        super.onStop()
+        binding.searchViewUserList.setOnQueryTextListener(null)
+    }
     private fun showSnackBar(message: String) {
         val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) };
         if (snackBar != null) {
@@ -155,5 +161,7 @@ class UserListFragment : Fragment()  ,OnUserSelected {
         val action = UserListFragmentDirections.userListFragmentToUserTaskListFragment(userModel)
         findNavController().navigate(action)
     }
+
+
 
 }

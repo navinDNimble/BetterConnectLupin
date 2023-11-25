@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.admin.R
@@ -15,7 +16,6 @@ import com.nimble.lupin.admin.api.ApiService
 import com.nimble.lupin.admin.api.ResponseHandler
 import com.nimble.lupin.admin.databinding.FragmentScheduleDetailBinding
 import com.nimble.lupin.admin.interfaces.OnTaskUserSelected
-
 import com.nimble.lupin.admin.models.TaskModel
 import com.nimble.lupin.admin.models.TaskUsersModel
 import com.nimble.lupin.admin.views.home.MainActivity
@@ -132,6 +132,7 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
 
 
     override fun onTaskUserSelected(taskUsersModel: TaskUsersModel) {
-        TODO("Not yet implemented")
+        val action =  ScheduleDetailFragmentDirections.scheduleDetailFragmentToScheduleUpdateFragment(taskUsersModel.userTask!!,task!!)
+        findNavController().navigate(action)
     }
 }

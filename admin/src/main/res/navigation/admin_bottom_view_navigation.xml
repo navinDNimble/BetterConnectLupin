@@ -91,7 +91,26 @@
         android:label="Schedule Detail"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
-        tools:layout="@layout/fragment_schedule_detail" />
+        tools:layout="@layout/fragment_schedule_detail"
+     >
+        <action
+            android:id="@+id/scheduleDetailFragment_to_scheduleUpdateFragment"
+            app:destination="@id/scheduleUpdatesFragment">
+            <argument
+                android:name="UserTaskModel"
+                app:argType="com.nimble.lupin.admin.models.UserTaskModel" />
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.admin.models.TaskModel" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleUpdatesFragment"
+        android:name="com.nimble.lupin.admin.views.home.schedule.ScheduleUpdatesFragment"
+        android:label="ScheduleUpdates"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_schedule_updates" />
 
     <fragment
         android:id="@+id/assignTaskFragment"
@@ -107,7 +126,15 @@
         android:label="Create User"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
-        tools:layout="@layout/fragment_create_user" />
+        tools:layout="@layout/fragment_create_user" >
+
+        <action
+            android:id="@+id/createUserFragment_to_navigation_user_list"
+            app:destination="@+id/navigation_user_list"
+            app:popUpTo="@id/navigation_user_list"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/userTaskListFragment"
@@ -115,5 +142,17 @@
         android:label="UserTaskList"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
-        tools:layout="@layout/fragment_user_list" />
+        tools:layout="@layout/fragment_user_task_list" >
+        <action
+            android:id="@+id/userTaskListFragment_to_scheduleUpdatesFragment"
+            app:destination="@id/scheduleUpdatesFragment">
+            <argument
+                android:name="UserTaskModel"
+                app:argType="com.nimble.lupin.admin.models.UserTaskModel" />
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.admin.models.TaskModel" />
+        </action>
+    </fragment>
+
 </navigation>

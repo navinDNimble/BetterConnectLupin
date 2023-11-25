@@ -20,6 +20,8 @@ import com.nimble.lupin.admin.models.UserTasksListModel
 import com.nimble.lupin.admin.utils.Constants
 import com.nimble.lupin.admin.utils.PaginationScrollListener
 import com.nimble.lupin.admin.views.home.MainActivity
+import com.nimble.lupin.admin.views.home.schedule.ScheduleFragmentDirections
+import com.nimble.lupin.admin.views.navigation.user.UserListFragmentDirections
 
 class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
 
@@ -176,7 +178,8 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
     }
 
     override fun onUserTaskSelected(userTaskListViewModel: UserTasksListModel) {
-
+        val action  = UserTaskListFragmentDirections.userTaskListFragmentToScheduleUpdatesFragment(userTaskListViewModel.userTask,userTaskListViewModel.task)
+        findNavController().navigate(action)
     }
 
 }
