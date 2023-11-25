@@ -14,7 +14,7 @@ import com.nimble.lupin.admin.interfaces.OnReportAuthoritySelected
 import com.nimble.lupin.admin.interfaces.OnSubActivitySelected
 import com.nimble.lupin.admin.interfaces.OnTaskSelected
 import com.nimble.lupin.admin.interfaces.OnTrainingModeSelected
-import com.nimble.lupin.admin.interfaces.OnUsersSelected
+
 import com.nimble.lupin.admin.models.TaskModel
 import java.io.InvalidClassException
 import java.lang.NullPointerException
@@ -48,9 +48,7 @@ class PostBottomSheetFragment<T, U>(private var myList: List<T>, private var cal
                 )
             }
 
-            is OnUsersSelected -> {
-                // Handle OnUsersSelected
-            }
+
 
             is OnPostSelected -> {
                 // Handle OnPostSelected

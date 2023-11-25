@@ -1,5 +1,6 @@
 package com.nimble.lupin.user.adapters
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -21,6 +22,10 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemList[position], position)
+        holder.binding.root.setOnClickListener {
+          onTaskSelected.onTaskSelected(itemList[position])
+        }
+
     }
 
     fun updateList(newList: List<TaskModel>) {
@@ -35,7 +40,11 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
     class ViewHolder(val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskModel, position: Int) {
-          binding.textViewActivityNameIn.text = item.task?.activityName
+          binding.textViewActivityNameIn.text = item.task?.activityName +" - "+ item.task?.subActivityName
+          binding.textViewAssignTaskTaskTitleIn.text = item.task?.taskName
+            binding.textViewAssignTaskStartDateIn.text ="${item.task?.startDate} ${" To "+item.task?.endDate}"
+            binding.units.text = "${item.userTask?.completedUnit} ${"/"+item.userTask?.totalUnits}"
+
         }
     }
     class TaskDiffCallback(private val oldList: List<TaskModel>, private val newList: List<TaskModel>) : DiffUtil.Callback() {

@@ -74,4 +74,5 @@ dependencies {
     implementation 'io.github.chaosleung:pinview:1.4.4'
 
     implementation 'com.google.firebase:firebase-auth-ktx:22.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

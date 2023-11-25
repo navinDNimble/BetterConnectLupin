@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- First Image -->
+    <item  >
+        <bitmap
+            android:src="@drawable/lupin_symbol"
+            android:gravity="center_vertical|start"
+            android:width="512dp"
+             android:height="512dp"
+            />
+    </item>
+</layer-list>

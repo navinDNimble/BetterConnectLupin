@@ -21,7 +21,7 @@ import org.koin.java.KoinJavaComponent
 
 class HomeFragment : Fragment() {
     private lateinit var  binding :FragmentHomeBinding
-    val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
 
     private var homeViewModel :HomeViewModel? =null
     override fun onCreate(savedInstanceState: Bundle?) {

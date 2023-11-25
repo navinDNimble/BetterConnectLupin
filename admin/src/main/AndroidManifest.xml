@@ -12,7 +12,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".utils.AdminApplication"
         android:theme="@style/Base.Theme.BetterConnect"
+        android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
             android:name=".views.login.LoginActivity"

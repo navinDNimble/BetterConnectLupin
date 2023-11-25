@@ -18,32 +18,32 @@ class TaskViewModel : ViewModel()  {
 
     val pendingRecyclerViewVisibility = ObservableField(false)
     val completedRecyclerViewVisibility = ObservableField(false)
-
     val pendingTaskResultTextView = ObservableField("")
     val completedTaskResultTextView = ObservableField("")
-
-    val isLoadingPendingTask = ObservableField(false)
+    val LoadingPendingTask = ObservableField(false)
     val isLoadingCompletedTask = ObservableField(false)
-
-
     val pendingTaskTextVisibility  = ObservableField(false)
     val completedTaskTextVisibility = ObservableField(false)
-
     var isLastPageOfCompleted = false
     var isLastPageOfPending = false
-
     val completedTaskListResponse = MutableLiveData<List<TaskModel>>()
     val pendingTaskListResponse = MutableLiveData<List<TaskModel>>()
     val responseError = MutableLiveData<String>()
 
+
+
+    //Frgament component
+
+     var pendingPage = 0
+     var completedPage = 0
     private val apiService: ApiService by inject(ApiService::class.java)
 
-    fun getPendingUserTask(page :Int){
-        Log.d("sachinTaskCompletedPage", page.toString())
+    fun getPendingUserTask(){
+        Log.d("sachinTaskCompletedPage", pendingPage.toString())
 
-        isLoadingPendingTask.set(true)
+        LoadingPendingTask.set(true)
 
-        apiService.getPendingUserTask(Constants.userId,page).enqueue(object :Callback<ResponseHandler<List<TaskModel>>>{
+        apiService.getPendingUserTask(Constants.userId,pendingPage).enqueue(object :Callback<ResponseHandler<List<TaskModel>>>{
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,
                 response: Response<ResponseHandler<List<TaskModel>>>
@@ -70,22 +70,23 @@ class TaskViewModel : ViewModel()  {
                         pendingTaskResultTextView.set("Error in Loading Pending Task"+result.message)
                         pendingTaskTextVisibility.set(true)
                     }
+                    LoadingPendingTask.set(false)
                 }
-                isLoadingPendingTask.set(false)
+
             }
 
             override fun onFailure(call: Call<ResponseHandler<List<TaskModel>>>, t: Throwable) {
                 Log.d("sachinTaskPending", t.message.toString())
-                isLoadingPendingTask.set(false)
+                LoadingPendingTask.set(false)
                 responseError.postValue("Error in Loading Pending Task")
             }
 
         })
     }
-     fun getCompletedUserTask(page :Int){
-         Log.d("sachinTaskCompletedPage", page.toString())
+     fun getCompletedUserTask(){
+         Log.d("sachinTaskCompletedPage", completedPage.toString())
          isLoadingCompletedTask.set(true)
-         apiService.getCompletedUserTask(Constants.userId,page).enqueue(object :Callback<ResponseHandler<List<TaskModel>>>{
+         apiService.getCompletedUserTask(Constants.userId,completedPage).enqueue(object :Callback<ResponseHandler<List<TaskModel>>>{
              override fun onResponse(
                  call: Call<ResponseHandler<List<TaskModel>>>,
                  response: Response<ResponseHandler<List<TaskModel>>>

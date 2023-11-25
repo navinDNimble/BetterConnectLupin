@@ -43,12 +43,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mAuth = FirebaseAuth.getInstance()
-        if (mAuth.currentUser!=null){
-            changeActivity()
-        }
 
-
+       mAuth =FirebaseAuth.getInstance()
         binding.sendOtpButton.setOnClickListener {
             val phoneNumber = binding.phoneNumberEditText.text.toString()
             if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length != 10) {
@@ -189,7 +185,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun changeActivity() {
         CoroutineScope(Dispatchers.Main).launch {
-            delay(2000)
+            delay(1000)
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         }

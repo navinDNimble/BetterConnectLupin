@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data
+        >
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.nimble.lupin.user.views.home.task.taskUpdate.UpdateTaskViewModel" />
+    </data>
+    <FrameLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primaryColor">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/profile_admin_appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageViewBackButton"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/icon_back"
+                        />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/taskNameTaskUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp"
+                            tools:text="Task1_Jan2023" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/dateTaskUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_14ssp"
+                            tools:text="Task1_Jan2023" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/activityTaskUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/_14ssp"
+                            tools:text="Task1_Jan2023" />
+
+
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </LinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/profile_admin_appBar"
+
+                >
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/top_curve_shape"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:scrollbars="none"
+                    >
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="@string/farmers_present_for_training"
+                            android:textColor="@color/light_green_400"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/edit_text_background_black"
+                            android:paddingVertical="8dp"
+                            android:visibility="@{viewModel.spinnerVisibility ? View.VISIBLE : View.GONE}"
+                              >
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spinnerId"
+                                android:layout_width="match_parent"
+                                android:paddingHorizontal="10dp"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{viewModel.spinnerVisibility ? View.VISIBLE : View.GONE}"
+
+                                />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.maleCountVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="@string/male_farmers"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/maleFarmersId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold"
+                                android:visibility="@{viewModel.maleCountVisibility ? View.VISIBLE : View.GONE}"
+                                />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.femaleCountVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="FemaleFarmers"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.femaleCountVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/femaleFarmersId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.demoCountVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Number of Demo"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.demoCountVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/demoId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.eventCountVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Number of Demo"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.eventCountVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/eventId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.lgCodeVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="LG Code"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.lgCodeVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/LgCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.wellVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Number of Wells"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.wellVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/wells_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.surveyVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Number of Survey"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.surveyVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/survey_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.villagesVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Number of Villages"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.villagesVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/village_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.trainingVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Number of Trainings"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/trainingId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:minWidth="100dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:gravity="end"
+                                android:inputType="number"
+                                android:padding="8dp"
+                                android:visibility="@{viewModel.trainingVisibility ? View.VISIBLE : View.GONE}"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.subjectVisibility ? View.VISIBLE : View.GONE}"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textViewSubjectId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Subject"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editTextSubjectId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="30dp"
+                                android:visibility="@{viewModel.subjectVisibility ? View.VISIBLE : View.GONE}"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:text=""
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.finding ? View.VISIBLE : View.GONE}"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Findings"
+                                android:textSize="@dimen/_14sdp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editTextFindingsId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="30dp"
+                                android:visibility="@{viewModel.finding ? View.VISIBLE : View.GONE}"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:text=""
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.reasonForVisitVisibility ? View.VISIBLE : View.GONE}"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textViewReasonVisitId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="10dp"
+                                android:text="Reason For Visit"
+                                android:textSize="@dimen/_14sdp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editTextReasonVisitId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="30dp"
+                                android:visibility="@{viewModel.reasonForVisitVisibility ? View.VISIBLE : View.GONE}"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:text=""
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.farmerNameVisibility ? View.VISIBLE : View.GONE}"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Name Of Farmer"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.farmerNameVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/nameOfFarmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:text=""
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="10dp"
+                            android:visibility="@{viewModel.reasonVisibility ? View.VISIBLE : View.GONE}"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textViewReasonId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Reasons"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.reasonVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/editTextReasonId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:text=""
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.meetingWithWhomVisibility ? View.VISIBLE : View.GONE}"
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textViewMeetingWhomId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Meeting With Whom"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:visibility="@{viewModel.meetingWithWhomVisibility ? View.VISIBLE : View.GONE}"
+                                android:id="@+id/editTextMeetingWhomId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:text=""
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_20sdp"
+                            android:background="@drawable/shape_select_image"
+                            android:paddingVertical="20dp"
+                            android:visibility="@{viewModel.photoVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="Upload Image"
+                                android:textSize="@dimen/_20sdp"
+                                android:textStyle="bold" />
+
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/selectImageId"
+                                android:layout_marginTop="20dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_camera"
+                                android:layout_gravity="center"
+                                />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                       <RelativeLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="10dp"
+                           >
+                           <androidx.appcompat.widget.AppCompatButton
+                               android:id="@+id/updateDetailsButton"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_centerHorizontal="true"
+                               android:layout_marginHorizontal="@dimen/_30sdp"
+                               android:background="@drawable/corner_radius_10"
+                               android:backgroundTint="@color/light_green_300"
+                               android:text="Update Details"
+                               android:visibility="@{viewModel.progressBarVisibility ? View.GONE : View.VISIBLE}"
+                               android:textColor="@color/white"
+                               android:textStyle="bold" />
+
+                           <ProgressBar
+                               android:id="@+id/progressBar_updateDetails"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_centerInParent="true"
+
+                               android:elevation="10dp"
+                               android:visibility="@{viewModel.progressBarVisibility ? View.VISIBLE : View.GONE}"
+                               android:textColor="@color/white"
+                               android:textStyle="bold" />
+                       </RelativeLayout>
+
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </ScrollView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+</layout>

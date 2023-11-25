@@ -1,12 +1,18 @@
 package com.nimble.lupin.user.views.home
 
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,11 +20,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.databinding.ActivityMainBinding
 import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.utils.NetworkChangeListener
+import com.nimble.lupin.user.views.login.LoginActivity
+import kotlinx.coroutines.delay
 import org.koin.java.KoinJavaComponent
 
 class MainActivity : AppCompatActivity() {
@@ -28,12 +37,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomView: BottomNavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var networkChangeListener: NetworkChangeListener
-
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        if (FirebaseAuth.getInstance().currentUser == null || sharedPref.getInt(
+                Constants.User_ID,
+                0
+            ) == 0
+        ) {
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            finish()
+        }
+
         setContentView(binding.root)
-        val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
+
         Constants.userId = sharedPref.getInt(Constants.User_ID,0)
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkChangeListener = NetworkChangeListener(this@MainActivity)
@@ -51,6 +69,9 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
 
     }
+
+
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

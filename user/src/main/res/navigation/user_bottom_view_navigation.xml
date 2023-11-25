@@ -22,7 +22,7 @@
         android:label="@string/title_task"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
-
+        app:launchSingleTop="true"
         tools:layout="@layout/fragment_task">
         <action
             android:id="@+id/taskFragment_to_TaskDetailFragment"
@@ -66,6 +66,22 @@
         android:name="com.nimble.lupin.user.views.home.task.taskDetail.TaskDetailFragment"
         android:label="Task Detail"
         app:enterAnim="@anim/pull_in_left"
-        app:exitAnim="@anim/push_out_right" />
+        app:exitAnim="@anim/push_out_right" >
+        <action
+            android:id="@+id/taskDetailFragment_to_taskUpdateFragment"
+            app:destination="@id/taskUpdateFragment">
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.user.models.TaskModel" />
+        </action>
+
+    </fragment>
+    <fragment
+        android:id="@+id/taskUpdateFragment"
+        android:name="com.nimble.lupin.user.views.home.task.taskUpdate.UpdateTaskFragment"
+        android:label="Task Update"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        />
 
 </navigation>

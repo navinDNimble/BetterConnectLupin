@@ -7,6 +7,7 @@
     android:theme="@style/ThemeOverlay.BetterConnect.FullscreenContainer"
     tools:context=".views.home.schedule.ScheduleFragment"
     android:background="@color/primaryColor"
+    android:layout_marginBottom="@dimen/_60sdp"
     >
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -90,7 +91,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/adminAllTaskRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_19sdp"
             tools:listitem="@layout/item_task"
             android:background="@color/white"
@@ -99,4 +100,11 @@
            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+    <ProgressBar
+        android:id="@+id/progress_bar_task"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:visibility="gone"
+        />
 </FrameLayout>

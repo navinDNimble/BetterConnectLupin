@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/admin_bottom_view_navigation"
+
             />
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

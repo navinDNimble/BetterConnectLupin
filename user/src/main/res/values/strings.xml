@@ -31,6 +31,10 @@
     <string name="oops_n_no_internet_connection_n_please_check_your_connection">OOPS!\n No Internet Connection \n Please Check Your Connection</string>
 
     <string name="date_combine_string">%1$s To %2$s</string>
+    <string name="activity_combine_String">%1$s  -  %2$s</string>
+    <string name="units_combine_String">%1$s / %2$s</string>
     <string name="retry">Retry</string>
+    <string name="farmers_present_for_training">Farmers Present for Training</string>
+    <string name="male_farmers">Male Farmers</string>
 
 </resources>

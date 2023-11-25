@@ -1,14 +1,18 @@
 package com.nimble.lupin.user.views.navigation.logout
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.views.home.MainActivity
+import com.nimble.lupin.user.views.login.LoginActivity
+import org.koin.java.KoinJavaComponent
 
 class LogoutDialog : BottomSheetDialogFragment() {
 
@@ -29,8 +33,10 @@ class LogoutDialog : BottomSheetDialogFragment() {
             dismiss()
         }
         continueButton.setOnClickListener {
-            //TODO:CHANGE ACTIVITY TO LOGIN ACTIVITY
-            startActivity(Intent(requireContext(), MainActivity::class.java))
+            val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
+            sharedPref.edit().clear().apply()
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
 
 
         }

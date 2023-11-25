@@ -1,6 +1,7 @@
 package com.nimble.lupin.admin.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,9 @@ class TaskAdapter(private var itemList: List<TaskModel>, private val onTaskSelec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemList[position], position)
+        holder.binding.root.setOnClickListener {
+            onTaskSelected.onTaskSelected(itemList[position] )
+        }
     }
 
     fun updateList(newList: List<TaskModel>) {
@@ -35,7 +39,10 @@ class TaskAdapter(private var itemList: List<TaskModel>, private val onTaskSelec
     class ViewHolder(val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskModel, position: Int) {
-            binding.textViewActivityNameIn.text = item.activityName
+            binding.textViewActivityNameIn.text = item.activityName +" - "+ item.subActivityName
+            binding.textViewAssignTaskTaskTitleIn.text = item.taskName
+            binding.textViewAssignTaskStartDateIn.text ="${item.startDate} ${" To "+item.endDate}"
+            binding.units.visibility =View.GONE
         }
     }
     class TaskDiffCallback(private val oldList: List<TaskModel>, private val newList: List<TaskModel>) : DiffUtil.Callback() {
@@ -48,7 +55,7 @@ class TaskAdapter(private var itemList: List<TaskModel>, private val onTaskSelec
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].id == newList[newItemPosition].id
+            return oldList[oldItemPosition].taskId == newList[newItemPosition].taskId
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

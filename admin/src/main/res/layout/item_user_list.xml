@@ -34,13 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingHorizontal="5dp"
-            android:gravity="center"
             tools:text="Mr.Sachin Dubhade sachin"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewProfileImage"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

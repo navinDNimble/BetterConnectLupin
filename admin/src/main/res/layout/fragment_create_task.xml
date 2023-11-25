@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/ThemeOverlay.BetterConnect.FullscreenContainer"
-    tools:context=".views.navigation.task.CreateTaskFragment">
+    tools:context=".views.navigation.createtask.CreateTaskFragment">
 
     <ScrollView
         android:layout_width="match_parent"

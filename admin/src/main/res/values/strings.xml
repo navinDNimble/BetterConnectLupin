@@ -65,4 +65,9 @@
     <string name="pu_manager">PU Manager</string>
     <string name="project_coordinator">Project Coordinator</string>
     <string name="field_facilitator">Field Facilitator</string>
+
+    <string name="date_combine_string">%1$s To %2$s</string>
+    <string name="activity_combine_String">%1$s  -  %2$s</string>
+    <string name="units_combine_String">%1$s / %2$s</string>
+    <string name="pending_task">Pending Task</string>
 </resources>

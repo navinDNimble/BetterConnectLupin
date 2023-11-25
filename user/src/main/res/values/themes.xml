@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BetterConnect" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/primaryColor</item>
+
     </style>
     <style name="Base.BetterConnect.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
 

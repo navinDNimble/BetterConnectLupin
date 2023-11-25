@@ -10,7 +10,6 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -58,6 +57,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/update_task_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginHorizontal="@dimen/_20sdp"
@@ -66,14 +66,35 @@
             android:backgroundTint="@color/primaryColor"
             android:text="@string/update_task_detail"
             android:textColor="@color/white"
+            android:enabled="false"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/task_detailRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            tools:listitem="@layout/item_task"/>
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_task_updates"/>
+        <ProgressBar
+            android:id="@+id/task_detailProgressBar"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/taskDetailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/black"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </FrameLayout>

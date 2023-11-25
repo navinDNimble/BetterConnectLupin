@@ -44,8 +44,7 @@ data class Task(
     val userTaskId: Int,
     val activityName: String?,
     val subActivityName: String?,
-    val completedUnits:Int,
-    val TotalUnits:Int
+
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -57,9 +56,7 @@ data class Task(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readString(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readInt()
+        parcel.readString()
     ) {
     }
 
@@ -74,8 +71,7 @@ data class Task(
         parcel.writeInt(userTaskId)
         parcel.writeString(activityName)
         parcel.writeString(subActivityName)
-        parcel.writeInt(completedUnits)
-        parcel.writeInt(TotalUnits)
+
     }
 
     override fun describeContents(): Int {

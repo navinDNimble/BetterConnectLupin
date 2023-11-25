@@ -1,5 +1,6 @@
 package com.nimble.lupin.user.utils
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,15 +14,17 @@ abstract class PaginationScrollListener(
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
-        val visibleItemCount = layoutManager.childCount
-        val totalItemCount = layoutManager.itemCount
-        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
-        if (isLoading().not() && isLastPage().not()) {
-            if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                loadMoreItems()
-            }
-        }
+//        val visibleItemCount = layoutManager.childCount
+//        val totalItemCount = layoutManager.itemCount
+//        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+//
+//        if (isLoading().not() && isLastPage().not()) {
+//            if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+//                loadMoreItems()
+//            }
+//        }else{
+//            Log.d("sachinpagination","Condition not match")
+//        }
     }
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
@@ -33,6 +36,8 @@ abstract class PaginationScrollListener(
             if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                 loadMoreItems()
             }
+        }else{
+            Log.d("sachinpagination","Condition not match")
         }
     }
     abstract fun loadMoreItems()

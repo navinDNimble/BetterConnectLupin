@@ -26,9 +26,7 @@ open class HomeViewModel() : ViewModel() {
     var completedTask  = ObservableField("0")
 
     var responseError : MutableLiveData<String> = MutableLiveData()
-    init {
 
-    }
     fun getTasksStatus (){
        apiService.getUserTaskCount(Constants.userId).enqueue(object :
            Callback<ResponseHandler<UserTaskCountModel>> {

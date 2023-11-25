@@ -1,6 +1,8 @@
 package com.nimble.lupin.admin.views.home
 
+import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
@@ -13,9 +15,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.nimble.lupin.admin.R
 import com.nimble.lupin.admin.databinding.ActivityMainBinding
+import com.nimble.lupin.admin.utils.Constants
 import com.nimble.lupin.admin.utils.NetworkChangeListener
+import com.nimble.lupin.admin.views.login.LoginActivity
+import org.koin.java.KoinJavaComponent
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,13 +30,23 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var networkBroadcaster: NetworkChangeListener
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (FirebaseAuth.getInstance().currentUser == null || sharedPref.getInt(
+                Constants.Admin_ID_Key,
+                0
+            ) == 0
+        ) {
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            finish()
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Constants.Admin_ID = sharedPref.getInt(Constants.Admin_ID_Key,0)
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkBroadcaster = NetworkChangeListener(this@MainActivity)
-
         binding.bottomBarView.setupWithNavController(controller)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -80,9 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
+
 
     override fun onResume() {
         super.onResume()

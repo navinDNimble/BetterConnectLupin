@@ -4,23 +4,26 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.nimble.lupin.admin.databinding.ItemTaskBinding
-import com.nimble.lupin.admin.interfaces.OnUsersSelected
+import com.nimble.lupin.admin.databinding.ItemUserListBinding
+import com.nimble.lupin.admin.interfaces.OnUserSelected
 import com.nimble.lupin.admin.models.UserModel
 
-class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSelected: OnUsersSelected) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSelected: OnUserSelected) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val adapterItemMedicineBinding = ItemTaskBinding.inflate(
+        val userListItem = ItemUserListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return ViewHolder(adapterItemMedicineBinding)
+        return ViewHolder(userListItem)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemList[position], position)
+        holder.binding.root.setOnClickListener {
+            onUsersSelected.onUserSelected(itemList[position])
+        }
     }
 
     fun updateList(newList: List<UserModel>) {
@@ -32,10 +35,11 @@ class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSel
         return itemList.size
     }
 
-    class ViewHolder(val binding: ItemTaskBinding) :
+    class ViewHolder(val binding: ItemUserListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: UserModel, position: Int) {
-            binding.textViewActivityNameIn.text = item.name
+            binding.textViewMultiUsername.text = item.firstName + " " + item.lastName
+
         }
     }
     class TaskDiffCallback(private val oldList: List<UserModel>, private val newList: List<UserModel>) : DiffUtil.Callback() {
@@ -48,11 +52,13 @@ class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSel
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].id == newList[newItemPosition].id
+            return oldList[oldItemPosition].userId == newList[newItemPosition].userId
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldList[oldItemPosition] == newList[newItemPosition]
         }
     }
+
+
 }

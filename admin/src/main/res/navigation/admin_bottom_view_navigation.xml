@@ -30,7 +30,7 @@
         </action>
         <action
             android:id="@+id/scheduleFragment_to_AssignTaskFragment"
-            app:destination="@+id/assignTaskFragment"></action>
+            app:destination="@+id/assignTaskFragment"/>
     </fragment>
 
     <fragment
@@ -51,12 +51,21 @@
         tools:layout="@layout/fragment_user_list">
         <action
             android:id="@+id/userListFragment_to_createUserFragment"
-            app:destination="@+id/createUserFragment"></action>
+            app:destination="@+id/createUserFragment">
+
+        </action>
+        <action
+            android:id="@+id/userListFragment_to_UserTaskListFragment"
+            app:destination="@id/userTaskListFragment">
+            <argument
+                android:name="UserDetail"
+                app:argType="com.nimble.lupin.admin.models.UserModel" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_create_task"
-        android:name="com.nimble.lupin.admin.views.navigation.task.CreateTaskFragment"
+        android:name="com.nimble.lupin.admin.views.navigation.createtask.CreateTaskFragment"
         android:label="Create Task"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
@@ -100,5 +109,11 @@
         app:exitAnim="@anim/push_out_right"
         tools:layout="@layout/fragment_create_user" />
 
-
+    <fragment
+        android:id="@+id/userTaskListFragment"
+        android:name="com.nimble.lupin.admin.views.navigation.user.userTaskList.UserTaskListFragment"
+        android:label="UserTaskList"
+        app:enterAnim="@anim/pull_in_left"
+        app:exitAnim="@anim/push_out_right"
+        tools:layout="@layout/fragment_user_list" />
 </navigation>

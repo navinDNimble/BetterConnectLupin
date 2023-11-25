@@ -1,4 +1,4 @@
-package com.nimble.lupin.admin.views.navigation.task
+package com.nimble.lupin.admin.views.navigation.createtask
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nimble.lupin.admin.R
 import com.nimble.lupin.admin.databinding.FragmentCreateTaskBinding
-import com.nimble.lupin.admin.databinding.FragmentHomeBinding
 import com.nimble.lupin.admin.views.home.MainActivity
 
 
