@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="@string/let_s_allot_the_task"
+                android:text="@string/let_s_create_the_task"
                 android:textColor="@color/primaryColor"
                 android:textSize="@dimen/_18sdp"
                 android:textStyle="bold" />
@@ -42,32 +42,14 @@
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewTaskTitle"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/taskNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:singleLine="true"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/title"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/filed_facilitator"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewFieldFacilitator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/select_field_facilitator"
                 android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
 
@@ -81,7 +63,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewActivity"
+                android:id="@+id/activityNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -100,7 +82,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewSubActivity"
+                android:id="@+id/subActivityNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -119,7 +101,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewTrainingMode"
+                android:id="@+id/taskModeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -137,15 +119,54 @@
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewDate"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/select_date"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:weightSum="2.2">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewStartDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="00-00-0000"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/textViewTo"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="To"
+                   android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewEndDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="00-00-0000"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -153,7 +174,7 @@
                 android:layout_marginTop="20dp">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/createTaskButton"
+                    android:id="@+id/create_task_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -161,12 +182,12 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/corner_radius_10"
                     android:backgroundTint="@color/light_green_300"
-                    android:text="@string/create_task"
+                    android:text="@string/assign_the_task"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <ProgressBar
-
+                    android:id="@+id/create_task_progress_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

@@ -69,7 +69,14 @@
         android:label="Create Task"
         app:enterAnim="@anim/pull_in_left"
         app:exitAnim="@anim/push_out_right"
-        tools:layout="@layout/fragment_user_list" />
+        tools:layout="@layout/fragment_create_task" >
+        <action
+            android:id="@+id/createTaskFragment_to_ScheduleFragment"
+            app:destination="@+id/navigation_schedule"
+            app:popUpTo="@id/navigation_schedule"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_setting"

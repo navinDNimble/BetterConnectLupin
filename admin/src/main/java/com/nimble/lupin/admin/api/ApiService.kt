@@ -2,6 +2,7 @@ package com.nimble.lupin.admin.api
 
 import com.nimble.lupin.admin.models.AdminProfileData
 import com.nimble.lupin.admin.models.AdminTaskCountModel
+import com.nimble.lupin.admin.models.TaskCreateResponseModel
 import com.nimble.lupin.admin.models.TaskModel
 import com.nimble.lupin.admin.models.TaskUpdatesModel
 import com.nimble.lupin.admin.models.TaskUsersModel
@@ -36,4 +37,8 @@ interface ApiService {
     fun getUserTaskDetails(@Query("userTaskId") userTaskId: Int): Call<ResponseHandler<List<TaskUpdatesModel>>>
     @POST("create_user")
     fun createUser(@Body userModel: UserModel): Call<ResponseHandler<UserModel>>
+    @GET("activities")
+    fun getActivitySubActivityTaskMode(): Call<ResponseHandler<TaskCreateResponseModel>>
+    @POST("create_task")
+    fun createTask(@Body taskModel: TaskModel): Call<ResponseHandler<TaskModel>>
 }

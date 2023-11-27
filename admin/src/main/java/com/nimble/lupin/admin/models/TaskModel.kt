@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 
 data class TaskModel(
-    val taskId:Int,
+    val taskId:Int ,
     val taskName: String?,
     val activityId:Int,
     val subActivityId:Int,

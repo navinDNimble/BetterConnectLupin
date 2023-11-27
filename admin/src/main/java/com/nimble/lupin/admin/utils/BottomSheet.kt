@@ -88,7 +88,10 @@ class BottomSheet(
             }
         }
     }
-
+   public fun updateList(  newList: MutableList<BottomSheetModel>){
+       list = newList
+       adapter.notifyDataSetChanged()
+   }
 
     fun getUsersList() {
         binding.progressBar.visibility = View.VISIBLE

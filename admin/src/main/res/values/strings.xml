@@ -70,4 +70,6 @@
     <string name="activity_combine_String">%1$s  -  %2$s</string>
     <string name="units_combine_String">%1$s / %2$s</string>
     <string name="pending_task">Pending Task</string>
+    <string name="let_s_create_the_task">Let\'s Create The Task</string>
+    <string name="task_name">Task Name</string>
 </resources>
