@@ -20,7 +20,7 @@ class ScheduleViewModel : ViewModel() {
 
     fun getTaskList(){
         loadingProgressBar.postValue(true)
-        apiService.getTask(page).enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
+        apiService.getTask(page , "").enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,
                 response: Response<ResponseHandler<List<TaskModel>>>

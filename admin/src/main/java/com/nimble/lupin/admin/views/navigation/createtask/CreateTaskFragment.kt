@@ -177,7 +177,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         val taskName = binding.taskNameEditText.text.toString()
         val activityName = binding.activityNameTextView.text.toString()
         val subActivityName = binding.subActivityNameTextView.text.toString()
-        val taskModeName = binding.taskNameEditText.text.toString()
+        val taskModeName = binding.taskModeTextView.text.toString()
         val startDate = binding.textViewStartDate.text.toString()
         val endDate = binding.textViewEndDate.text.toString()
 
