@@ -36,5 +36,10 @@
     <string name="retry">Retry</string>
     <string name="farmers_present_for_training">Farmers Present for Training</string>
     <string name="male_farmers">Male Farmers</string>
-
+    <string-array name="graph_selector">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+        <!-- Add more items as needed -->
+    </string-array>
 </resources>

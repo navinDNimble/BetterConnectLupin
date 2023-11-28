@@ -13,7 +13,9 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primaryColor"
-        tools:context=".views.home.home.HomeFragment">
+        tools:context=".views.home.home.HomeFragment"
+        android:layout_marginBottom="@dimen/_60sdp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -188,13 +190,25 @@ xmlns:tools="http://schemas.android.com/tools">
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold"
                             tools:ignore="RelativeOverlap" />
-
-                        <Spinner
-                            android:id="@+id/spinner"
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="@dimen/_25sdp" />
+                            android:layout_marginEnd="@dimen/_20sdp"
+                           android:paddingHorizontal="@dimen/_5sdp"
+                            android:background="@drawable/edit_text_background_black">
+
+                            <Spinner
+                                android:id="@+id/spinner"
+                                android:gravity="center"
+                                android:layout_centerInParent="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/graph_selector"
+
+                                 />
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 
@@ -202,8 +216,9 @@ xmlns:tools="http://schemas.android.com/tools">
                         android:id="@+id/view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginHorizontal="@dimen/_2sdp"
+                        android:background="@drawable/corner_radius_10"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

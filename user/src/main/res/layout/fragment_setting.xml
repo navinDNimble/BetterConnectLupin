@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".views.navigation.setting.SettingFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/_16sdp"
+        android:text="Upcomming Feature" />
 
 </FrameLayout>

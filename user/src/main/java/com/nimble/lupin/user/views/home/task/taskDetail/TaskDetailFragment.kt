@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.nimble.lupin.user.R
@@ -49,7 +50,9 @@ class TaskDetailFragment : Fragment() {
             task?.userTask?.completedUnit.toString(),
             task?.userTask?.totalUnits.toString()
         )
-
+        binding.backButton.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
         binding.updateTaskButton.setOnClickListener {
            if (task?.userTask!!.completedUnit<task?.userTask!!.totalUnits){
                val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)

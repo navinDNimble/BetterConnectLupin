@@ -10,6 +10,7 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Constants.userId = sharedPref.getInt(Constants.User_ID,0)
+
+        binding.userNavigationView.getHeaderView(0).findViewById<AppCompatTextView>(R.id.header_userName).text =   sharedPref.getString(Constants.User_Name,"")
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkChangeListener = NetworkChangeListener(this@MainActivity)
         bottomView = binding.bottomBarView
@@ -78,16 +81,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideBottomView() {
-        actionBarDrawerToggle.isDrawerIndicatorEnabled = false
-        bottomView.animate().translationY(bottomView.height.toFloat()).setDuration(800).withEndAction {
-            bottomView.visibility = View.GONE
-        }.start()
+        binding.bottomBarView.animate().translationY(binding.bottomBarView.height.toFloat())
+            .setDuration(800).withEndAction {
+                binding.bottomBarView.visibility = View.GONE
+            }.start()
+        binding.toolbar.visibility = View.GONE
 
     }
     fun showBottomView(){
-        bottomView.visibility = View.VISIBLE
-        bottomView.animate().translationY(0f).setDuration(800).start()
-        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
+        binding.toolbar.visibility = View.VISIBLE
+        binding.bottomBarView.visibility = View.VISIBLE
+        binding.bottomBarView.animate().translationY(0f).setDuration(800).start()
     }
 
     override fun onStart() {

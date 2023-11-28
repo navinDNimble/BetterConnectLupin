@@ -15,7 +15,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="cancel">Cancel</string>
-    <string name="logout_message">Are You Sure Do You Want To Logout</string>
+    <string name="logout_message">Are You Sure Want To Logout</string>
 
     <string name="task_status">Task Status</string>
     <string name="growth_chart">Growth Chart</string>

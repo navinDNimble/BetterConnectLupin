@@ -10,20 +10,35 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sample_id"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
-            android:paddingStart="60dp"
-            android:paddingTop="15dp"
-            android:text="@string/assigned_task_progress"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
+            android:paddingTop="@dimen/_10sdp"
+            android:background="@color/primaryColor">
+           <androidx.appcompat.widget.AppCompatImageView
+               android:id="@+id/backButton"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+             android:layout_gravity="center"
+               android:layout_marginStart="@dimen/_20sdp"
+
+               android:background="@drawable/icon_back"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sample_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primaryColor"
+                android:paddingStart="20dp"
+
+                android:text="@string/assigned_task_progress"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,42 +1,35 @@
 package com.nimble.lupin.admin.views.home.schedule.assignTask
 
 
-import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.DisplayMetrics
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
-import android.widget.FrameLayout
-import androidx.fragment.app.DialogFragment
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.admin.R
 import com.nimble.lupin.admin.adapters.UsersSelectionAdapter
 import com.nimble.lupin.admin.api.ApiService
 import com.nimble.lupin.admin.api.ResponseHandler
 import com.nimble.lupin.admin.databinding.FragmentAssignTaskBinding
-import com.nimble.lupin.admin.databinding.FragmentUserSelectionBinding
 import com.nimble.lupin.admin.interfaces.OnBottomSheetItemSelected
+import com.nimble.lupin.admin.models.AssignTaskBody
+import com.nimble.lupin.admin.models.AssignTaskModel
 import com.nimble.lupin.admin.models.BottomSheetModel
-import com.nimble.lupin.admin.models.UserModel
 import com.nimble.lupin.admin.utils.BottomSheet
 import com.nimble.lupin.admin.utils.Constants
 import com.nimble.lupin.admin.utils.PaginationScrollListener
 import com.nimble.lupin.admin.views.home.MainActivity
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 
@@ -47,29 +40,235 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
     private var selectedTaskId: Int = 0
 
 
+    private  lateinit var paginationScrollListener: PaginationScrollListener
+
+
+    val userList = mutableListOf<AssignTaskModel>()
+
+    var adapter  :UsersSelectionAdapter? = UsersSelectionAdapter(userList)
+    var isLoading: Boolean = false
+    var isLastPage: Boolean = false
+    var page: Int = 0
+    val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
+    var searchKey: String = ""
+    var userCall: Call<ResponseHandler<List<AssignTaskModel>>>? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private var searchDelayMillis = 500L  // 500 milliseconds
+
+      public var selectedItemList = mutableSetOf<AssignTaskModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
         binding = FragmentAssignTaskBinding.inflate(inflater, container, false)
         taskBottomSheet = BottomSheet(mutableListOf(), this, "task", true, requireContext())
         binding.taskNameTextView.setOnClickListener {
             taskBottomSheet.show()
         }
         binding.selectFiledFacilitator.setOnClickListener {
-            showUserDialog()
+            changeVisibility(false)
         }
+
+        initializeUserSelectListDialog()
         return binding.root
     }
 
-    private fun showUserDialog() {
+    private fun assignTask() {
+       if (selectedTaskId == 0){
+           binding.taskNameTextView.requestFocus()
+           binding.taskNameTextView.error = "Please Select a task"
+           return
+       }
 
-        val userSelectionDialog = context?.let { UserSelectionListDialog(requireContext()) }
-        userSelectionDialog?.show()
+       if (selectedItemList.isEmpty()) {
+           binding.selectFiledFacilitator.requestFocus()
+           binding.selectFiledFacilitator.error = "Please Select User"
+           return
+       }
+         Log.d("sachin", selectedItemList.toString())
+       val assign = AssignTaskBody(selectedTaskId, selectedItemList)
+        binding.allotTaskProgress.visibility =View.VISIBLE
+        binding.assignTaskButton.visibility =View.GONE
+        apiService.allotTaskToUser(assign).enqueue(object : Callback<ResponseHandler<AssignTaskBody>> {
+            override fun onResponse(
+                call: Call<ResponseHandler<AssignTaskBody>>,
+                response: Response<ResponseHandler<AssignTaskBody>>
+            ) {
+                val result = response.body()
+                if (result != null) {
+                    if (result.code==200){
+                        showSnackBar(result.message ,Color.GREEN)
+                        Log.d("sachin", "SUCCESS")
+
+                        fragmentManager?.popBackStack()
+                    }else{
+                        showSnackBar(result.message , Color.RED)
+                        Log.d("sachin", result.message)
+
+
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseHandler<AssignTaskBody>>, t: Throwable) {
+                t.message?.let { showSnackBar(it , Color.RED) }
+                Log.d("sachin", t.message.toString())
+
+                binding.assignTaskButton.visibility =View.VISIBLE
+                binding.allotTaskProgress.visibility =View.GONE
+            }
+
+        })
 
 
     }
 
+    private fun changeVisibility(setInputDetailVisible :Boolean ){
+       binding.inputDetailView.visibility = if (setInputDetailVisible) View.VISIBLE else View.GONE
+       binding.multiuserSelectionView.visibility = if (setInputDetailVisible) View.GONE else View.VISIBLE
+
+   }
+    private fun initializeUserSelectListDialog() {
+        binding.assignTaskButton.setOnClickListener {
+            assignTask()
+        }
+
+        binding.backButton.setOnClickListener {
+            val selectedList = adapter?.getSelectedList()
+            selectedItemList.addAll(selectedList!!)
+            changeVisibility(true)
+
+        }
+        binding.continueButton.setOnClickListener {
+            val selectedList = adapter?.getSelectedList()
+            selectedItemList.addAll(selectedList!!)
+            changeVisibility(true)
+        }
+        binding.searchViewUserList.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                handler.removeCallbacksAndMessages(null)
+                handler.postDelayed({
+                   page= 0
+                    searchKey = newText.toString()
+                    getUsersList()
+                }, searchDelayMillis)
+
+                return true
+
+            }
+
+        })
+
+        binding.recyclerViewUser.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewUser.adapter = adapter
+        paginationScrollListener = object :
+            PaginationScrollListener(binding.recyclerViewUser.layoutManager as LinearLayoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLoading
+            }
+            override fun isLoading(): Boolean {
+                return isLastPage
+            }
+            override fun loadMoreItems() {
+                Log.d("sachin", isLastPage.toString())
+                if (isLastPage.not()) {
+                    page += Constants.PAGE_SIZE
+                    getUsersList()
+                }
+            }
+        }
+        paginationScrollListener.let { progressPaginationScrollListener ->
+            binding.recyclerViewUser.addOnScrollListener(
+                progressPaginationScrollListener
+            )
+        }
+
+
+        getUsersList()
+
+    }
+    fun getUsersList() {
+
+
+        binding.progressBar.visibility = View.VISIBLE
+        isLoading = true
+        userCall?.cancel()
+        userCall = apiService.getAllUserForSelectionList(page, searchKey)
+        userCall?.enqueue(object : retrofit2.Callback<ResponseHandler<List<AssignTaskModel>>> {
+            override fun onResponse(
+                call: Call<ResponseHandler<List<AssignTaskModel>>>,
+                response: Response<ResponseHandler<List<AssignTaskModel>>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    Log.d("sachinAdminTASK", result.toString())
+                    when (result?.code) {
+                        200 -> {
+                            isLastPage = result.isLastPage
+                            val responseList = result.response
+                            val selectedList = adapter?.getSelectedList()
+                            selectedItemList.addAll(selectedList!!)
+                            Log.d("sachinAdminTASK", selectedItemList.toString())
+                            selectedItemList.forEach { item1 ->
+                                responseList.find { it.userId == item1.userId }?.let { matchingItem ->
+                                    matchingItem.total_units = item1.total_units
+                                    matchingItem.isSelected = true
+                                    Log.d("sachinMatching",item1.toString())
+                                }
+                            }
+
+                            if (page ==0){
+                                userList.clear()
+                                userList.addAll(responseList)
+                                binding.recyclerViewUser.adapter = null
+                                adapter =null
+                                adapter = UsersSelectionAdapter(userList)
+                                binding.recyclerViewUser.adapter = adapter
+                            }else{
+                               val size = userList.size
+                                userList.addAll(responseList)
+                                adapter?.notifyItemRangeInserted(size , responseList.size)
+                            }
+
+                        }
+
+                        404 -> {
+                            isLastPage = result.isLastPage
+                            showSnackBar("No Users Available" + result.message  , Color.RED)
+
+                        }
+
+                        409 -> {
+                            isLastPage = result.isLastPage
+                        }
+
+                        500 -> {
+                            showSnackBar("Error in Loading Users" + result.message  , Color.RED)
+
+                        }
+                    }
+                }
+                binding.progressBar.visibility= View.GONE
+                isLoading = false
+            }
+
+            override fun onFailure(call: Call<ResponseHandler<List<AssignTaskModel>>>, t: Throwable) {
+
+                binding.progressBar.visibility= View.GONE
+                showSnackBar("Error in Loading Users" + t.message.toString() , Color.RED)
+                isLoading = false
+            }
+        })
+
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -104,142 +303,17 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
 
-     fun showSnackBar(message: String) {
+     fun showSnackBar(message: String  ,color :Int) {
         val snackBar =  Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
-        snackBar.setBackgroundTint(Color.RED)
+        snackBar.setBackgroundTint(color)
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
 
     }
-}
-class UserSelectionListDialog(context :Context) : Dialog(context) {
-    private var _binding: FragmentUserSelectionBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var paginationScrollListener: PaginationScrollListener
-    private val userList = mutableListOf<UserModel>()
-    private val adapter = UsersSelectionAdapter(userList)
-    private var isLoading: Boolean = false
-    private var isLastPage: Boolean = false
-    private var page: Int = 0
-    private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
-    private val searchKey: String = ""
-    private var userCall: Call<ResponseHandler<List<UserModel>>>? = null
-
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        val dialog = super.onCreateDialog(savedInstanceState)
-//        dialog.setOnShowListener {
-//            val bottomSheetDialog = it as BottomSheetDialog
-//            val parentLayout = bottomSheetDialog.findViewById<View>(
-//                com.google.android.material.R.id.design_bottom_sheet
-//            )
-//            parentLayout?.let { bottomSheet ->
-//                val behaviour = BottomSheetBehavior.from(bottomSheet)
-//                val layoutParams = bottomSheet.layoutParams
-//                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
-//                bottomSheet.layoutParams = layoutParams
-//                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-//            }
-//        }
-//        return dialog
-//    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        _binding = FragmentUserSelectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.recyclerViewUser.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewUser.adapter = adapter
-        paginationScrollListener = object :
-            PaginationScrollListener(binding.recyclerViewUser.layoutManager as LinearLayoutManager) {
-
-            override fun isLastPage(): Boolean {
-                return isLoading
-            }
-
-            override fun isLoading(): Boolean {
-                return isLastPage
-            }
-
-            override fun loadMoreItems() {
-                Log.d("sachin", isLastPage.toString())
-                if (isLastPage.not()) {
-                    page += Constants.PAGE_SIZE
-                    getUsersList()
-                }
-
-            }
-        }
-        paginationScrollListener.let { progressPaginationScrollListener ->
-            binding.recyclerViewUser.addOnScrollListener(
-                progressPaginationScrollListener
-            )
-        }
-
-        getUsersList()
-
-    }
 
 
 
 
-    fun getUsersList() {
-        binding.progressBar.visibility = View.VISIBLE
-        isLoading = true
-        userCall?.cancel()
-        userCall = apiService.getAllUserList(page, "")
-        userCall?.enqueue(object : retrofit2.Callback<ResponseHandler<List<UserModel>>> {
-            override fun onResponse(
-                call: Call<ResponseHandler<List<UserModel>>>,
-                response: Response<ResponseHandler<List<UserModel>>>
-            ) {
-                if (response.isSuccessful) {
-                    val result = response.body()
-                    Log.d("sachinAdminTASK", result.toString())
-                    when (result?.code) {
-                        200 -> {
-                            isLastPage = result.isLastPage
-                            val apiList = result.response
-                            userList.addAll(apiList)
-                            adapter.updateList(userList)
-                            Log.d("sachinAdminTASK", userList.toString())
-                            adapter.notifyDataSetChanged()
-                        }
-
-                        404 -> {
-                            isLastPage = result.isLastPage
-//                            showSnackBar("No Users Available" + result.message)
-
-                        }
-
-                        409 -> {
-                            isLastPage = result.isLastPage
-                        }
-
-                        500 -> {
-//                            showSnackBar("Error in Loading Users" + result.message)
-
-                        }
-                    }
-                }
-                binding.progressBar.visibility= View.GONE
-                isLoading = false
-            }
-
-            override fun onFailure(call: Call<ResponseHandler<List<UserModel>>>, t: Throwable) {
-
-                binding.progressBar.visibility= View.GONE
-//                showSnackBar("Error in Loading Users" + t.message.toString())
-                isLoading = false
-            }
-        })
-
-    }
 
 }
+

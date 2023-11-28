@@ -2,6 +2,8 @@ package com.nimble.lupin.admin.api
 
 import com.nimble.lupin.admin.models.AdminProfileData
 import com.nimble.lupin.admin.models.AdminTaskCountModel
+import com.nimble.lupin.admin.models.AssignTaskBody
+import com.nimble.lupin.admin.models.AssignTaskModel
 import com.nimble.lupin.admin.models.TaskCreateResponseModel
 import com.nimble.lupin.admin.models.TaskModel
 import com.nimble.lupin.admin.models.TaskUpdatesModel
@@ -41,4 +43,10 @@ interface ApiService {
     fun getActivitySubActivityTaskMode(): Call<ResponseHandler<TaskCreateResponseModel>>
     @POST("create_task")
     fun createTask(@Body taskModel: TaskModel): Call<ResponseHandler<TaskModel>>
+
+    @GET("get_all_user")
+    fun getAllUserForSelectionList(@Query("page") page: Int , @Query("searchKey") searchKey: String ): Call<ResponseHandler<List<AssignTaskModel>>>
+
+    @POST("assign_users_to_task")
+    fun allotTaskToUser(@Body assignTaskModelList : AssignTaskBody): Call<ResponseHandler<AssignTaskBody>>
 }

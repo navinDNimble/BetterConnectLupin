@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,7 +22,7 @@ import com.nimble.lupin.user.views.home.MainActivity
 
 class TaskFragment : Fragment(), OnTaskSelected {
 
-    private lateinit var viewModel: TaskViewModel
+
     private var _binding: FragmentTaskBinding? = null
     private val binding get() = _binding!!
     private lateinit var taskListProgress: MutableList<TaskModel>
@@ -30,16 +31,17 @@ class TaskFragment : Fragment(), OnTaskSelected {
     private lateinit var completedAdapter: TaskAdapter
     private lateinit var completedPaginationScrollListener: PaginationScrollListener
     private lateinit var progressPaginationScrollListener: PaginationScrollListener
-
+    private val viewModel: TaskViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+
         viewModel.pendingPage =0
         viewModel.completedPage=0
+
         viewModel.isLastPageOfCompleted =false
         viewModel.isLastPageOfPending = false
 
@@ -156,6 +158,11 @@ class TaskFragment : Fragment(), OnTaskSelected {
         }
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
     }
 
 

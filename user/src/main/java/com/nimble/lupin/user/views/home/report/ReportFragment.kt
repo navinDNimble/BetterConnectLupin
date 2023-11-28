@@ -11,9 +11,6 @@ import com.nimble.lupin.user.views.home.MainActivity
 
 class ReportFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ReportFragment()
-    }
 
     private lateinit var viewModel: ReportViewModel
 

@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.home.schedule.assignTask.AssignTaskFragment">
 
 
     <ScrollView
+        android:id="@+id/inputDetailView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_gravity="center">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -147,6 +150,7 @@
                 android:layout_marginTop="20dp">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/assignTaskButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -158,6 +162,7 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
                 <ProgressBar
+                    android:id="@+id/allotTaskProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -166,5 +171,67 @@
             </RelativeLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
+    <FrameLayout
+        android:id="@+id/multiuserSelectionView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/backButton"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/icon_back"
+                app:layout_constraintBottom_toBottomOf="@+id/searchViewUserList"
+                app:layout_constraintEnd_toStartOf="@+id/searchViewUserList"
+                android:backgroundTint="@color/white"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchViewUserList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:background="@drawable/corner_radius_10"
+                android:elevation="@dimen/_5sdp"
+                android:gravity="center_horizontal"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="Search By Name" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_user"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/progress_bar"
+                app:layout_constraintTop_toBottomOf="@+id/searchViewUserList" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/continueButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/continueButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:backgroundTint="@color/primaryColor"
+                android:text="Continue"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </FrameLayout>

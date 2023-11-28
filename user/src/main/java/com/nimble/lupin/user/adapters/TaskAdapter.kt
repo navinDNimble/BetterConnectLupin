@@ -1,6 +1,5 @@
 package com.nimble.lupin.user.adapters
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -57,7 +56,7 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].task?.id == newList[newItemPosition].task?.id
+            return oldList[oldItemPosition].task?.taskId == newList[newItemPosition].task?.taskId
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

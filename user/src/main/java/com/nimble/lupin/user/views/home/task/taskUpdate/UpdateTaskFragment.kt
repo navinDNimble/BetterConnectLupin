@@ -2,6 +2,7 @@ package com.nimble.lupin.user.views.home.task.taskUpdate
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -260,7 +261,9 @@ class UpdateTaskFragment : Fragment() {
 
                 viewModel.maleCountVisibility.set(true)
                 viewModel.femaleCountVisibility.set(true)
-                when (task?.task!!.taskModeId) {
+                Log.d("sachin",task?.task!!.modeId.toString())
+
+                when (task?.task!!.modeId) {
                     1 -> {
 
                         viewModel.trainingVisibility.set(true)

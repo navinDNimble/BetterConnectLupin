@@ -1,18 +1,18 @@
 package com.nimble.lupin.admin.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nimble.lupin.admin.databinding.ItemMultipleUserSelectionBinding
-import com.nimble.lupin.admin.models.UserModel
+import com.nimble.lupin.admin.models.AssignTaskModel
+import com.nimble.lupin.admin.views.home.schedule.assignTask.AssignTaskFragment
 
 
+class UsersSelectionAdapter(private var itemList: List<AssignTaskModel> ) : RecyclerView.Adapter<UsersSelectionAdapter.ViewHolder>() {
 
-class UsersSelectionAdapter(private var itemList: List<UserModel>) : RecyclerView.Adapter<UsersSelectionAdapter.ViewHolder>() {
-
+    private var selectedUserList = mutableSetOf<AssignTaskModel>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val adapterItemMedicineBinding = ItemMultipleUserSelectionBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -23,11 +23,31 @@ class UsersSelectionAdapter(private var itemList: List<UserModel>) : RecyclerVie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(itemList[position], position)
+        val model = itemList[position]
+        holder.binding.viewModel = model
+        holder.binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+
+                selectedUserList.add(model)
+            }else {
+                 removeItemFromSelectedList(model.userId)
+            }
+
+        }
+        holder.binding.editTextUnits.addTextChangedListener {
+            model.total_units = it.toString()
+        }
 
     }
+    private fun removeItemFromSelectedList(userId : Int) {
+        selectedUserList.removeIf { it.userId == userId}
+        AssignTaskFragment().selectedItemList.removeIf { it.userId == userId}
+    }
 
-    fun updateList(newList: List<UserModel>) {
+     fun getSelectedList(): MutableSet<AssignTaskModel> {
+        return selectedUserList
+    }
+    fun updateList(newList: List<AssignTaskModel>) {
         val diffResult = DiffUtil.calculateDiff(TaskDiffCallback(itemList, newList))
         itemList = newList
         diffResult.dispatchUpdatesTo(this)
@@ -36,14 +56,11 @@ class UsersSelectionAdapter(private var itemList: List<UserModel>) : RecyclerVie
         return itemList.size
     }
 
-    class ViewHolder(val binding: ItemMultipleUserSelectionBinding) :
+    inner class ViewHolder(val binding: ItemMultipleUserSelectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserModel, position: Int) {
-           binding.userNameTextView.text = item.firstName + " "+ item.lastName
-            Log.d("saching", item.firstName )
-        }
+
     }
-    class TaskDiffCallback(private val oldList: List<UserModel>, private val newList: List<UserModel>) : DiffUtil.Callback() {
+    class TaskDiffCallback(private val oldList: List<AssignTaskModel>, private val newList: List<AssignTaskModel>) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldList.size
         }
