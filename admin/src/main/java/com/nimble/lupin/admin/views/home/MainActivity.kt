@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Constants.Admin_ID = sharedPref.getInt(Constants.Admin_ID_Key,0)
+        binding.adminNavigationView.getHeaderView(0).findViewById<AppCompatTextView>(R.id.header_userName).text =   sharedPref.getString(Constants.Admin_Username_Key,"")
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkBroadcaster = NetworkChangeListener(this@MainActivity)
         binding.bottomBarView.setupWithNavController(controller)

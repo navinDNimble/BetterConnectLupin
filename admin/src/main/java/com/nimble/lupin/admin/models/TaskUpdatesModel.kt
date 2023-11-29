@@ -27,4 +27,5 @@ data class TaskUpdatesModel(
     var spinnerSelection : String? = null,
 
     var photo: Int? = null,
+    var update_date : String? =  null
 )

@@ -47,9 +47,9 @@ class CreateUserFragment : Fragment() ,OnBottomSheetItemSelected {
         binding = FragmentCreateUserBinding.inflate(inflater, container, false)
 
         val bottomModelList = mutableListOf(
-            BottomSheetModel(2, "Project Manager"),
-            BottomSheetModel(3, "PU Manager"),
-            BottomSheetModel(4, "Project Coordinator"),
+//            BottomSheetModel(2, "Project Manager"),
+//            BottomSheetModel(3, "PU Manager"),
+//            BottomSheetModel(4, "Project Coordinator"),
             BottomSheetModel(5, "Field Facilitator")
         )
 

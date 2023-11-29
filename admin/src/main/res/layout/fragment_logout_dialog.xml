@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingVertical="@dimen/_30sdp"
+    android:background="@color/white"
     tools:context=".views.navigation.logout.LogoutDialog">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/logout_message"
+        android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold" />
 
@@ -20,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
+
         android:weightSum="2">
 
         <RelativeLayout
@@ -33,7 +36,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:background="@drawable/corner_radius_10"
+                android:backgroundTint="@color/primaryColor"
+                />
 
         </RelativeLayout>
 
@@ -47,6 +54,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:background="@drawable/corner_radius_10"
+                android:backgroundTint="@android:color/holo_red_dark"
                 android:text="@string/log_out" />
         </RelativeLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

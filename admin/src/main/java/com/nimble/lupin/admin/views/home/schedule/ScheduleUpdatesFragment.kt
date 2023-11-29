@@ -55,8 +55,15 @@ class ScheduleUpdatesFragment : Fragment() {
         binding.includedLayout.textViewAssignTaskStartDateIn.text =   getString(R.string.date_combine_string, task?.startDate, task?.endDate)
         binding.includedLayout.textViewActivityNameIn.text =  getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
         binding.includedLayout.units.visibility =View.GONE
+
+        binding.backButton.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
+
+
         binding.taskUpdatesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.taskUpdatesRecyclerView.adapter = taskUserAdapter
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

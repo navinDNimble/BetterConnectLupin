@@ -71,40 +71,52 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-        <TextView
-            android:id="@+id/progress_SelectionView"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchTaskView"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="10dp"
             android:background="@drawable/corner_radius_10"
-            android:elevation="@dimen/_2sdp"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/_25sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:text="@string/tasks_list"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/_16ssp"
-            android:textStyle="bold"
-            app:drawableEndCompat="@drawable/arrow_drop_down_circle" />
+            android:elevation="@dimen/_5sdp"
+            android:gravity="center_horizontal"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back_button_id_user_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="Search By Name"
+            />
+       <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:scrollbars="none">
+           <androidx.appcompat.widget.LinearLayoutCompat
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/adminAllTaskRecyclerView"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_marginHorizontal="@dimen/_19sdp"
+                   tools:listitem="@layout/item_task"
+                   android:background="@color/white"
+                   android:layout_marginTop="10dp"
+                   tools:itemCount="3"
+                   />
+               <ProgressBar
+                   android:id="@+id/progress_bar_task"
+                   android:layout_width="@dimen/_30sdp"
+                   android:layout_height="@dimen/_30sdp"
+                   android:layout_gravity="bottom|center_horizontal"
+                   android:visibility="gone"
+                   />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/adminAllTaskRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/_19sdp"
-            tools:listitem="@layout/item_task"
-            android:background="@color/white"
-            android:layout_marginTop="10dp"
-            tools:itemCount="3"
-           />
+           </androidx.appcompat.widget.LinearLayoutCompat>
+       </ScrollView>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-    <ProgressBar
-        android:id="@+id/progress_bar_task"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:visibility="gone"
-        />
+
 </FrameLayout>

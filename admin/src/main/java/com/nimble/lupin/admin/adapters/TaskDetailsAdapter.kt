@@ -38,7 +38,12 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskUpdatesModel, position: Int) {
             var pointer = 1
+            if (checkNull(item.update_date)){
 
+                binding.textViewDate.text = "Date : "+item.update_date.toString()
+                binding.textViewDate.visibility  = View.VISIBLE
+
+            }
             if (checkNull(item.male_count)){
                 setTextOnView("Male Count : "+item.male_count.toString() , pointer)
                 pointer++

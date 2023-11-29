@@ -55,6 +55,7 @@ class TaskDetailFragment : Fragment() {
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
+        setUpdateTaskButton()
         binding.updateTaskButton.setOnClickListener {
            if (task?.userTask!!.completedUnit<task?.userTask!!.totalUnits){
                val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)
@@ -65,6 +66,13 @@ class TaskDetailFragment : Fragment() {
         }
         return binding.root
     }
+
+    private fun setUpdateTaskButton() {
+        if (task?.userTask!!.completedUnit==task?.userTask!!.totalUnits){
+            binding.updateTaskButton.visibility = View.GONE
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getTaskUpdates()
@@ -93,6 +101,7 @@ class TaskDetailFragment : Fragment() {
                             Constants.changedSize = size
                             binding.includedLayout.units.text = getString(R.string.units_combine_String,size.toString(),task?.userTask!!.totalUnits.toString())
                         }
+                        setUpdateTaskButton()
                         binding.updateTaskButton.isEnabled = true
                     } else if (result.code == 404) {
                         binding.updateTaskButton.isEnabled = true

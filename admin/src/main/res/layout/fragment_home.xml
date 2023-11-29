@@ -26,14 +26,15 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
+               android:gravity="center"
                 android:orientation="horizontal">
 
                 <com.nimble.lupin.admin.utils.CircleImageView
                     android:id="@+id/admin_profile_view"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:src="@drawable/icon_profile" />
+                    android:background="@drawable/icon_profile"
+                    android:backgroundTint="@color/white"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textViewAdminProfileName"

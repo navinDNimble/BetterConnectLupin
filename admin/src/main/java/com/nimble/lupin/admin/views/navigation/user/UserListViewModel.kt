@@ -23,7 +23,6 @@ class UserListViewModel :ViewModel(){
     private var call: Call<ResponseHandler<List<UserModel>>>? = null
     fun getUsersList(){
         loadingProgressBar.postValue(true)
-
         call?.cancel()
         call = apiService.getAllUserList(page, searchKey)
         call?.enqueue(object : retrofit2.Callback<ResponseHandler<List<UserModel>>> {

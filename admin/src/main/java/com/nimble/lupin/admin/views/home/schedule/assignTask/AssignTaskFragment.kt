@@ -88,7 +88,15 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
            binding.selectFiledFacilitator.error = "Please Select User"
            return
        }
-         Log.d("sachin", selectedItemList.toString())
+
+        Log.d("sachin", selectedItemList.toString())
+        for (item in selectedItemList) {
+            if (item.total_units.isNullOrEmpty()){
+                showSnackBar("Unit Not Assigned to"+item.firstName+" - " + item.lastName,Color.RED)
+                return
+            }
+        }
+        Log.d("sachin2", selectedItemList.toString())
        val assign = AssignTaskBody(selectedTaskId, selectedItemList)
         binding.allotTaskProgress.visibility =View.VISIBLE
         binding.assignTaskButton.visibility =View.GONE

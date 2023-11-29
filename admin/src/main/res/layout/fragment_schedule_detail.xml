@@ -12,18 +12,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sample_id"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
-            android:paddingStart="60dp"
-            android:paddingTop="15dp"
-            android:text="@string/review_the_activity_status"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
+            android:paddingTop="@dimen/_10sdp"
+            android:background="@color/primaryColor">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:background="@drawable/icon_back"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sample_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primaryColor"
+                android:paddingStart="20dp"
+                android:text="@string/review_the_activity_status"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,17 +72,35 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/samplet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/task_detailRecyclerView"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:background="@color/white"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_user_allocated_to_task"
-            />
+            android:scrollbars="none">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/scheduleUserRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:background="@color/white"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_user_allocated_to_task"
+                    />
+                <ProgressBar
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:id="@+id/scheduleDetailProgressBar"
+                    android:layout_below="@+id/scheduleUserRecyclerView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom|center_horizontal" />
+
+            </RelativeLayout>
+        </ScrollView>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/scheduleDetailResultTextView"
@@ -75,11 +109,8 @@
         android:layout_gravity="center"
         tools:text="NO USER ALLOCATED TO TASK"
         android:textSize="@dimen/_14ssp"
+        android:visibility="gone"
         android:textStyle="bold"
         android:gravity="center"/>
-    <ProgressBar
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:id="@+id/scheduleDetailProgressBar"
-        android:layout_gravity="bottom|center_horizontal" />
+
 </FrameLayout>

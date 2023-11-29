@@ -12,6 +12,7 @@ import retrofit2.Response
 
 class ScheduleViewModel : ViewModel() {
     var page =0
+    var searchKey = ""
     var isLastPage = false
     var responseError : MutableLiveData<String> = MutableLiveData()
     var loadingProgressBar : MutableLiveData<Boolean> = MutableLiveData()
@@ -20,7 +21,7 @@ class ScheduleViewModel : ViewModel() {
 
     fun getTaskList(){
         loadingProgressBar.postValue(true)
-        apiService.getTask(page , "").enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
+        apiService.getTask(page , searchKey).enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,
                 response: Response<ResponseHandler<List<TaskModel>>>
@@ -35,7 +36,7 @@ class ScheduleViewModel : ViewModel() {
                     } else if(result?.code == 404){
 
                         isLastPage = result.isLastPage
-                        responseError.postValue("No Tasks Available"+result.message)
+                        responseError.postValue(result.message)
 
                     }else if(result?.code == 409){
                         isLastPage = result.isLastPage

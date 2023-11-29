@@ -12,7 +12,6 @@
             type="com.nimble.lupin.user.views.home.task.taskUpdate.UpdateTaskViewModel" />
     </data>
     <FrameLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -87,9 +86,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/profile_admin_appBar"
+                android:layout_below="@+id/profile_admin_appBar">
 
-                >
+
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
