@@ -15,5 +15,7 @@ class Constants {
         const val User_Profile = "USER_PROFILE"
         var userId  :Int = 0
         const val PAGE_SIZE = 1
+
+        var changedSize = 0
     }
 }

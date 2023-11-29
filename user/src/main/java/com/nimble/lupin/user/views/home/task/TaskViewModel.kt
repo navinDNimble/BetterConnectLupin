@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TaskViewModel : ViewModel()  {
+class TaskViewModel   {
 
 
     val pendingRecyclerViewVisibility = ObservableField(false)

@@ -9,44 +9,35 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.views.home.MainActivity
 import com.nimble.lupin.user.views.login.LoginActivity
+import org.koin.java.KoinJavaComponent
 
 class SplashActivity : AppCompatActivity() {
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            splashScreen.setSplashScreenTheme(R.style.Base_Theme_BetterConnect)
-            splashScreen.setOnExitAnimationListener {
-               changeActivity()
+
+        setContentView(R.layout.activity_splash)
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (FirebaseAuth.getInstance().currentUser == null || sharedPref.getInt(
+                    Constants.User_ID,
+                    0
+                ) == 0
+            ) {
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                finish()
+            }else {
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                finish()
             }
-        }else{
-            setContentView(R.layout.activity_splash)
-            Handler(Looper.getMainLooper()).postDelayed({
-                changeActivity()
-            }, 3000)
-        }
 
-    }
-    private fun changeActivity(){
-        val intent  :Intent
-        val sharedPref = getSharedPreferences(Constants.SHARED_PREF_KEY, Context.MODE_PRIVATE)
-        intent = if ((sharedPref.getInt(Constants.User_ID,0) == 0).not()){
-            Intent(this, MainActivity::class.java)
+        }, 2000)
 
-
-        }else{
-            Intent(this, LoginActivity::class.java)
-
-        }
-        startActivity(intent)
-        finish()
-//        with(sharedPref.edit()) {
-//            putString(key, value)
-//            apply()
-//        }
 
     }
 }

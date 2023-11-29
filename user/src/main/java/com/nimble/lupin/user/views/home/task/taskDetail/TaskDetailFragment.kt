@@ -17,7 +17,9 @@ import com.nimble.lupin.user.api.ResponseHandler
 import com.nimble.lupin.user.databinding.FragmentTaskDetailBinding
 import com.nimble.lupin.user.models.TaskModel
 import com.nimble.lupin.user.models.TaskUpdatesModel
+import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.views.home.MainActivity
+import com.nimble.lupin.user.views.home.task.TaskFragment
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,12 +65,10 @@ class TaskDetailFragment : Fragment() {
         }
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getTaskUpdates()
     }
-
     private fun getTaskUpdates() {
         binding.taskDetailProgressBar.visibility = View.VISIBLE
         apiService.getUserTaskDetails(task?.userTask!!.userTaskId)
@@ -83,14 +83,23 @@ class TaskDetailFragment : Fragment() {
                         val taskDetailsAdapter = TaskDetailsAdapter(resultList)
                         binding.taskDetailRecyclerView.layoutManager = LinearLayoutManager(context)
                         binding.taskDetailRecyclerView.adapter = taskDetailsAdapter
-                        if (resultList.size  < task?.userTask!!.totalUnits){
+
+                        val size = resultList.size
+                        if (size < task?.userTask!!.totalUnits){
                             binding.updateTaskButton.isEnabled = true
                         }
+                        if (size != task!!.userTask?.completedUnit ){
+                            task!!.userTask?.completedUnit = size
+                            Constants.changedSize = size
+                            binding.includedLayout.units.text = getString(R.string.units_combine_String,size.toString(),task?.userTask!!.totalUnits.toString())
+                        }
+                        binding.updateTaskButton.isEnabled = true
                     } else if (result.code == 404) {
                         binding.updateTaskButton.isEnabled = true
                         binding.taskDetailTextView.text = result.message
                     } else if (result.code == 500){
                         showSnackBar(result.message)
+                        binding.updateTaskButton.isEnabled =false
                     }
                     binding.taskDetailProgressBar.visibility = View.GONE
                 }
@@ -100,6 +109,7 @@ class TaskDetailFragment : Fragment() {
                     t: Throwable
                 ) {
                     binding.taskDetailProgressBar.visibility = View.GONE
+                    binding.updateTaskButton.isEnabled =false
                     showSnackBar(t.message.toString())
                 }
 

@@ -22,7 +22,7 @@ class TaskAdapter(private var itemList: List<TaskModel> , private val onTaskSele
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemList[position], position)
         holder.binding.root.setOnClickListener {
-          onTaskSelected.onTaskSelected(itemList[position])
+          onTaskSelected.onTaskSelected(itemList[position],position)
         }
 
     }

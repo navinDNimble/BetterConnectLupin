@@ -5,11 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nimble.lupin.user.adapters.TaskAdapter
@@ -20,7 +17,8 @@ import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.utils.PaginationScrollListener
 import com.nimble.lupin.user.views.home.MainActivity
 
-class TaskFragment : Fragment(), OnTaskSelected {
+
+class TaskFragment : Fragment(), OnTaskSelected  {
 
 
     private var _binding: FragmentTaskBinding? = null
@@ -31,46 +29,56 @@ class TaskFragment : Fragment(), OnTaskSelected {
     private lateinit var completedAdapter: TaskAdapter
     private lateinit var completedPaginationScrollListener: PaginationScrollListener
     private lateinit var progressPaginationScrollListener: PaginationScrollListener
-    private val viewModel: TaskViewModel by viewModels()
 
+   private val viewModel  = TaskViewModel()
+    private var selectedPosition  = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+       resetVariables()
+
+        progressAdapter = TaskAdapter(taskListProgress, this)
+        completedAdapter = TaskAdapter(taskListCompleted, this)
 
 
-        viewModel.pendingPage =0
-        viewModel.completedPage=0
+        viewModel.pendingTaskListResponse.observe(this, Observer {
 
-        viewModel.isLastPageOfCompleted =false
-        viewModel.isLastPageOfPending = false
+                if (viewModel.pendingPage==0){
+                    taskListProgress.clear()
+                }
+                taskListProgress.addAll(it)
+                Log.d("sachintask", taskListProgress.size.toString())
+                progressAdapter.updateList(taskListProgress)
+                progressAdapter.notifyDataSetChanged()
+
+
+        })
+        viewModel.completedTaskListResponse.observe(this, Observer {
+                if (viewModel.completedPage==0){
+                    taskListCompleted.clear()
+                }
+                taskListCompleted.addAll(it)
+                completedAdapter.updateList(taskListCompleted)
+                completedAdapter.notifyDataSetChanged()
+        })
+
+
+    }
+
+    private fun resetVariables() {
+        viewModel.pendingPage = 0
+        viewModel.completedPage = 0
 
         taskListProgress = mutableListOf()
         taskListCompleted = mutableListOf()
 
-        progressAdapter = TaskAdapter(taskListProgress, this)
-        completedAdapter = TaskAdapter(taskListCompleted, this)
-        viewModel.pendingTaskListResponse.observe(this, Observer {
-            if (viewModel.pendingPage==0){
-                taskListProgress.clear()
-            }
-            taskListProgress.addAll(it)
-            Log.d("sachintask", taskListProgress.size.toString())
-            progressAdapter.updateList(taskListProgress)
-            progressAdapter.notifyDataSetChanged()
-        })
-        viewModel.completedTaskListResponse.observe(this, Observer {
-            if (viewModel.completedPage==0){
-                taskListCompleted.clear()
-            }
-            taskListCompleted.addAll(it)
-            completedAdapter.updateList(taskListCompleted)
-            completedAdapter.notifyDataSetChanged()
-        })
+        viewModel.isLastPageOfCompleted = false
+        viewModel.isLastPageOfPending = false
 
-        Log.d("sachintask", "Loading Task")
         viewModel.getPendingUserTask()
         viewModel.getCompletedUserTask()
+
 
     }
 
@@ -81,6 +89,7 @@ class TaskFragment : Fragment(), OnTaskSelected {
     ): View {
         if (_binding == null) {
             _binding = FragmentTaskBinding.inflate(inflater, container, false)
+
             binding.viewModel = viewModel
             binding.progressTaskRecyclerView.layoutManager = LinearLayoutManager(context)
             binding.completedTaskRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -155,27 +164,51 @@ class TaskFragment : Fragment(), OnTaskSelected {
                     viewModel.completedRecyclerViewVisibility.get()?.not()
                 )
             }
+
+
+
         }
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
+       Log.d("sachin","Ondestroy vIEW")
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("sachin","OnDestroy")
 
     }
 
 
     override fun onResume() {
         super.onResume()
-
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.showBottomView()
+        if (Constants.changedSize!=0){
+            resetVariables()
+
+            Constants.changedSize = 0
+        }
     }
 
-    override fun onTaskSelected(taskModel: TaskModel) {
+    override fun onTaskSelected(taskModel: TaskModel , position: Int) {
+        selectedPosition = position
         val action = TaskFragmentDirections.taskFragmentToTaskDetailFragment(taskModel)
         findNavController().navigate(action)
+
     }
+
+
 
 }

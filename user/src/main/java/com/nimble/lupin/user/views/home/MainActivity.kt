@@ -42,14 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        if (FirebaseAuth.getInstance().currentUser == null || sharedPref.getInt(
-                Constants.User_ID,
-                0
-            ) == 0
-        ) {
-            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-            finish()
-        }
+
 
         setContentView(binding.root)
 

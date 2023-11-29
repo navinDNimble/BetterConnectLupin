@@ -155,7 +155,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -188,7 +188,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -220,7 +220,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -251,7 +251,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -282,7 +282,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -314,7 +314,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -346,7 +346,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -378,7 +378,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
@@ -408,7 +408,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
-                                android:gravity="end"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:visibility="@{viewModel.trainingVisibility ? View.VISIBLE : View.GONE}"
@@ -609,6 +609,36 @@
                                 android:textStyle="bold" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+
+                            >
+
+                            <androidx.appcompat.widget.AppCompatTextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="Date"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+
+                                android:id="@+id/dateIdSelector"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/edit_text_background_black"
+                                android:inputType="text"
+                                android:padding="@dimen/_8sdp"
+                                android:hint="Select Date "
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -639,6 +669,7 @@
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
+
                        <RelativeLayout
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"

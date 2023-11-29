@@ -90,7 +90,7 @@ data class Task(
 }
 
 data class UserTaskModel(
-    val completedUnit: Int,
+    var completedUnit: Int,
     val isTaskComplete: Int,
     val taskId: Int,
     val totalUnits: Int,

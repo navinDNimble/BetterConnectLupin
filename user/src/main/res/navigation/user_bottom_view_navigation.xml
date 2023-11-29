@@ -81,7 +81,17 @@
         android:name="com.nimble.lupin.user.views.home.task.taskUpdate.UpdateTaskFragment"
         android:label="Task Update"
         app:enterAnim="@anim/pull_in_left"
-        app:exitAnim="@anim/push_out_right"
-        />
+        app:exitAnim="@anim/push_out_right">
+
+        <action
+            android:id="@+id/action_taskUpdateFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment"
+            app:popUpTo="@id/taskDetailFragment"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.user.models.TaskModel" />
+        </action>
+    </fragment>
 
 </navigation>

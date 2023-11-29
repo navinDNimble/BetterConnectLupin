@@ -1,5 +1,6 @@
 package com.nimble.lupin.user.views.home.task.taskUpdate
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.api.ApiService
@@ -19,6 +21,9 @@ import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class UpdateTaskFragment : Fragment() {
@@ -26,6 +31,9 @@ class UpdateTaskFragment : Fragment() {
     private var _binding: FragmentUpdateTaskBinding? = null
     private val binding get() = _binding!!
     private var task: TaskModel? = null
+
+    private val calendar = Calendar.getInstance()
+    private lateinit var startDatePickerDialog: DatePickerDialog
 
     private lateinit  var  viewModel : UpdateTaskViewModel
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
@@ -46,10 +54,28 @@ class UpdateTaskFragment : Fragment() {
         binding.taskNameTaskUpdate.text =  task?.task!!.taskName
         binding.dateTaskUpdate.text =  getString(R.string.date_combine_string,task?.task!!.startDate , task?.task!!.endDate)
         binding.activityTaskUpdate.text = getString(R.string.activity_combine_String,task?.task!!.activityName , task?.task!!.subActivityName)
+        startDatePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(year, monthOfYear, dayOfMonth)
+                binding.dateIdSelector.text
+                calendar.set(year, monthOfYear, dayOfMonth)
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val selectedDate: String = sdf.format(calendar.time)
+                binding.dateIdSelector.text = selectedDate
 
+            },
+
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+
+        )
+        startDatePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         binding.imageViewBackButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
+
       return  binding.root
     }
 
@@ -57,8 +83,14 @@ class UpdateTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         visibility()
 
+        binding.dateIdSelector.setOnClickListener {
+           startDatePickerDialog.show()
+        }
         binding.updateDetailsButton.setOnClickListener {
             val taskUpdateModel  = TaskUpdatesModel()
+              taskUpdateModel.taskId = task?.task?.taskId
+              taskUpdateModel.userId = task?.userTask?.userId
+              taskUpdateModel.userTaskId = task?.userTask?.userTaskId
 
             if (viewModel.spinnerVisibility.get() == true)
             {
@@ -205,7 +237,12 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.photoVisibility.get() == true){
 
             }
-
+            if (binding.dateIdSelector.text.isNullOrEmpty()){
+                binding.dateIdSelector.error = "Please Select Date"
+                binding.editTextMeetingWhomId.requestFocus()
+                return@setOnClickListener
+            }
+            taskUpdateModel.update_date = binding.dateIdSelector.text.toString()
             if (viewModel.finding.get() == true){
                 val findings  = binding.editTextFindingsId.text
                 if (findings.isNullOrEmpty()){
@@ -222,6 +259,7 @@ class UpdateTaskFragment : Fragment() {
     }
     private fun updateTask(taskUpdateModel: TaskUpdatesModel) {
         viewModel.progressBarVisibility.set(true)
+        binding.updateDetailsButton.visibility = View.GONE
         apiService.updateUserTaskDetails(taskUpdateModel).enqueue(object :
             Callback<ResponseHandler<TaskUpdatesModel>>{
             override fun onResponse(
@@ -231,11 +269,14 @@ class UpdateTaskFragment : Fragment() {
                 val result = response.body()
                 if (result?.code ==200){
                     showSnackBar(result.message , Color.GREEN)
-                    //Todo  :go to the task details Fragment clearing the backstack
+                   val action =  UpdateTaskFragmentDirections.actionTaskUpdateFragmentToTaskDetailFragment(task!!)
+                    findNavController().navigate(action)
                 }else if (
                     result?.code == 404
                 ){
                     showSnackBar(result.message , Color.RED)
+
+                    binding.updateDetailsButton.visibility = View.VISIBLE
                 }
                 viewModel.progressBarVisibility.set(false)
             }
@@ -243,6 +284,7 @@ class UpdateTaskFragment : Fragment() {
             override fun onFailure(call: Call<ResponseHandler<TaskUpdatesModel>>, t: Throwable) {
                 showSnackBar(t.message.toString() , Color.RED)
                 viewModel.progressBarVisibility.set(false)
+                binding.updateDetailsButton.visibility = View.VISIBLE
             }
 
         })

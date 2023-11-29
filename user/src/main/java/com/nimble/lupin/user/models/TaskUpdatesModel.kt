@@ -9,7 +9,7 @@ data class TaskUpdatesModel(
     var male_count: Int? =null,
     var female_count: Int?= null,
     var demo_count : Int? =null,
-    var event_count: Int? =null ,
+    var event_count: Int? =null,
     var lg_code: Int? = null,
     var wells_count: Int? = null,
     var survey_count: Int? = null,
@@ -26,4 +26,5 @@ data class TaskUpdatesModel(
     var spinnerSelection : String? = null,
 
     var photo: Int? = null,
+    var update_date : String? =  null
 )

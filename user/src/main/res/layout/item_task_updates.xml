@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/corner_radius_10"
     android:paddingHorizontal="@dimen/_5sdp"
+
     android:layout_marginTop="10dp"
     android:layout_marginHorizontal="1dp"
     android:elevation="3dp"
@@ -14,9 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingTop="10dp"
+        android:paddingVertical="10dp"
         android:orientation="vertical"
        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+
+            android:layout_weight="1"
+            tools:text="Male : "
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+
+            />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,6 +38,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:gravity="center"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView1Update"

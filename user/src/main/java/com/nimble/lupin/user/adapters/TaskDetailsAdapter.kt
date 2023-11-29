@@ -1,5 +1,6 @@
 package com.nimble.lupin.user.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,8 +38,12 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
     class ViewHolder(val binding: ItemTaskUpdatesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskUpdatesModel, position: Int) {
+            Log.d("sachin",item.toString())
             var pointer = 1
-
+             if (checkNull(item.update_date)){
+                 binding.textViewDate.visibility =  View.VISIBLE
+                binding.textViewDate.text = "Date :  "+item.update_date
+             }
              if (checkNull(item.male_count)){
                  setTextOnView("Male Count : "+item.male_count.toString() , pointer)
                  pointer++
