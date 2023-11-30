@@ -85,6 +85,7 @@ class UserListFragment : Fragment()  ,OnUserSelected {
                 binding.progressBarUserList.visibility = View.GONE
             }
         })
+
         userListViewModel!!.getUsersList()
     }
 

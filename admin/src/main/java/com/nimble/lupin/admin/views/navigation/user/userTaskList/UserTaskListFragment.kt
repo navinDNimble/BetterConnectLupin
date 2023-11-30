@@ -42,13 +42,8 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
 
         userModel = arguments?.getParcelable("UserDetail")
         viewModel = ViewModelProvider(this)[UserTaskListViewModel::class.java]
-        viewModel.pendingPage =0
-        viewModel.completedPage=0
-        viewModel.isLastPageOfCompleted =false
-        viewModel.isLastPageOfPending = false
 
-        taskListProgress = mutableListOf()
-        taskListCompleted = mutableListOf()
+         resetVariables()
 
         progressAdapter = UserTasksAdapter(taskListProgress, this)
         completedAdapter = UserTasksAdapter(taskListCompleted, this)
@@ -74,6 +69,8 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
         viewModel.getPendingUserTask(userModel!!.userId)
         viewModel.getCompletedUserTask(userModel!!.userId)
 
+
+
     }
 
 
@@ -91,6 +88,10 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
             }
             binding.imageViewBackArrow.setOnClickListener {
                 fragmentManager?.popBackStack()
+            }
+            binding.assigntaskToUser.setOnClickListener {
+                     val action =  UserTaskListFragmentDirections.userListFragmentToAssignTaskFragment(userModel!!)
+                     findNavController().navigate(action)
             }
             binding.progressTaskRecyclerView.layoutManager = LinearLayoutManager(context)
             binding.completedTaskRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -169,12 +170,27 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
         return binding.root
     }
 
+    fun resetVariables() {
+        viewModel.pendingPage =0
+        viewModel.completedPage=0
+        viewModel.isLastPageOfCompleted =false
+        viewModel.isLastPageOfPending = false
 
+        taskListProgress = mutableListOf()
+        taskListCompleted = mutableListOf()
+    }
     override fun onResume() {
         super.onResume()
 
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
+        if (Constants.isChanged){
+            resetVariables()
+            viewModel.getPendingUserTask(userModel!!.userId)
+            viewModel.getCompletedUserTask(userModel!!.userId)
+            Constants.isChanged =false
+
+        }
     }
 
     override fun onUserTaskSelected(userTaskListViewModel: UserTasksListModel) {

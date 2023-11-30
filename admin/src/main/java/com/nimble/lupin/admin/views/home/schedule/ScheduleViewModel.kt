@@ -14,6 +14,7 @@ class ScheduleViewModel : ViewModel() {
     var page =0
     var searchKey = ""
     var isLastPage = false
+    val noTaskAvailableText :MutableLiveData<Boolean> = MutableLiveData()
     var responseError : MutableLiveData<String> = MutableLiveData()
     var loadingProgressBar : MutableLiveData<Boolean> = MutableLiveData()
     val taskListResponse = MutableLiveData<List<TaskModel>>()

@@ -72,4 +72,10 @@
     <string name="pending_task">Pending Task</string>
     <string name="let_s_create_the_task">Let\'s Create The Task</string>
     <string name="task_name">Task Name</string>
+    <string-array name="graph_selector">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+        <!-- Add more items as needed -->
+    </string-array>
 </resources>

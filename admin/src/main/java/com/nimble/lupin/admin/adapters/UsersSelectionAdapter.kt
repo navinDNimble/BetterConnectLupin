@@ -41,7 +41,7 @@ class UsersSelectionAdapter(private var itemList: List<AssignTaskModel> ) : Recy
     }
     private fun removeItemFromSelectedList(userId : Int) {
         selectedUserList.removeIf { it.userId == userId}
-        AssignTaskFragment().selectedItemList.removeIf { it.userId == userId}
+        AssignTaskFragment.selectedItemList.removeIf { it.userId == userId}
     }
 
      fun getSelectedList(): MutableSet<AssignTaskModel> {

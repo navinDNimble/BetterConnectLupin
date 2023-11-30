@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
             android:background="@drawable/icon_back"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@+id/searchViewUserList"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -78,6 +78,7 @@
                     android:layout_marginTop="10dp"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_user_list" />
+
 
                 <ProgressBar
                     android:id="@+id/progressBar_userList"

@@ -3,158 +3,189 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <ScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_back"
+                android:backgroundTint="@color/primaryColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:text="@string/create_user"
+                android:text="Create User Profile"
                 android:textColor="@color/primaryColor"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/firstName_id"
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/primaryColor" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/first_name"
-                android:inputType="text"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
+                android:layout_marginHorizontal="20dp"
+                android:orientation="vertical">
 
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/lastName_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/last_name"
-                android:inputType="text"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/mobileNumber_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/mobile_number"
-                android:inputType="number"
-                android:maxLength="10"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/emailId_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/email_id"
-                android:inputType="textEmailAddress"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/workStation_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/work_station"
-                android:inputType="text"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/post_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/post"
-                android:text="Field Facilitator"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/empIdNumber_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/emp_id_number"
-                android:inputType="number"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/reportAuthority_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/report_authority"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/joiningDate_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/joining_date"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingBottom="@dimen/_3sdp"
-                >
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/createUser_id"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/firstName_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginHorizontal="@dimen/_30sdp"
-                    android:background="@drawable/corner_radius_10"
-                    android:backgroundTint="@color/light_green_300"
-                    android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/create_users"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_16ssp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/first_name"
+                    android:inputType="text"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
 
-                <ProgressBar
-                    android:id="@+id/createUserProgressBar"
-                    android:layout_width="wrap_content"
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/lastName_id"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:elevation="20dp"
-                    android:visibility="gone" />
-            </RelativeLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/last_name"
+                    android:inputType="text"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/mobileNumber_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/mobile_number"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/emailId_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/email_id"
+                    android:inputType="textEmailAddress"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/workStation_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/work_station"
+                    android:inputType="text"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/post_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/post"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Field Facilitator"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/empIdNumber_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/emp_id_number"
+                    android:inputType="number"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/reportAuthority_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/report_authority"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/joiningDate_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/joining_date"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="@dimen/_3sdp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/createUser_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginHorizontal="@dimen/_30sdp"
+                        android:background="@drawable/corner_radius_10"
+                        android:backgroundTint="@color/light_green_300"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:text="@string/create_users"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/createUserProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:elevation="20dp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </FrameLayout>

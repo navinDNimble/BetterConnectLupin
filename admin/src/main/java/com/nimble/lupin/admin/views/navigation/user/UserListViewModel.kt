@@ -16,6 +16,7 @@ class UserListViewModel :ViewModel(){
     var searchKey =""
     var isLastPage = false
     var responseError : MutableLiveData<String> = MutableLiveData()
+
     var loadingProgressBar : MutableLiveData<Boolean> = MutableLiveData()
     val taskListResponse = MutableLiveData<List<UserModel>>()
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)

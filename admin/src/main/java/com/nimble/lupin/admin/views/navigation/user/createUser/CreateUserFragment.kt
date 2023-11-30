@@ -70,7 +70,10 @@ class CreateUserFragment : Fragment() ,OnBottomSheetItemSelected {
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
-
+         datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        binding.backButton.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
 
         binding.createUserId.setOnClickListener() {
 

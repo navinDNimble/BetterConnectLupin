@@ -18,15 +18,29 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical">
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="@string/let_s_allot_the_task"
-                android:textColor="@color/primaryColor"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold" />
+                android:layout_marginTop="15dp">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/backButtonMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icon_back"
+                    android:backgroundTint="@color/primaryColor"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/let_s_allot_the_task"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
@@ -60,16 +74,40 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               >
+               <androidx.appcompat.widget.AppCompatTextView
+                   android:id="@+id/selectFiledFacilitator"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/edit_text_background"
+                   android:padding="@dimen/_10sdp"
+                   android:hint="@string/select_field_facilitator"
+                    android:textColor="@color/black"
+                   android:textSize="@dimen/_12ssp" />
+               <androidx.appcompat.widget.AppCompatEditText
+                   android:id="@+id/editTextUnits"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:minWidth="@dimen/_70sdp"
+                   android:layout_alignParentEnd="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginEnd="@dimen/_5sdp"
+                   android:background="@drawable/edit_text_background"
+                   android:backgroundTint="@color/white"
+                   android:gravity="center"
+                   android:hint="units"
+                   android:inputType="number"
+                   android:padding="5dp"
+                   android:visibility="gone"
+                   />
+           </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/selectFiledFacilitator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:layout_marginTop="5dp"
-                android:hint="@string/select_field_facilitator"
-                android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp" />
+
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -186,10 +224,10 @@
                 android:id="@+id/backButton"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/icon_back"
+                android:background="@drawable/icon_back"
                 app:layout_constraintBottom_toBottomOf="@+id/searchViewUserList"
                 app:layout_constraintEnd_toStartOf="@+id/searchViewUserList"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/black"
                 app:layout_constraintTop_toTopOf="parent" />
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchViewUserList"

@@ -80,7 +80,9 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         binding.taskModeTextView.setOnClickListener {
             taskModeBottomSheet.show()
         }
-
+        binding.backButton.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
         getActivitySubActivityTaskMode()
 
 

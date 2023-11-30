@@ -15,6 +15,7 @@ data class TaskUpdatesModel(
     var survey_count: Int? = null,
     var village_count: Int? = null,
     var training_count: Int? = null,
+    var no_of_farmers: Int? = null,
 
 
     var findings: String? =null,

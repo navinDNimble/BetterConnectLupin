@@ -34,15 +34,6 @@ class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (FirebaseAuth.getInstance().currentUser == null || sharedPref.getInt(
-                Constants.Admin_ID_Key,
-                0
-            ) == 0
-        ) {
-            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-            finish()
-        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Constants.Admin_ID = sharedPref.getInt(Constants.Admin_ID_Key,0)

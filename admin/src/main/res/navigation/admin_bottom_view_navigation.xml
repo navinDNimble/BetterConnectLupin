@@ -159,6 +159,14 @@
                 android:name="TaskDetail"
                 app:argType="com.nimble.lupin.admin.models.TaskModel" />
         </action>
+
+        <action
+            android:id="@+id/userListFragment_to_assignTaskFragment"
+            app:destination="@id/assignTaskFragment">
+            <argument
+                android:name="UserDetail"
+                app:argType="com.nimble.lupin.admin.models.UserModel" />
+        </action>
     </fragment>
 
 </navigation>

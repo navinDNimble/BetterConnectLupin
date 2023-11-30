@@ -13,6 +13,7 @@ class UpdateTaskViewModel : ViewModel() {
     var lgCodeVisibility = ObservableField(false)
     var wellVisibility = ObservableField(false)
     var surveyVisibility = ObservableField(false)
+    var no_of_farmers = ObservableField(false)
     var villagesVisibility = ObservableField(false)
     var trainingVisibility = ObservableField(false)
     var subjectVisibility = ObservableField(false)

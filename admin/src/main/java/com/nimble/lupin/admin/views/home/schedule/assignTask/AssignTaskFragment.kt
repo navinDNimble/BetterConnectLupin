@@ -23,6 +23,7 @@ import com.nimble.lupin.admin.interfaces.OnBottomSheetItemSelected
 import com.nimble.lupin.admin.models.AssignTaskBody
 import com.nimble.lupin.admin.models.AssignTaskModel
 import com.nimble.lupin.admin.models.BottomSheetModel
+import com.nimble.lupin.admin.models.UserModel
 import com.nimble.lupin.admin.utils.BottomSheet
 import com.nimble.lupin.admin.utils.Constants
 import com.nimble.lupin.admin.utils.PaginationScrollListener
@@ -54,9 +55,11 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
     var userCall: Call<ResponseHandler<List<AssignTaskModel>>>? = null
     private val handler = Handler(Looper.getMainLooper())
     private var searchDelayMillis = 500L  // 500 milliseconds
+    companion object{
+        var selectedItemList = mutableSetOf<AssignTaskModel>()
+    }
 
-      public var selectedItemList = mutableSetOf<AssignTaskModel>()
-
+    private   var  userModel  : UserModel? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,12 +67,22 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
 
         binding = FragmentAssignTaskBinding.inflate(inflater, container, false)
+        selectedItemList.clear()
         taskBottomSheet = BottomSheet(mutableListOf(), this, "task", true, requireContext())
+        userModel = arguments?.getParcelable("UserDetail")
+        if (userModel!=null){
+            binding.selectFiledFacilitator.isEnabled = false
+            binding.editTextUnits.visibility =View.VISIBLE
+            binding.selectFiledFacilitator.text = userModel!!.firstName + " " + userModel!!.lastName
+        }
         binding.taskNameTextView.setOnClickListener {
             taskBottomSheet.show()
         }
         binding.selectFiledFacilitator.setOnClickListener {
             changeVisibility(false)
+        }
+        binding.backButtonMain.setOnClickListener {
+            fragmentManager?.popBackStack()
         }
 
         initializeUserSelectListDialog()
@@ -77,22 +90,31 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
     private fun assignTask() {
+
        if (selectedTaskId == 0){
            binding.taskNameTextView.requestFocus()
            binding.taskNameTextView.error = "Please Select a task"
            return
        }
+        if (userModel!=null){
+            val singleUserUnit =  binding.editTextUnits.text
+            if (singleUserUnit.isNullOrEmpty() || singleUserUnit.toString().toInt() ==0){
+                   binding.editTextUnits.requestFocus()
+                   binding.editTextUnits.setError("Enter Units")
 
+                   return
+            }
+            selectedItemList.add(AssignTaskModel(userModel!!.userId,"","" ,singleUserUnit.toString(),true))
+        }
        if (selectedItemList.isEmpty()) {
            binding.selectFiledFacilitator.requestFocus()
            binding.selectFiledFacilitator.error = "Please Select User"
            return
        }
 
-        Log.d("sachin", selectedItemList.toString())
         for (item in selectedItemList) {
             if (item.total_units.isNullOrEmpty()){
-                showSnackBar("Unit Not Assigned to"+item.firstName+" - " + item.lastName,Color.RED)
+                showSnackBar("Unit Not Assigned to "+item.firstName+" - " + item.lastName,Color.RED)
                 return
             }
         }
@@ -112,6 +134,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                         Log.d("sachin", "SUCCESS")
 
                         fragmentManager?.popBackStack()
+                        Constants.isChanged = true
                     }else{
                         showSnackBar(result.message , Color.RED)
                         Log.d("sachin", result.message)
@@ -140,21 +163,32 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
        binding.multiuserSelectionView.visibility = if (setInputDetailVisible) View.GONE else View.VISIBLE
 
    }
+    fun setTextOnFiledFacilitator(){
+        val selectedList = adapter?.getSelectedList()
+        selectedItemList.addAll(selectedList!!)
+        val size = selectedItemList.size.toString()
+        Log.d("sachin",size.toString())
+        if (selectedItemList.size==0){
+            binding.selectFiledFacilitator.text=""
+        }else if (selectedItemList.size==1){
+            binding.selectFiledFacilitator.text= selectedItemList.first().firstName + " "+ selectedItemList.first().lastName
+        }
+        else if (selectedItemList.size>1){
+            binding.selectFiledFacilitator.text= "Multiple User Selected"
+        }
+        changeVisibility(true)
+    }
     private fun initializeUserSelectListDialog() {
         binding.assignTaskButton.setOnClickListener {
             assignTask()
         }
 
         binding.backButton.setOnClickListener {
-            val selectedList = adapter?.getSelectedList()
-            selectedItemList.addAll(selectedList!!)
-            changeVisibility(true)
 
+            setTextOnFiledFacilitator()
         }
         binding.continueButton.setOnClickListener {
-            val selectedList = adapter?.getSelectedList()
-            selectedItemList.addAll(selectedList!!)
-            changeVisibility(true)
+            setTextOnFiledFacilitator()
         }
         binding.searchViewUserList.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -210,7 +244,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
         isLoading = true
         userCall?.cancel()
         userCall = apiService.getAllUserForSelectionList(page, searchKey)
-        userCall?.enqueue(object : retrofit2.Callback<ResponseHandler<List<AssignTaskModel>>> {
+        userCall?.enqueue(object : Callback<ResponseHandler<List<AssignTaskModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<AssignTaskModel>>>,
                 response: Response<ResponseHandler<List<AssignTaskModel>>>

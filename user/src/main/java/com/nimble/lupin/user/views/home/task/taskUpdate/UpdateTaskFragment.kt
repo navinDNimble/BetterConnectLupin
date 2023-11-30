@@ -147,7 +147,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.wellVisibility.get() == true){
                 val wellCount  = binding.wellsId.text
                 if (wellCount.isNullOrEmpty()){
-                    binding.wellsId.error = "Enter a Event Count"
+                    binding.wellsId.error = "Enter a well Count"
                     binding.wellsId.requestFocus()
                     return@setOnClickListener
                 }
@@ -156,7 +156,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.surveyVisibility.get() == true){
                 val surveyCount  = binding.surveyId.text
                 if (surveyCount.isNullOrEmpty()){
-                    binding.surveyId.error = "Enter a Event Count"
+                    binding.surveyId.error = "Enter a Survey Count"
                     binding.surveyId.requestFocus()
                     return@setOnClickListener
                 }
@@ -165,7 +165,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.villagesVisibility.get() == true){
                 val villageCount  = binding.villageId.text
                 if (villageCount.isNullOrEmpty()){
-                    binding.villageId.error = "Enter a Event Count"
+                    binding.villageId.error = "Enter a Village Count"
                     binding.villageId.requestFocus()
                     return@setOnClickListener
                 }
@@ -174,16 +174,25 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.trainingVisibility.get() == true){
                 val trainingCount  = binding.trainingId.text
                 if (trainingCount.isNullOrEmpty()){
-                    binding.trainingId.error = "Enter a Event Count"
+                    binding.trainingId.error = "Enter a training Count"
                     binding.trainingId.requestFocus()
                     return@setOnClickListener
                 }
                 taskUpdateModel.training_count = trainingCount.toString().toInt()
             }
+            if (viewModel.no_of_farmers.get() == true){
+                val noOfFarmers  = binding.noOfFarmersId.text
+                if (noOfFarmers.isNullOrEmpty()){
+                    binding.noOfFarmersId.error = "Enter a No of Farmer Count"
+                    binding.noOfFarmersId.requestFocus()
+                    return@setOnClickListener
+                }
+                taskUpdateModel.no_of_farmers = noOfFarmers.toString().toInt()
+            }
             if (viewModel.finding.get() == true){
                 val findings  = binding.editTextFindingsId.text
                 if (findings.isNullOrEmpty()){
-                    binding.editTextSubjectId.error = "Enter a Event Count"
+                    binding.editTextSubjectId.error = "Enter a findings"
                     binding.editTextSubjectId.requestFocus()
                     return@setOnClickListener
                 }
@@ -192,7 +201,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.subjectVisibility.get() == true){
                 val subject  = binding.editTextSubjectId.text
                 if (subject.isNullOrEmpty()){
-                    binding.editTextSubjectId.error = "Enter a Event Count"
+                    binding.editTextSubjectId.error = "Enter a subject"
                     binding.editTextSubjectId.requestFocus()
                     return@setOnClickListener
                 }
@@ -201,7 +210,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.reasonForVisitVisibility.get() == true){
                 val reasonForVisit  = binding.editTextReasonVisitId.text
                 if (reasonForVisit.isNullOrEmpty()){
-                    binding.editTextReasonVisitId.error = "Enter a Event Count"
+                    binding.editTextReasonVisitId.error = "Enter a reason For Visit "
                     binding.editTextReasonVisitId.requestFocus()
                     return@setOnClickListener
                 }
@@ -210,7 +219,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.farmerNameVisibility.get() == true){
                 val farmerName  = binding.nameOfFarmer.text
                 if (farmerName.isNullOrEmpty()){
-                    binding.nameOfFarmer.error = "Enter a Event Count"
+                    binding.nameOfFarmer.error = "Enter a Farmer Name"
                     binding.nameOfFarmer.requestFocus()
                     return@setOnClickListener
                 }
@@ -219,7 +228,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.reasonVisibility.get() == true){
                 val reason  = binding.editTextReasonId.text
                 if (reason.isNullOrEmpty()){
-                    binding.editTextReasonId.error = "Enter a Event Count"
+                    binding.editTextReasonId.error = "Enter a Reason"
                     binding.editTextReasonId.requestFocus()
                     return@setOnClickListener
                 }
@@ -228,7 +237,7 @@ class UpdateTaskFragment : Fragment() {
             if (viewModel.meetingWithWhomVisibility.get() == true){
                 val meetingWithWhom  = binding.editTextMeetingWhomId.text
                 if (meetingWithWhom.isNullOrEmpty()){
-                    binding.editTextMeetingWhomId.error = "Enter a Event Count"
+                    binding.editTextMeetingWhomId.error = "Enter a meeting with whom"
                     binding.editTextMeetingWhomId.requestFocus()
                     return@setOnClickListener
                 }
@@ -243,15 +252,6 @@ class UpdateTaskFragment : Fragment() {
                 return@setOnClickListener
             }
             taskUpdateModel.update_date = binding.dateIdSelector.text.toString()
-            if (viewModel.finding.get() == true){
-                val findings  = binding.editTextFindingsId.text
-                if (findings.isNullOrEmpty()){
-                    binding.editTextFindingsId.error = "Enter a Event Count"
-                    binding.editTextFindingsId.requestFocus()
-                    return@setOnClickListener
-                }
-                taskUpdateModel.findings = findings.toString()
-            }
 
             updateTask(taskUpdateModel)
         }
@@ -362,8 +362,7 @@ class UpdateTaskFragment : Fragment() {
             10 -> {
                 when (subActivityId) {
                     1, 2, 3 -> {
-                        viewModel.maleCountVisibility.set(true)
-                        viewModel.femaleCountVisibility.set(true)
+                        viewModel.no_of_farmers.set(true)
                         viewModel.lgCodeVisibility.set(true)
                     }
 

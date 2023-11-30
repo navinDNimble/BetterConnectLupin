@@ -12,6 +12,7 @@ class Constants {
         const val adminProfileModel = "ADMIN_PROFILE_MODEL"
         var Admin_ID = 0
         const val PAGE_SIZE = 1
+        var isChanged = false
 
     }
 }

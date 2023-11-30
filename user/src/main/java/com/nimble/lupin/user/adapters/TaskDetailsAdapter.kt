@@ -81,6 +81,10 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
                 setTextOnView("Training Count : " + item.training_count.toString() , pointer)
                 pointer++
             }
+            if (checkNull(item.no_of_farmers)){
+                setTextOnView("No Of Farmers  : " + item.no_of_farmers.toString() , pointer)
+                pointer++
+            }
             if (checkNull(item.spinnerSelection)){
                 setTextOnView("Type : " + item.spinnerSelection.toString() , pointer)
             }
