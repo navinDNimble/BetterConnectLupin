@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,9 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
     private val taskModeList = mutableListOf<BottomSheetModel>()
     private lateinit var startDatePickerDialog: DatePickerDialog
     private lateinit var endDatePickerDialog: DatePickerDialog
-    private val calendar = Calendar.getInstance()
+    private val startCalendar = Calendar.getInstance()
+    private val endCalendar = Calendar.getInstance()
+
 
     private lateinit var dialog: ProgressDialog
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
@@ -91,35 +94,35 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         startDatePickerDialog = DatePickerDialog(
             requireContext(),
             { _, year, monthOfYear, dayOfMonth ->
-                calendar.set(year, monthOfYear, dayOfMonth)
+                startCalendar.set(year, monthOfYear, dayOfMonth)
                 binding.textViewStartDate.text
-                calendar.set(year, monthOfYear, dayOfMonth)
+                startCalendar.set(year, monthOfYear, dayOfMonth)
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val selectedDate: String = sdf.format(calendar.time)
+                val selectedDate: String = sdf.format(startCalendar.time)
                 binding.textViewStartDate.text = selectedDate
                 binding.textViewEndDate.text = null
-                startDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
             },
 
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            startCalendar.get(Calendar.YEAR),
+            startCalendar.get(Calendar.MONTH),
+            startCalendar.get(Calendar.DAY_OF_MONTH)
 
         )
-        startDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
         endDatePickerDialog = DatePickerDialog(
             requireContext(),
             { _, year, monthOfYear, dayOfMonth ->
-                calendar.set(year, monthOfYear, dayOfMonth)
+                endCalendar.set(year, monthOfYear, dayOfMonth)
                 binding.textViewEndDate.text
-                calendar.set(year, monthOfYear, dayOfMonth)
+                endCalendar.set(year, monthOfYear, dayOfMonth)
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val selectedDate: String = sdf.format(calendar.time)
+                val selectedDate: String = sdf.format(endCalendar.time)
                 binding.textViewEndDate.text = selectedDate
             },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            endCalendar.get(Calendar.YEAR),
+            endCalendar.get(Calendar.MONTH),
+            endCalendar.get(Calendar.DAY_OF_MONTH)
         )
         binding.textViewStartDate.setOnClickListener {
             startDatePickerDialog.show()
@@ -129,7 +132,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                 showSnackBar("Please Select Start Date", Color.RED)
                 return@setOnClickListener
             }
-            endDatePickerDialog.datePicker.minDate = calendar.timeInMillis
+            endDatePickerDialog.datePicker.minDate = startCalendar.timeInMillis
             endDatePickerDialog.show()
         }
 
@@ -207,10 +210,12 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
             ) {
                 val result = response.body()
                 if (result?.code == 200) {
+                    Log.d("sachinCreateTask", result?.response.toString())
                     showSnackBar(result.message, Color.GREEN)
                     val action = CreateTaskFragmentDirections.createTaskFragmentToScheduleFragment()
                     findNavController().navigate(action)
                 } else {
+                    Log.d("sachinCreateTask", result?.response.toString())
                     showSnackBar(result?.message.toString(), Color.RED)
                     binding.createTaskButton.visibility = View.VISIBLE
                     binding.createTaskProgressBar.visibility = View.GONE
@@ -236,6 +241,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                 ) {
                     val result = response.body()
                     if (result?.code == 200) {
+                        Log.d("sachinCreateTask", result?.response.toString())
                         result.response.activities.forEach {
                             activityList.add(BottomSheetModel(it.activityId, it.activityName))
                         }
@@ -243,12 +249,13 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                         result.response.taskModes.forEach {
                             taskModeList.add(BottomSheetModel(it.taskModeId, it.taskModeName))
                         }
-
+                        Log.d("sachinCreateTask", result?.response.toString())
                         activityBottomSheet.updateList(activityList)
                         taskModeBottomSheet.updateList(taskModeList)
 
 
                     } else {
+                        Log.d("sachinCreateTask", result?.response.toString())
                         showSnackBar(result?.message.toString(), Color.RED)
 
                     }
@@ -259,6 +266,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                     call: Call<ResponseHandler<TaskCreateResponseModel>>,
                     t: Throwable
                 ) {
+
                     showSnackBar(t.message.toString(), Color.RED)
                     dialog.cancel()
                 }
@@ -273,6 +281,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
         subActivityList.forEach {
             if (it.activityId == activityId) {
+                Log.d("sachinCreateTask", activityId.toString())
                 subActivityBottomModelList.add(
                     BottomSheetModel(
                         it.subActivityId,
@@ -295,6 +304,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         when (type) {
 
             "activity" -> {
+                Log.d("sachinCreateTask", activityId.toString())
                 binding.activityNameTextView.text = bottomSheetItem.title
                 activityId = bottomSheetItem.id
                 filterSubActivityList(activityId)
@@ -304,12 +314,14 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
             }
 
             "subActivity" -> {
+                Log.d("sachinCreateTask", subActivityId.toString())
                 binding.subActivityNameTextView.text = bottomSheetItem.title
                 subActivityId = bottomSheetItem.id
                 subActivityBottomSheet.cancel()
             }
 
             "taskMode" -> {
+                Log.d("sachinCreateTask", taskModeId.toString())
                 binding.taskModeTextView.text = bottomSheetItem.title
                 taskModeId = bottomSheetItem.id
                 taskModeBottomSheet.cancel()

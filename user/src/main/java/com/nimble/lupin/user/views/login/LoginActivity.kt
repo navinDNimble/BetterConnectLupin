@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
        mAuth =FirebaseAuth.getInstance()
+
         binding.sendOtpButton.setOnClickListener {
             val phoneNumber = binding.phoneNumberEditText.text.toString()
             if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length != 10) {
@@ -128,7 +129,8 @@ class LoginActivity : AppCompatActivity() {
                 resendToken = token
                 binding.mobileNumberLayout.visibility = View.GONE
                 binding.verifyOtpLayout.visibility = View.VISIBLE
-                binding.sendOtpButton.visibility = View.VISIBLE
+                binding.sendOtpButton.visibility = View.GONE
+                binding.verifyOtpButton.visibility = View.VISIBLE
                 binding.progressBarMobileNumber.visibility = View.GONE
             }
 
@@ -208,6 +210,7 @@ class LoginActivity : AppCompatActivity() {
             binding.mobileNumberLayout.visibility = View.VISIBLE
             binding.progressBarOtp.visibility = View.GONE
             binding.verifyOtpButton.visibility = View.GONE
+            binding.sendOtpButton.visibility = View.VISIBLE
             return
 
         } else {

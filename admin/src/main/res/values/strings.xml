@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BetterConnect</string>
+    <string name="app_name">Better Cotton</string>
 
     <string name="title_schedule">Schedule</string>
     <string name="title_home">Home</string>
@@ -73,9 +73,7 @@
     <string name="let_s_create_the_task">Let\'s Create The Task</string>
     <string name="task_name">Task Name</string>
     <string-array name="graph_selector">
-        <item>Week</item>
-        <item>Month</item>
-        <item>Year</item>
-        <!-- Add more items as needed -->
+        <item>Farmer Training</item>
+        <item>Farmer Visit</item>
     </string-array>
 </resources>

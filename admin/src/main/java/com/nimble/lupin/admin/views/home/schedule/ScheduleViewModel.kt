@@ -22,7 +22,7 @@ class ScheduleViewModel : ViewModel() {
 
     fun getTaskList(){
         loadingProgressBar.postValue(true)
-        apiService.getTask(page , searchKey).enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
+        apiService.getScheduleTask(page , searchKey).enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,
                 response: Response<ResponseHandler<List<TaskModel>>>
@@ -35,11 +35,12 @@ class ScheduleViewModel : ViewModel() {
                        taskListResponse.postValue(result.response!!)
 
                     } else if(result?.code == 404){
-
+                        Log.d("sachinAdminTASK",result.toString())
                         isLastPage = result.isLastPage
                         responseError.postValue(result.message)
 
                     }else if(result?.code == 409){
+                        Log.d("sachinAdminTASK",result.toString())
                         isLastPage = result.isLastPage
                     }else if(result?.code == 500){
                         responseError.postValue("Error in Loading  Task"+result.message)

@@ -177,7 +177,7 @@ class BottomSheet(
         binding.progressBar.visibility = View.VISIBLE
         isLoading = true
         taskCall?.cancel()
-        taskCall = apiService.getTask(page, searchKey)
+        taskCall = apiService.getTaskToAssign(page, searchKey)
         taskCall?.enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,

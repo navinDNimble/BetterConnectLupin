@@ -129,6 +129,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
             ) {
                 val result = response.body()
                 if (result != null) {
+                    Log.d("sachinAssignTask",result.toString())
                     if (result.code==200){
                         showSnackBar(result.message ,Color.GREEN)
                         Log.d("sachin", "SUCCESS")
@@ -137,9 +138,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                         Constants.isChanged = true
                     }else{
                         showSnackBar(result.message , Color.RED)
-                        Log.d("sachin", result.message)
-
-
+                        Log.d("sachinAssignTask", result.message)
                     }
                 }
 
@@ -148,7 +147,6 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
             override fun onFailure(call: Call<ResponseHandler<AssignTaskBody>>, t: Throwable) {
                 t.message?.let { showSnackBar(it , Color.RED) }
                 Log.d("sachin", t.message.toString())
-
                 binding.assignTaskButton.visibility =View.VISIBLE
                 binding.allotTaskProgress.visibility =View.GONE
             }
@@ -268,6 +266,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                             }
 
                             if (page ==0){
+                                Log.d("sachinMatching",page.toString())
                                 userList.clear()
                                 userList.addAll(responseList)
                                 binding.recyclerViewUser.adapter = null
@@ -326,6 +325,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
         when (type) {
 
             "task" -> {
+                Log.d("sachinMatching",bottomSheetItem.toString())
                 val selectedtask = taskBottomSheet.getAdapterList().find {
                     it.taskId == bottomSheetItem.id
                 }

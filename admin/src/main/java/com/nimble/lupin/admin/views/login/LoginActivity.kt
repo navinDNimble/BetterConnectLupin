@@ -47,6 +47,8 @@ class LoginActivity : AppCompatActivity()  {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mAuth = FirebaseAuth.getInstance()
+
+
         binding.sendOtpButton.setOnClickListener {
             val phoneNumber = binding.phoneNumberEditText.text.toString()
             if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length != 10) {

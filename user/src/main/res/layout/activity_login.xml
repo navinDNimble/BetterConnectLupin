@@ -16,19 +16,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/lupin_logo" />
-
-        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/better_connect"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold" />
+            android:layout_height="@dimen/_120sdp"
+            android:layout_marginHorizontal="@dimen/_30sdp"
+            android:src="@drawable/img_better_cotton" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -50,6 +42,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="@string/enter_mobile_number"
             android:inputType="number"
+            android:imeOptions="actionDone"
             android:padding="15dp"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
@@ -71,6 +64,8 @@
                 android:background="@drawable/corner_radius_10"
                 android:backgroundTint="@color/light_green_300"
                 android:text="@string/send_otp"
+
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -82,6 +77,29 @@
                 android:elevation="20dp"
                 android:visibility="gone" />
         </RelativeLayout>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/lupin_symbol" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/lupin_text" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </LinearLayout>
 
@@ -96,22 +114,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="-16dp">
+       >
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/lupin_logo" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/better_connect"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold" />
+            android:layout_height="@dimen/_120sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_better_cotton" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -133,6 +143,7 @@
             android:inputType="number"
             app:itemCount="6"
             app:itemHeight="50dp"
+            android:imeOptions="actionDone"
             app:itemRadius="10dp"
             app:itemWidth="45dp"
             android:layout_gravity="center"

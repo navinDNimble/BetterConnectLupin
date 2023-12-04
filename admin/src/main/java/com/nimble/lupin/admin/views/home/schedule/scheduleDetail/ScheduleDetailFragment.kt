@@ -110,7 +110,7 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
             ) {
                 val result = response.body()
                 if (response.isSuccessful){
-                    Log.d("sachin",result.toString())
+                    Log.d("sachinScheduleDetails",result.toString())
                     when (result?.code) {
                         200 -> {
                             isLastPage = result.isLastPage
@@ -122,14 +122,17 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
                             taskUserAdapter.notifyDataSetChanged()
                         }
                         404 -> {
+                            Log.d("sachinScheduleDetails",result.toString())
                             isLastPage = result.isLastPage
                             binding.scheduleDetailResultTextView.text = result.message
                         }
                         409 -> {
+                            Log.d("sachinScheduleDetails",result.toString())
                             isLastPage = result.isLastPage
 
                         }
                         500 -> {
+                            Log.d("sachinScheduleDetails",result.toString())
                             showSnackBar("Error in Loading  Task")
                         }
                     }

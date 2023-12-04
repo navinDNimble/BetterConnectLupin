@@ -1,17 +1,32 @@
 package com.nimble.lupin.admin.views.navigation.user.createUser
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.nimble.lupin.admin.R
 import com.nimble.lupin.admin.api.ApiService
 import com.nimble.lupin.admin.api.ResponseHandler
 import com.nimble.lupin.admin.models.BottomSheetModel
@@ -40,16 +55,30 @@ class CreateUserFragment : Fragment() ,OnBottomSheetItemSelected {
     private var postId : Int = 5
     private var reportAuthorityId : Int = 0
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
+    val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (!isGranted) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)){
+                    showRationalDialog()
+                }else{
+                    showSettingDialog()
+                }
+            }
+
+        }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateUserBinding.inflate(inflater, container, false)
 
+        //TODO: api selected roll
         val bottomModelList = mutableListOf(
-//            BottomSheetModel(2, "Project Manager"),
-//            BottomSheetModel(3, "PU Manager"),
-//            BottomSheetModel(4, "Project Coordinator"),
+            BottomSheetModel(2, "Project Manager"),
+            BottomSheetModel(3, "PU Manager"),
+            BottomSheetModel(4, "Project Coordinator"),
             BottomSheetModel(5, "Field Facilitator")
         )
 
@@ -78,12 +107,12 @@ class CreateUserFragment : Fragment() ,OnBottomSheetItemSelected {
         binding.createUserId.setOnClickListener() {
 
 
-            val firstName = binding.firstNameId.text.toString()
-            val lastName = binding.lastNameId.text.toString()
-            val mobileNumber = binding.mobileNumberId.text.toString()
-            val emailId = binding.emailIdId.text.toString()
+            val firstName = binding.firstNameId.text.toString().trim()
+            val lastName = binding.lastNameId.text.toString().trim()
+            val mobileNumber = binding.mobileNumberId.text.toString().trim()
+            val emailId = binding.emailIdId.text.toString().trim()
             val workStation = binding.workStationId.text.toString()
-            val empIdNumber = binding.empIdNumberId.text.toString()
+            val empIdNumber = binding.empIdNumberId.text.toString().trim()
             val joiningDate = binding.joiningDateId.text.toString()
 
 
@@ -142,13 +171,14 @@ class CreateUserFragment : Fragment() ,OnBottomSheetItemSelected {
                     response: Response<ResponseHandler<UserModel>>
                 ) {
                     val result = response.body()
-                    Log.d("sachin", result?.response.toString())
+                    Log.d("sachinCreateUser", result?.response.toString())
                     if (result?.code==200){
                         showSnackBar(result.message,Color.GREEN)
-                        Log.d("sachin", result.toString())
+                        Log.d("sachinCreateUser", result?.response.toString())
                         val action  = CreateUserFragmentDirections.createUserFragmentToNavigationUserList()
                         findNavController().navigate(action)
                     }else if (result?.code==409){
+                        Log.d("sachinCreateUser", result?.response.toString())
                         showSnackBar(result.message,Color.RED)
                     }
                     binding.createUserProgressBar.visibility = View.GONE
@@ -175,6 +205,68 @@ class CreateUserFragment : Fragment() ,OnBottomSheetItemSelected {
         }
         return binding.root
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the API that requires the permission.
+            }
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                requireActivity(), Manifest.permission.CAMERA)
+            -> {
+                showRationalDialog()
+
+            }
+            else -> {
+               requestCameraPermission()
+            }
+        }
+    }
+    private fun requestCameraPermission(){
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+    }
+   private fun  showRationalDialog(){
+       val dialog = Dialog(requireContext());
+       dialog.setContentView(R.layout.dialog_permission)
+       dialog.findViewById<AppCompatTextView>(R.id.message).text = "CAMERA permission IS REQUIRED \n Do you Want To Allow permission"
+       dialog.findViewById<AppCompatButton>(R.id.negativeButton).setOnClickListener{
+           dialog.dismiss()
+           fragmentManager?.popBackStack()
+       }
+       val positiveButton =  dialog.findViewById<AppCompatButton>(R.id.positiveButton)
+       positiveButton.text = "Allow"
+       positiveButton.setOnClickListener{
+           dialog.dismiss()
+          requestCameraPermission()
+       }
+       dialog.show()
+    }
+
+    private fun showSettingDialog(){
+        val dialog = Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_permission)
+        dialog.findViewById<AppCompatTextView>(R.id.message).text = "Allow App access to your camera .\n Tap Settings > Permission ,and turn Camera On"
+        dialog.findViewById<AppCompatButton>(R.id.negativeButton).setOnClickListener{
+            dialog.dismiss()
+            fragmentManager?.popBackStack()
+        }
+        val positiveButton =  dialog.findViewById<AppCompatButton>(R.id.positiveButton)
+        positiveButton.text = "Settings"
+        positiveButton.setOnClickListener{
+            fragmentManager?.popBackStack()
+            dialog.dismiss()
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+            intent.data = uri
+            startActivity(intent)
+        }
+        dialog.show()
     }
 
 

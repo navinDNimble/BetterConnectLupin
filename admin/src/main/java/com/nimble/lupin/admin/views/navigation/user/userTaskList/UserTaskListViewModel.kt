@@ -54,16 +54,18 @@ class UserTaskListViewModel : ViewModel() {
                         pendingTaskTextVisibility.set(false)
                         isLastPageOfPending = result.isLastPage
                     }else if(result?.code == 404){
+                        Log.d("sachinTaskPending", result.toString())
                         // No user Task Available
                         pendingTaskResultTextView.set(result.message)
                         pendingTaskTextVisibility.set(true)
                         isLastPageOfPending = result.isLastPage
                     }else if(result?.code == 409){
-
+                        Log.d("sachinTaskPending", result.toString())
                         //No More Task To Load
                         isLastPageOfPending = result.isLastPage
 
                     }else if(result?.code == 500){
+                        Log.d("sachinTaskPending", result.toString())
                         responseError.postValue("Error in Loading Pending Task"+result.message)
                         pendingTaskResultTextView.set("Error in Loading Pending Task"+result.message)
                         pendingTaskTextVisibility.set(true)
@@ -97,16 +99,19 @@ class UserTaskListViewModel : ViewModel() {
                         completedTaskTextVisibility.set(false)
                         isLastPageOfCompleted = result.isLastPage
                     }else if(result?.code == 404){
+                        Log.d("sachinTaskCompleted", result.toString())
                         // NO user Task Available\
                         completedTaskResultTextView.set(result.message)
                         completedTaskTextVisibility.set(true)
                         isLastPageOfCompleted = result.isLastPage
                     }else if(result?.code == 409){
+                        Log.d("sachinTaskCompleted", result.toString())
                         //No More Task To Load
                         isLastPageOfCompleted = result.isLastPage
                     }else if(result?.code == 404){
 
                     }else if(result?.code == 500){
+                        Log.d("sachinTaskCompleted", result.toString())
                         responseError.postValue("Error in Loading Completed Task "+result.message)
                         completedTaskResultTextView.set("Error in Loading Completed Task"+result.message)
                         pendingTaskTextVisibility.set(true)

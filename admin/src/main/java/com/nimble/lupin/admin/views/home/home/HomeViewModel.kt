@@ -33,6 +33,7 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result?.code == 200) {
+                        Log.d("sachinHome",result.toString())
                         totalTask.set(result.response.total_task.toString())
                         completedTask.set(result.response.completed_task.toString())
                         pendingTask.set(result.response.pending_task.toString())

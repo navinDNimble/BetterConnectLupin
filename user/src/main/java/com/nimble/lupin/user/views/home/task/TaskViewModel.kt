@@ -94,24 +94,27 @@ class TaskViewModel   {
                  if (response.isSuccessful){
                      val result = response.body()
                      Log.d("sachinTaskCompleted", result.toString())
-                     if (result?.code == 200){
-                         completedTaskListResponse.postValue(result.response!!)
-                         completedTaskTextVisibility.set(false)
-                         isLastPageOfCompleted = result.isLastPage
-                     }else if(result?.code == 404){
-                         // NO user Task Available\
-                         completedTaskResultTextView.set(result.message)
-                         completedTaskTextVisibility.set(true)
-                         isLastPageOfCompleted = result.isLastPage
-                     }else if(result?.code == 409){
-                           //No More Task To Load
-                         isLastPageOfCompleted = result.isLastPage
-                     }else if(result?.code == 404){
-
-                     }else if(result?.code == 500){
-                         responseError.postValue("Error in Loading Completed Task "+result.message)
-                         completedTaskResultTextView.set("Error in Loading Completed Task"+result.message)
-                         pendingTaskTextVisibility.set(true)
+                     when (result?.code) {
+                         200 -> {
+                             completedTaskListResponse.postValue(result.response!!)
+                             completedTaskTextVisibility.set(false)
+                             isLastPageOfCompleted = result.isLastPage
+                         }
+                         404 -> {
+                             // NO user Task Available\
+                             completedTaskResultTextView.set(result.message)
+                             completedTaskTextVisibility.set(true)
+                             isLastPageOfCompleted = result.isLastPage
+                         }
+                         409 -> {
+                             //No More Task To Load
+                             isLastPageOfCompleted = result.isLastPage
+                         }
+                         500 -> {
+                             responseError.postValue("Error in Loading Completed Task "+result.message)
+                             completedTaskResultTextView.set("Error in Loading Completed Task"+result.message)
+                             pendingTaskTextVisibility.set(true)
+                         }
                      }
                  }
                  isLoadingCompletedTask.set(false)

@@ -104,10 +104,8 @@ class ScheduleUpdatesFragment : Fragment() {
 
             }
             )
-
-
-
     }
+
     fun showSnackBar(message: String) {
 
         val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)

@@ -40,13 +40,16 @@ class UserListViewModel :ViewModel(){
                             taskListResponse.postValue(result.response!!)
                         }
                         404 -> {
+                            Log.d("sachinAdminTASK", result.toString())
                             isLastPage = result.isLastPage
                             responseError.postValue("No Users Available" + result.message)
                         }
                         409 -> {
+                            Log.d("sachinAdminTASK", result.toString())
                             isLastPage = result.isLastPage
                         }
                         500 -> {
+                            Log.d("sachinAdminTASK", result.toString())
                             responseError.postValue("Error in Loading Users" + result.message)
                         }
                     }

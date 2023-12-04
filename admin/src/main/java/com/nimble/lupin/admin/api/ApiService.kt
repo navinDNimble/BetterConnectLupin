@@ -22,7 +22,13 @@ interface ApiService {
     @GET("admin_task_counts")
     fun getAdminTaskCount(): Call<ResponseHandler<AdminTaskCountModel>>
     @GET("get_all_task")
-    fun getTask(@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
+    fun getAllTask(@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
+
+    @GET("get_task_to_assign")
+    fun getTaskToAssign(@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
+
+    @GET("get_admin_schedule_task")
+    fun getScheduleTask(@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
 
     @GET("get_task_users")
     fun getTaskUsers(@Query("taskId") taskId: Int, @Query("page") page: Int): Call<ResponseHandler<List<TaskUsersModel>>>

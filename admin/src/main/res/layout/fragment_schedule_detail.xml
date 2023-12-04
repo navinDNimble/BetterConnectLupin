@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.home.schedule.scheduleDetail.ScheduleDetailFragment">
 
 
@@ -15,15 +15,16 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_10sdp"
-            android:background="@color/primaryColor">
+            android:background="@color/primaryColor"
+            android:paddingTop="@dimen/_10sdp">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_20sdp"
-                android:background="@drawable/icon_back"/>
+                android:background="@drawable/icon_back" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/sample_id"
@@ -40,20 +41,19 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:background="@color/primaryColor">
+            android:background="@color/primaryColor"
+            android:paddingTop="20dp">
+
             <include
                 android:id="@+id/includedLayout"
                 layout="@layout/item_task"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"/>
+                android:layout_marginHorizontal="@dimen/_20sdp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/samplet"
@@ -72,10 +72,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/samplet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -84,16 +87,16 @@
                     android:id="@+id/scheduleUserRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white"
                     tools:itemCount="5"
-                    tools:listitem="@layout/item_user_allocated_to_task"
-                    />
+                    tools:listitem="@layout/item_user_allocated_to_task" />
+
                 <ProgressBar
+                    android:id="@+id/scheduleDetailProgressBar"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:id="@+id/scheduleDetailProgressBar"
                     android:layout_below="@+id/scheduleUserRecyclerView"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="bottom|center_horizontal" />
@@ -102,15 +105,16 @@
         </ScrollView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/scheduleDetailResultTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="NO USER ALLOCATED TO TASK"
+        android:gravity="center"
         android:textSize="@dimen/_14ssp"
-        android:visibility="gone"
         android:textStyle="bold"
-        android:gravity="center"/>
+        android:visibility="gone"
+        tools:text="NO USER ALLOCATED TO TASK" />
 
 </FrameLayout>

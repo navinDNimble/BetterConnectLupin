@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">user</string>
+    <string name="app_name">Better Cotton</string>
     <string name="title_task">Task</string>
     <string name="title_home">Home</string>
     <string name="title_report">Report</string>
@@ -37,9 +37,7 @@
     <string name="farmers_present_for_training">Farmers Present for Training</string>
     <string name="male_farmers">Male Farmers</string>
     <string-array name="graph_selector">
-        <item>Week</item>
-        <item>Month</item>
-        <item>Year</item>
-        <!-- Add more items as needed -->
+        <item>Farmer Training</item>
+        <item>Farmer Visit</item>
     </string-array>
 </resources>
