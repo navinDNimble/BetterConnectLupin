@@ -1,5 +1,7 @@
 package com.nimble.lupin.user.utils
 
+import com.google.firebase.storage.FirebaseStorage
+
 class Constants {
     companion object {
 
@@ -16,7 +18,7 @@ class Constants {
         const val User_Profile = "USER_PROFILE"
         var userId  :Int = 0
         const val PAGE_SIZE = 1
-
+        val storageRef = FirebaseStorage.getInstance().reference
         var changedSize = 0
     }
 }

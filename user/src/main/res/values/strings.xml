@@ -36,6 +36,7 @@
     <string name="retry">Retry</string>
     <string name="farmers_present_for_training">Farmers Present for Training</string>
     <string name="male_farmers">Male Farmers</string>
+    <string name="update_details">Update Details</string>
     <string-array name="graph_selector">
         <item>Farmer Training</item>
         <item>Farmer Visit</item>

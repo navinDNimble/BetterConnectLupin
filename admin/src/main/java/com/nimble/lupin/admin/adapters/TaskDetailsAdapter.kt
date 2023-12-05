@@ -52,14 +52,7 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
                 setTextOnView("Female Count : "+item.female_count.toString() , pointer)
                 pointer++
             }
-            if (checkNull(item.demo_count)){
-                setTextOnView("Demo Count : " + item.demo_count.toString() , pointer)
-                pointer++
-            }
-            if (checkNull(item.event_count)){
-                setTextOnView("Event Count : " + item.event_count.toString() , pointer)
-                pointer++
-            }
+
             if (checkNull(item.lg_code)){
                 setTextOnView("LG Code : " + item.lg_code.toString() , pointer)
                 pointer++
@@ -77,17 +70,12 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
                 setTextOnView("Village Count : " + item.village_count.toString() , pointer)
                 pointer++
             }
-            if (checkNull(item.training_count)){
-                setTextOnView("Training Count : " + item.training_count.toString() , pointer)
-                pointer++
-            }
+
             if (checkNull(item.no_of_farmers)){
                 setTextOnView("No Of Farmers  : " + item.no_of_farmers.toString() , pointer)
                 pointer++
             }
-            if (checkNull(item.spinnerSelection)){
-                setTextOnView("Type : " + item.spinnerSelection.toString() , pointer)
-            }
+
             if (checkNull(item.findings)){
                 setTextOnView("Findings : " + item.findings.toString() , 5)
             }
