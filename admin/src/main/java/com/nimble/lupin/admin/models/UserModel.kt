@@ -14,6 +14,7 @@ data class UserModel(
     var employeeId: Int,
     var reportAuthority: Int,
     var joiningDate:  String,
+    var profilePhoto :String,
 
     ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -26,6 +27,7 @@ data class UserModel(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
@@ -41,6 +43,7 @@ data class UserModel(
         parcel.writeInt(employeeId)
         parcel.writeInt(reportAuthority)
         parcel.writeString(joiningDate)
+        parcel.writeString(profilePhoto)
     }
 
     override fun describeContents(): Int {

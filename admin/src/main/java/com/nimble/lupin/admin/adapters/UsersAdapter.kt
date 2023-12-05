@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nimble.lupin.admin.databinding.ItemUserListBinding
 import com.nimble.lupin.admin.interfaces.OnUserSelected
 import com.nimble.lupin.admin.models.UserModel
 
-class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSelected: OnUserSelected) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSelected: OnUserSelected ) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val userListItem = ItemUserListBinding.inflate(
@@ -39,7 +40,7 @@ class UsersAdapter(private var itemList: List<UserModel>, private val onUsersSel
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: UserModel, position: Int) {
             binding.textViewMultiUsername.text = item.firstName + " " + item.lastName
-
+            Glide.with(binding.root).load(item.profilePhoto).into(binding.imageViewProfileImage)
         }
     }
     class TaskDiffCallback(private val oldList: List<UserModel>, private val newList: List<UserModel>) : DiffUtil.Callback() {

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -50,12 +50,34 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp">
 
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:orientation="vertical">
+               <androidx.appcompat.widget.LinearLayoutCompat
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <com.nimble.lupin.admin.utils.CircleImageView
+                       android:id="@+id/profileImage"
+                       android:layout_width="@dimen/_55sdp"
+                       android:layout_height="@dimen/_55sdp"
+                       android:src="@color/green_A100"
+                       android:scaleType="centerCrop"
+                    />
 
+                   <androidx.appcompat.widget.AppCompatTextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:layout_marginStart="@dimen/_15sdp"
+                       android:text="Uplaod Profile Picture"
+                       android:textColor="@color/black"
+                       android:textSize="@dimen/_14ssp"
+                       android:textStyle="bold"
+                       />
+               </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/firstName_id"

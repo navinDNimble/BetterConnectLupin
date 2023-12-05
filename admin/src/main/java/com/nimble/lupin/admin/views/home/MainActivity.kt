@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,11 +20,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.nimble.lupin.admin.R
 import com.nimble.lupin.admin.databinding.ActivityMainBinding
+import com.nimble.lupin.admin.utils.CircleImageView
 import com.nimble.lupin.admin.utils.Constants
 import com.nimble.lupin.admin.utils.NetworkChangeListener
 import com.nimble.lupin.admin.views.login.LoginActivity
@@ -44,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         Constants.Admin_ID = sharedPref.getInt(Constants.Admin_ID_Key,0)
         binding.adminNavigationView.getHeaderView(0).findViewById<AppCompatTextView>(R.id.header_userName).text =   sharedPref.getString(Constants.Admin_Username_Key,"")
+       val navigationProfileView =  binding.adminNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.header_imageView)
+        Glide.with(this).load(sharedPref.getString(Constants.Admin_Image_Key,"")).into(navigationProfileView)
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkBroadcaster = NetworkChangeListener(this@MainActivity)
         binding.bottomBarView.setupWithNavController(controller)

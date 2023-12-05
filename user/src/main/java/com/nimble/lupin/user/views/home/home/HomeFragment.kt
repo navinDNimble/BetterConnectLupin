@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -45,6 +46,9 @@ class HomeFragment : Fragment() {
 
          binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.viewModel = homeViewModel
+        Glide.with(this).load(sharedPref.getString(Constants.User_IMAGE,""))
+            .into(binding.userProfileView)
+
         return binding.root
     }
 

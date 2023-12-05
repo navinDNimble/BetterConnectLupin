@@ -19,12 +19,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.databinding.ActivityMainBinding
+import com.nimble.lupin.user.utils.CircleImageView
 import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.utils.NetworkChangeListener
 import com.nimble.lupin.user.views.login.LoginActivity
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         Constants.userId = sharedPref.getInt(Constants.User_ID,0)
 
         binding.userNavigationView.getHeaderView(0).findViewById<AppCompatTextView>(R.id.header_userName).text =   sharedPref.getString(Constants.User_Name,"")
+        val navigationProfileView =  binding.userNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.header_profileView)
+        Glide.with(this).load(sharedPref.getString(Constants.User_IMAGE,"")).into(navigationProfileView)
         val controller = findNavController(R.id.nav_host_fragment_activity_main)
         networkChangeListener = NetworkChangeListener(this@MainActivity)
         bottomView = binding.bottomBarView

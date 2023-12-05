@@ -14,6 +14,7 @@ data class UserProfileModel(
     val employeeId: Int,
     val reportAuthority: Int,
     val joiningDate: String?,
+    val profilePhoto: String?,
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -25,9 +26,9 @@ data class UserProfileModel(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
+        parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(userId)
@@ -40,6 +41,7 @@ data class UserProfileModel(
         parcel.writeInt(employeeId)
         parcel.writeInt(reportAuthority)
         parcel.writeString(joiningDate)
+        parcel.writeString(profilePhoto)
     }
 
     override fun describeContents(): Int {

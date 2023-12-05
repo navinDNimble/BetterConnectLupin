@@ -9,8 +9,8 @@
     android:padding="@dimen/_16sdp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/navigation_admin_profileView"
+    <com.nimble.lupin.admin.utils.CircleImageView
+        android:id="@+id/header_imageView"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/icon_profile"

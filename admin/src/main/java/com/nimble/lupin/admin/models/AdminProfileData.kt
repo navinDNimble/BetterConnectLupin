@@ -11,4 +11,5 @@ data class AdminProfileData(
     val employeeId: Int,
     val reportAuthority: Int,
     val joiningDate: String?,
+    var profilePhoto :String,
 )

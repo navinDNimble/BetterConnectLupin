@@ -168,7 +168,9 @@ class LoginActivity : AppCompatActivity() {
                     val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
                     val sharedPreferences = sharedPref.edit()
                     sharedPreferences.putInt(Constants.User_ID,userProfileModel.userId)
-                    sharedPreferences.putString(Constants.User_Name,userProfileModel.firstName+ " "+userProfileModel.lastName)
+                    sharedPreferences.putString(Constants.User_Name,userProfileModel.firstName+ " "
+                            +userProfileModel.lastName)
+                    sharedPreferences.putString(Constants.User_IMAGE,userProfileModel.profilePhoto)
                     sharedPreferences.putString(Constants.User_Profile,userProfileModel.toString())
                     sharedPreferences.apply()
                     showSnackBar("Log In Success", Color.GREEN)

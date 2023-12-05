@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -38,9 +39,6 @@ class HomeFragment : Fragment() {
     private var homeViewModel: HomeViewModel? = null
 
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
@@ -60,6 +58,8 @@ class HomeFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.viewModel = homeViewModel
+        Glide.with(this).load(sharedPref.getString(Constants.Admin_Image_Key, ""))
+            .into(binding.adminProfileView)
         return binding.root
     }
 

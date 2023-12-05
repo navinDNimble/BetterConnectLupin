@@ -30,7 +30,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:orientation="horizontal">
 
                 <com.nimble.lupin.user.utils.CircleImageView
-                    android:id="@+id/admin_profile_view"
+                    android:id="@+id/user_profile_view"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:src="@drawable/icon_profile" />

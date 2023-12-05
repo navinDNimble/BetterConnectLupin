@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nimble.lupin.admin.databinding.ItemUserAllocatedToTaskBinding
 import com.nimble.lupin.admin.interfaces.OnTaskUserSelected
 
@@ -43,6 +44,7 @@ class TaskUsersAdapter(private var itemList: List<TaskUsersModel> , private val 
         fun bind(item: TaskUsersModel, position: Int) {
             binding.textViewUsername.text = item.user?.firstName + " " + (item.user?.lastName )
             binding.unitsUser.text = item.userTask?.completedUnit.toString() + " / " + item.userTask?.totalUnits.toString()
+            Glide.with(binding.root).load(item.user?.profilePhoto).into(binding.imageViewProfileImage)
         }
     }
     class TaskDiffCallback(private val oldList: List<TaskUsersModel>, private val newList: List<TaskUsersModel>) : DiffUtil.Callback() {

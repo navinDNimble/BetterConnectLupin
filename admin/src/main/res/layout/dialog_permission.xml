@@ -41,8 +41,8 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/corner_radius_10"
                 android:backgroundTint="@android:color/holo_red_dark"
-                android:textColor="@color/white"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 

@@ -179,6 +179,7 @@ class LoginActivity : AppCompatActivity()  {
                     val sharedPreferences = sharedPref.edit()
                     sharedPreferences.putInt(Constants.Admin_ID_Key,adminProfileModel.userId)
                     sharedPreferences.putString(Constants.Admin_Username_Key,adminProfileModel.firstName+ " "+adminProfileModel.lastName)
+                    sharedPreferences.putString(Constants.Admin_Image_Key,adminProfileModel.profilePhoto)
                     sharedPreferences.putString(Constants.adminProfileModel,adminProfileModel.toString())
                     sharedPreferences.apply()
                     showSnackBar("Log In Success", Color.GREEN)

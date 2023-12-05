@@ -57,9 +57,8 @@ class UsersSelectionAdapter(private var itemList: List<AssignTaskModel> ) : Recy
     }
 
     inner class ViewHolder(val binding: ItemMultipleUserSelectionBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root)
 
-    }
     class TaskDiffCallback(private val oldList: List<AssignTaskModel>, private val newList: List<AssignTaskModel>) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldList.size

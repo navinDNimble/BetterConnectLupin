@@ -147,7 +147,7 @@ class ScheduleFragment : Fragment() , OnTaskSelected {
         _binding = null
     }
     private fun showSnackBar(message: String) {
-        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) };
+        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) }
         if (snackBar != null) {
             snackBar.setBackgroundTint(Color.RED)
             snackBar.setTextColor(Color.WHITE)
