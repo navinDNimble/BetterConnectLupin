@@ -13,9 +13,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,12 +29,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.UploadTask
 import com.nimble.lupin.user.R
-import com.nimble.lupin.user.adapters.ImageAdapter
+import com.nimble.lupin.user.adapters.ImageSelectorAdapter
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.api.ResponseHandler
 import com.nimble.lupin.user.databinding.FragmentUpdateTaskBinding
@@ -65,7 +68,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
     private lateinit  var  viewModel : UpdateTaskViewModel
 
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
-    private val imageAdapter :ImageAdapter = ImageAdapter(photoList,this)
+    private val imageAdapter :ImageSelectorAdapter = ImageSelectorAdapter(photoList,this)
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private val settingCameraCode  = 210
@@ -129,6 +132,9 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         visibility()
+
+        binding.photoRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.photoRecyclerView.adapter = imageAdapter
 
         binding.dateIdSelector.setOnClickListener {
            startDatePickerDialog.show()
@@ -329,23 +335,28 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
 
         Tasks.whenAllComplete(uploadTaskList)
             .addOnSuccessListener { taskSnapshots ->
-
                 for ((index, uploadTask) in uploadTaskList.withIndex()) {
                     if (uploadTask.isSuccessful) {
-                        val downloadUrl = (taskSnapshots[index].result as UploadTask.TaskSnapshot).metadata?.reference?.downloadUrl.toString()
-                        imageUrlList.add(downloadUrl)
+                        val storageReference = (taskSnapshots[index].result as UploadTask.TaskSnapshot).metadata?.reference
+                        storageReference?.downloadUrl?.addOnSuccessListener { uri ->
+                            val downloadUrl = uri.toString()
+                            imageUrlList.add(downloadUrl)
+
+                            if (uploadTaskList.size == imageUrlList.size) {
+                                taskUpdateModel.photoList = imageUrlList
+                                taskUpdateModel.photo = 1
+                                updateTask(taskUpdateModel)
+                            }
+                        }?.addOnFailureListener {
+                            // Handle failure to get download URL
+                            showSnackBar("Failed to get download URL: ${it.message}", Color.RED)
+                        }
                     }
-                }
-                if (uploadTaskList.size == imageUrlList.size){
-                    taskUpdateModel.photoList = imageUrlList
-                    taskUpdateModel.photo = 1
-                    updateTask(taskUpdateModel)
                 }
             }
             .addOnFailureListener { e ->
-               showSnackBar("Failed To Upload Images "+e.message.toString(),Color.RED);
+                showSnackBar("Failed To Upload Images ${e.message}", Color.RED)
             }
-
 
     }
 
@@ -705,7 +716,12 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
     }
     fun showSnackBar(message: String , color :Int) {
 
-        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG);
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
         snackBar.setBackgroundTint(color)
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
@@ -719,6 +735,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
         else if (requestCode == 110 &&resultCode == Activity.RESULT_OK ){
            val  selectedImage = data?.extras?.get("data") as Bitmap
             photoList.add(selectedImage)
+            Toast.makeText(context,"image selected", Toast.LENGTH_SHORT).show()
             imageAdapter.notifyItemInserted(photoList.size-1)
 
         }
@@ -743,7 +760,9 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
     }
 
     override fun onImageUnselected(position: Int) {
+        Log.d("sachin",position.toString())
          photoList.removeAt(position)
         imageAdapter.notifyItemRemoved(position)
+        imageAdapter.notifyItemRangeChanged(position, photoList.size)
     }
 }

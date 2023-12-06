@@ -19,7 +19,7 @@ data class TaskUpdatesModel(
     var reason: String? = null,
     var meeting_with_whome: String? = null,
     var name_of_farmer: String? = null,
-    var photo: Int? = null, // is photo available 1 else 0
+    var photo: Int? = 0, // is photo available 1 else 0
     var photoList: List<String>? = null, // List of photo Url
     var update_date : String? =  null
 )

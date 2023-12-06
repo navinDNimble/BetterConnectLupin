@@ -66,7 +66,7 @@ class TaskViewModel   {
                         isLastPageOfPending = result.isLastPage
 
                     }else if(result?.code == 500){
-                           responseError.postValue("Error in Loading Pending Task"+result.message)
+                           responseError.postValue("Error in Loading Pending Task \n "+result.message)
                         pendingTaskResultTextView.set("Error in Loading Pending Task"+result.message)
                         pendingTaskTextVisibility.set(true)
                     }

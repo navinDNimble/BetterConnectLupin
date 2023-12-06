@@ -25,4 +25,7 @@ interface ApiService {
    fun getUserTaskDetails(@Query("userTaskId") userTaskId: Int): Call<ResponseHandler<List<TaskUpdatesModel>>>
    @POST("update_task_details")
    fun updateUserTaskDetails(@Body updatesModel: TaskUpdatesModel): Call<ResponseHandler<TaskUpdatesModel>>
+
+   @GET("get_photos_url")
+   fun getPhotosUrl(@Query("taskUpdateId") taskUpdateId: Int): Call<ResponseHandler<List<String>>>
 }

@@ -1,14 +1,19 @@
 package com.nimble.lupin.user.views.home.task
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.user.adapters.TaskAdapter
 import com.nimble.lupin.user.databinding.FragmentTaskBinding
 import com.nimble.lupin.user.interfaces.OnTaskSelected
@@ -35,15 +40,11 @@ class TaskFragment : Fragment(), OnTaskSelected  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-       resetVariables()
-
+         resetVariables()
         progressAdapter = TaskAdapter(taskListProgress, this)
         completedAdapter = TaskAdapter(taskListCompleted, this)
 
-
         viewModel.pendingTaskListResponse.observe(this, Observer {
-
                 if (viewModel.pendingPage==0){
                     taskListProgress.clear()
                 }
@@ -61,6 +62,9 @@ class TaskFragment : Fragment(), OnTaskSelected  {
                 taskListCompleted.addAll(it)
                 completedAdapter.updateList(taskListCompleted)
                 completedAdapter.notifyDataSetChanged()
+        })
+        viewModel.responseError.observe(this, Observer {
+            showSnackBar(it,Color.RED)
         })
 
 
@@ -164,9 +168,6 @@ class TaskFragment : Fragment(), OnTaskSelected  {
                     viewModel.completedRecyclerViewVisibility.get()?.not()
                 )
             }
-
-
-
         }
 
         return binding.root
@@ -175,7 +176,7 @@ class TaskFragment : Fragment(), OnTaskSelected  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        Log.d("sachinTASKfRAGMENT","ON vIEW cREATEDE vIEW")
     }
     override fun onDestroyView() {
         super.onDestroyView()
@@ -197,7 +198,6 @@ class TaskFragment : Fragment(), OnTaskSelected  {
         mainActivity?.showBottomView()
         if (Constants.changedSize!=0){
             resetVariables()
-
             Constants.changedSize = 0
         }
     }
@@ -208,7 +208,17 @@ class TaskFragment : Fragment(), OnTaskSelected  {
         findNavController().navigate(action)
 
     }
-
+    private fun showSnackBar(message: String, color: Int) {
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
+        snackBar.setBackgroundTint(color)
+        snackBar.setTextColor(Color.WHITE)
+        snackBar.show()
+    }
 
 
 }

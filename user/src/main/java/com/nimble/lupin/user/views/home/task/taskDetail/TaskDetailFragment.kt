@@ -1,20 +1,26 @@
 package com.nimble.lupin.user.views.home.task.taskDetail
 
+import android.app.Dialog
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.user.adapters.TaskDetailsAdapter
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.api.ResponseHandler
 import com.nimble.lupin.user.databinding.FragmentTaskDetailBinding
+import com.nimble.lupin.user.interfaces.OnClickSeePhoto
 import com.nimble.lupin.user.models.TaskModel
 import com.nimble.lupin.user.models.TaskUpdatesModel
 import com.nimble.lupin.user.utils.Constants
@@ -26,19 +32,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class TaskDetailFragment : Fragment() {
+class TaskDetailFragment : Fragment() , OnClickSeePhoto {
 
     private var _binding: FragmentTaskDetailBinding? = null
     private val binding get() = _binding!!
-
     private var task: TaskModel? = null
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding =  FragmentTaskDetailBinding.inflate(layoutInflater)
         task = arguments?.getParcelable("TaskDetail")
-        _binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
+
         binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.task?.taskName
         binding.includedLayout.textViewAssignTaskStartDateIn.text =
             getString(R.string.date_combine_string, task?.task?.startDate, task?.task?.endDate)
@@ -57,13 +61,20 @@ class TaskDetailFragment : Fragment() {
         }
         setUpdateTaskButton()
         binding.updateTaskButton.setOnClickListener {
-           if (task?.userTask!!.completedUnit<task?.userTask!!.totalUnits){
-               val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)
-               findNavController().navigate(action)
-           }else{
-               showSnackBar("Task Is Already Completed")
-           }
+            if (task?.userTask!!.completedUnit<task?.userTask!!.totalUnits){
+                val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)
+                findNavController().navigate(action)
+            }else{
+                showSnackBar("Task Is Already Completed")
+            }
         }
+        getTaskUpdates()
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
         return binding.root
     }
 
@@ -75,7 +86,12 @@ class TaskDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getTaskUpdates()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
     }
     private fun getTaskUpdates() {
         binding.taskDetailProgressBar.visibility = View.VISIBLE
@@ -88,7 +104,7 @@ class TaskDetailFragment : Fragment() {
                     val result = response.body()
                     if (result?.code!! == 200) {
                         val resultList = result.response
-                        val taskDetailsAdapter = TaskDetailsAdapter(resultList)
+                        val taskDetailsAdapter = TaskDetailsAdapter(resultList , this@TaskDetailFragment)
                         binding.taskDetailRecyclerView.layoutManager = LinearLayoutManager(context)
                         binding.taskDetailRecyclerView.adapter = taskDetailsAdapter
 
@@ -130,7 +146,12 @@ class TaskDetailFragment : Fragment() {
     }
     fun showSnackBar(message: String) {
 
-        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG);
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
         snackBar.setBackgroundTint(Color.RED)
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
@@ -141,4 +162,16 @@ class TaskDetailFragment : Fragment() {
         mainActivity?.hideBottomView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("sachin","onDestroy() task Deatail")
+        _binding = null
+    }
+
+    override fun onClickSeePhoto(taskUpdateId: Int) {
+
+        val action = TaskDetailFragmentDirections.taskDetailFragmentToImageDetailFragment(taskUpdateId)
+        findNavController().navigate(action)
+
+    }
 }

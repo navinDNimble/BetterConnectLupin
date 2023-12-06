@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/imageviewId"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/_70sdp"
     android:layout_height="@dimen/_100sdp"
-    android:padding="@dimen/_5sdp"
-    android:background="@drawable/edit_text_background_black">
-</androidx.appcompat.widget.AppCompatImageView>
+    android:layout_marginStart="@dimen/_10sdp"
+    >
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageviewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/unselectImage"
+        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_cancel"
+        android:layout_gravity="end"
+        />
+
+</androidx.cardview.widget.CardView>

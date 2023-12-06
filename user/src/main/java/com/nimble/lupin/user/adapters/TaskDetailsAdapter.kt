@@ -1,5 +1,6 @@
 package com.nimble.lupin.user.adapters
 
+import android.app.Dialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 import com.nimble.lupin.user.databinding.ItemTaskUpdatesBinding
+import com.nimble.lupin.user.interfaces.OnClickSeePhoto
 import com.nimble.lupin.user.models.TaskUpdatesModel
 
-class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : RecyclerView.Adapter<TaskDetailsAdapter.ViewHolder>() {
+class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel> , private var  onClickSeePhoto: OnClickSeePhoto) : RecyclerView.Adapter<TaskDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val adapterItemMedicineBinding = ItemTaskUpdatesBinding.inflate(
@@ -26,16 +28,12 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
 
     }
 
-    fun updateList(newList: List<TaskUpdatesModel>) {
-        val diffResult = DiffUtil.calculateDiff(TaskDiffCallback(itemList, newList))
-        itemList = newList
-        diffResult.dispatchUpdatesTo(this)
-    }
+
     override fun getItemCount(): Int {
         return itemList.size
     }
 
-    class ViewHolder(val binding: ItemTaskUpdatesBinding) :
+    inner class ViewHolder(val binding: ItemTaskUpdatesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskUpdatesModel, position: Int) {
             Log.d("sachin",item.toString())
@@ -94,9 +92,13 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
             if (checkNull(item.name_of_farmer)){
                 setTextOnView("Name With Farmer : " + item.reason.toString() , 5)
             }
+            if (item.photo ==1){
+                binding.seePhotoId.visibility =View.VISIBLE
+                binding.seePhotoId.setOnClickListener {
+                   onClickSeePhoto.onClickSeePhoto(item.taskUpdateId!!)
+                }
+            }
 
-
-            //TODO :pHOTO SELECTING IS REMAINING
 
         }
 
@@ -137,23 +139,6 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
                 }
             }
 
-        }
-    }
-    class TaskDiffCallback(private val oldList: List<TaskUpdatesModel>, private val newList: List<TaskUpdatesModel>) : DiffUtil.Callback() {
-        override fun getOldListSize(): Int {
-            return oldList.size
-        }
-
-        override fun getNewListSize(): Int {
-            return newList.size
-        }
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].taskUpdateId == newList[newItemPosition].taskUpdateId
-        }
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
         }
     }
 }
