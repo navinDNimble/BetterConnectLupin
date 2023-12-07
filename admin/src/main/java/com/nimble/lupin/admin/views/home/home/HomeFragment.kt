@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -43,6 +44,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Toast.makeText(context,"Called HomeFragment",Toast.LENGTH_LONG).show()
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         homeViewModel!!.responseError.observe(this) {
             showSnackBar(it)

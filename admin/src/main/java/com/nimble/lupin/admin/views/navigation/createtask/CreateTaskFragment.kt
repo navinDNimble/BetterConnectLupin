@@ -51,7 +51,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
     private val endCalendar = Calendar.getInstance()
 
 
-    private lateinit var dialog: ProgressDialog
+
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -135,9 +135,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
             createTask()
         }
 
-        dialog = ProgressDialog(context)
-        dialog.setMessage("Loading Activity and SubActivity") // Set the message for the dialog
-        dialog.setCanceledOnTouchOutside(false)
+
 
 
         getActivitySubActivityTaskMode()
@@ -232,7 +230,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
     private fun getActivitySubActivityTaskMode() {
-        dialog.show()
+
         apiService.getActivitySubActivityTaskMode()
             .enqueue(object : Callback<ResponseHandler<TaskCreateResponseModel>> {
                 override fun onResponse(
@@ -241,7 +239,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                 ) {
                     val result = response.body()
                     if (result?.code == 200) {
-                        Log.d("sachinCreateTask", result?.response.toString())
+                        Log.d("sachinCreateTask", result.response.toString())
                         result.response.activities.forEach {
                             activityList.add(BottomSheetModel(it.activityId, it.activityName))
                         }
@@ -249,7 +247,6 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                         result.response.taskModes.forEach {
                             taskModeList.add(BottomSheetModel(it.taskModeId, it.taskModeName))
                         }
-                        Log.d("sachinCreateTask", result?.response.toString())
                         activityBottomSheet.updateList(activityList)
                         taskModeBottomSheet.updateList(taskModeList)
 
@@ -259,7 +256,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                         showSnackBar(result?.message.toString(), Color.RED)
 
                     }
-                    dialog.cancel()
+
                 }
 
                 override fun onFailure(
@@ -268,7 +265,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
                 ) {
 
                     showSnackBar(t.message.toString(), Color.RED)
-                    dialog.cancel()
+
                 }
 
             })

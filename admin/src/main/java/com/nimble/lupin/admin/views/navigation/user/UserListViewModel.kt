@@ -11,7 +11,7 @@ import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Response
 
-class UserListViewModel :ViewModel(){
+class UserListViewModel : ViewModel(){
     var page =0
     var searchKey =""
     var isLastPage = false

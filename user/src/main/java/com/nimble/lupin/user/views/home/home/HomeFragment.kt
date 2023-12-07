@@ -78,9 +78,6 @@ class HomeFragment : Fragment() {
         binding.barChartView.xAxis.setDrawGridLines(false)
         binding.barChartView.axisLeft.setDrawGridLines(false)
         binding.barChartView.description.text = ""
-
-// Set time labels on the x-axis
-
         binding.barChartView.invalidate()
     }
 
