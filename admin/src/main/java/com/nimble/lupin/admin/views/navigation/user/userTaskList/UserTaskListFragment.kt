@@ -68,8 +68,92 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
         Log.d("sachintask", "Loading Task")
         viewModel.getPendingUserTask(userModel!!.userId)
         viewModel.getCompletedUserTask(userModel!!.userId)
+        _binding = FragmentUserTaskListBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
+        binding.textViewUserName.text = userModel?.firstName+" " + userModel?.lastName
+        binding.textViewUserPost.text = when (userModel?.post) {
+            1 -> "Field Facilitator"
+            else -> "Unknown Post"
+        }
+        binding.imageViewBackArrow.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
+        binding.assigntaskToUser.setOnClickListener {
+            val action =  UserTaskListFragmentDirections.userListFragmentToAssignTaskFragment(userModel!!)
+            findNavController().navigate(action)
+        }
+        binding.progressTaskRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.completedTaskRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.progressTaskRecyclerView.adapter = progressAdapter
+        binding.completedTaskRecyclerView.adapter = completedAdapter
 
+        progressPaginationScrollListener = object :
+            PaginationScrollListener(binding.progressTaskRecyclerView.layoutManager as LinearLayoutManager) {
 
+            override fun isLastPage(): Boolean {
+                return viewModel.isLastPageOfPending
+            }
+
+            override fun isLoading(): Boolean {
+                return viewModel.LoadingPendingTask.get()!!
+            }
+
+            override fun loadMoreItems() {
+
+                if (!viewModel.isLastPageOfPending) {
+                    viewModel.pendingPage += Constants.PAGE_SIZE
+                    viewModel.getPendingUserTask(userModel!!.userId)
+                }
+            }
+        }
+        progressPaginationScrollListener.let { progressPaginationScrollListener ->
+            binding.progressTaskRecyclerView.addOnScrollListener(
+                progressPaginationScrollListener
+            )
+        }
+
+        completedPaginationScrollListener = object :
+            PaginationScrollListener(binding.completedTaskRecyclerView.layoutManager as LinearLayoutManager) {
+
+            override fun isLastPage(): Boolean {
+                return viewModel.isLastPageOfCompleted
+            }
+
+            override fun isLoading(): Boolean {
+                return viewModel.isLoadingCompletedTask.get()!!
+            }
+
+            override fun loadMoreItems() {
+                if (!viewModel.isLastPageOfCompleted) {
+                    viewModel.completedPage += Constants.PAGE_SIZE
+                    viewModel.getCompletedUserTask(userModel!!.userId)
+                }
+
+            }
+        }
+        completedPaginationScrollListener.let { completedPaginationScrollListener ->
+            binding.completedTaskRecyclerView.addOnScrollListener(
+                completedPaginationScrollListener
+            )
+        }
+
+        binding.pendingTaskView.setOnClickListener {
+            if (viewModel.completedRecyclerViewVisibility.get() == true) {
+                viewModel.completedRecyclerViewVisibility.set(false)
+            }
+
+            viewModel.pendingRecyclerViewVisibility.set(
+                viewModel.pendingRecyclerViewVisibility.get()?.not()
+            )
+        }
+        binding.completedTaskView.setOnClickListener {
+            if (viewModel.pendingRecyclerViewVisibility.get() == true) {
+                viewModel.pendingRecyclerViewVisibility.set(false)
+            }
+            viewModel.completedRecyclerViewVisibility.set(
+                viewModel.completedRecyclerViewVisibility.get()?.not()
+            )
+        }
 
     }
 
@@ -78,94 +162,6 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        if (_binding == null) {
-            _binding = FragmentUserTaskListBinding.inflate(inflater, container, false)
-            binding.viewModel = viewModel
-            binding.textViewUserName.text = userModel?.firstName+" " + userModel?.lastName
-            binding.textViewUserPost.text = when (userModel?.post) {
-                1 -> "Field Facilitator"
-                else -> "Unknown Post"
-            }
-            binding.imageViewBackArrow.setOnClickListener {
-                fragmentManager?.popBackStack()
-            }
-            binding.assigntaskToUser.setOnClickListener {
-                     val action =  UserTaskListFragmentDirections.userListFragmentToAssignTaskFragment(userModel!!)
-                     findNavController().navigate(action)
-            }
-            binding.progressTaskRecyclerView.layoutManager = LinearLayoutManager(context)
-            binding.completedTaskRecyclerView.layoutManager = LinearLayoutManager(context)
-            binding.progressTaskRecyclerView.adapter = progressAdapter
-            binding.completedTaskRecyclerView.adapter = completedAdapter
-
-            progressPaginationScrollListener = object :
-                PaginationScrollListener(binding.progressTaskRecyclerView.layoutManager as LinearLayoutManager) {
-
-                override fun isLastPage(): Boolean {
-                    return viewModel.isLastPageOfPending
-                }
-
-                override fun isLoading(): Boolean {
-                    return viewModel.LoadingPendingTask.get()!!
-                }
-
-                override fun loadMoreItems() {
-
-                    if (!viewModel.isLastPageOfPending) {
-                        viewModel.pendingPage += Constants.PAGE_SIZE
-                        viewModel.getPendingUserTask(userModel!!.userId)
-                    }
-                }
-            }
-            progressPaginationScrollListener.let { progressPaginationScrollListener ->
-                binding.progressTaskRecyclerView.addOnScrollListener(
-                    progressPaginationScrollListener
-                )
-            }
-
-            completedPaginationScrollListener = object :
-                PaginationScrollListener(binding.completedTaskRecyclerView.layoutManager as LinearLayoutManager) {
-
-                override fun isLastPage(): Boolean {
-                    return viewModel.isLastPageOfCompleted
-                }
-
-                override fun isLoading(): Boolean {
-                    return viewModel.isLoadingCompletedTask.get()!!
-                }
-
-                override fun loadMoreItems() {
-                    if (!viewModel.isLastPageOfCompleted) {
-                        viewModel.completedPage += Constants.PAGE_SIZE
-                        viewModel.getCompletedUserTask(userModel!!.userId)
-                    }
-
-                }
-            }
-            completedPaginationScrollListener.let { completedPaginationScrollListener ->
-                binding.completedTaskRecyclerView.addOnScrollListener(
-                    completedPaginationScrollListener
-                )
-            }
-
-            binding.pendingTaskView.setOnClickListener {
-                if (viewModel.completedRecyclerViewVisibility.get() == true) {
-                    viewModel.completedRecyclerViewVisibility.set(false)
-                }
-
-                viewModel.pendingRecyclerViewVisibility.set(
-                    viewModel.pendingRecyclerViewVisibility.get()?.not()
-                )
-            }
-            binding.completedTaskView.setOnClickListener {
-                if (viewModel.pendingRecyclerViewVisibility.get() == true) {
-                    viewModel.pendingRecyclerViewVisibility.set(false)
-                }
-                viewModel.completedRecyclerViewVisibility.set(
-                    viewModel.completedRecyclerViewVisibility.get()?.not()
-                )
-            }
-        }
 
         return binding.root
     }

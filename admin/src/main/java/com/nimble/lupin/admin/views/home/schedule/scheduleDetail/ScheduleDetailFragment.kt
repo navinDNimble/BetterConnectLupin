@@ -3,9 +3,11 @@ package com.nimble.lupin.admin.views.home.schedule.scheduleDetail
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,16 +49,7 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
 
         taskUserAdapter = TaskUsersAdapter(taskUsersList ,this )
 
-    }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-
-        _binding = FragmentScheduleDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentScheduleDetailBinding.inflate(layoutInflater)
 
         binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
         binding.includedLayout.textViewAssignTaskStartDateIn.text =   getString(R.string.date_combine_string, task?.startDate, task?.endDate)
@@ -69,12 +62,6 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
         binding.scheduleUserRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.scheduleUserRecyclerView.adapter = taskUserAdapter
 
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         paginationScrollListener = object : PaginationScrollListener(binding.scheduleUserRecyclerView.layoutManager as LinearLayoutManager) {
 
             override fun isLastPage(): Boolean {
@@ -99,6 +86,24 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
             )
         }
         getTaskUsers()
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+
+
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
     private fun getTaskUsers() {
         binding.scheduleDetailProgressBar.visibility = View.VISIBLE
@@ -160,12 +165,15 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
         mainActivity?.hideBottomView()
     }
     private fun showSnackBar(message: String) {
-        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) };
-        if (snackBar != null) {
-            snackBar.setBackgroundTint(Color.RED)
-            snackBar.setTextColor(Color.WHITE)
-            snackBar.show()
-        }
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
+        snackBar.setBackgroundTint(Color.RED)
+        snackBar.setTextColor(Color.WHITE)
+        snackBar.show()
     }
 
 

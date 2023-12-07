@@ -74,7 +74,7 @@ class BottomSheet(
                         page += Constants.PAGE_SIZE
                         when (type) {
                             "authority" -> {
-                                getUsersList()
+                                getAuthorityList()
                             }
                             "task" -> {
                                 getTasksList()
@@ -93,7 +93,7 @@ class BottomSheet(
             when (type) {
 
                 "authority" -> {
-                    getUsersList()
+                    getAuthorityList()
                 }
                 "task" -> {
                     Log.d("sachin","getTaskList Called")
@@ -114,11 +114,11 @@ class BottomSheet(
        adapter.notifyDataSetChanged()
    }
 
-    fun getUsersList() {
+    fun getAuthorityList() {
         binding.progressBar.visibility = View.VISIBLE
         isLoading = true
         userCall?.cancel()
-        userCall = apiService.getAllUserList(page, "")
+        userCall = apiService.getAllAuthority()
         userCall?.enqueue(object : retrofit2.Callback<ResponseHandler<List<UserModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<UserModel>>>,
@@ -135,13 +135,12 @@ class BottomSheet(
                                 list.add(
                                     BottomSheetModel(
                                         it.userId,
-                                        it.firstName + " " + it.lastName
+                                        it.firstName + " " + it.lastName + " -" + it.workStation
                                     )
                                 )
                             }
                             adapter.notifyDataSetChanged()
                         }
-
                         404 -> {
                             isLastPage = result.isLastPage
                             showSnackBar("No Users Available" + result.message)
@@ -154,7 +153,6 @@ class BottomSheet(
 
                         500 -> {
                             showSnackBar("Error in Loading Users" + result.message)
-
                         }
                     }
                 }

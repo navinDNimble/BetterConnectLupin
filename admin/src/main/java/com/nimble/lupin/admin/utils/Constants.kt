@@ -4,9 +4,9 @@ import com.google.firebase.storage.FirebaseStorage
 
 class Constants {
     companion object {
-        const val  serverIpAddress = "3.80.184.59" // Replace with your server's IP address
-      //  const val  serverIpAddress = "10.0.2.2" //Testing local Ip Address
-        const val  serverPort = 5000 // Replace with your server's port
+      //  const val  serverIpAddress = "3.80.184.59" // Replace with your server's IP address
+        private const val  serverIpAddress = "10.0.2.2" //Testing local Ip Address
+        private const val  serverPort = 5000 // Replace with your server's port
         const val BASE_URL = "http://$serverIpAddress:$serverPort"
         const val SHARED_PREF_KEY = "USER_KEY"
         const val Admin_ID_Key = "ADMIN_ID"

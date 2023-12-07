@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-      android:maxHeight="@dimen/_400sdp"
+    android:maxHeight="@dimen/_400sdp"
+    android:layout_marginHorizontal="@dimen/_20sdp"
     >
     <androidx.appcompat.widget.AppCompatImageView
 
@@ -15,7 +16,7 @@
         android:padding="@dimen/_5sdp"
         android:scaleType="centerCrop"
         android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/edit_text_background_black"
+        android:background="@drawable/edit_text_black"
         />
     <ProgressBar
         android:id="@+id/progressBar_id"

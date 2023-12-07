@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nimble.lupin.admin.databinding.ItemTaskUpdatesBinding
+import com.nimble.lupin.admin.interfaces.OnClickSeePhoto
 import com.nimble.lupin.admin.models.TaskUpdatesModel
 
 
-class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : RecyclerView.Adapter<TaskDetailsAdapter.ViewHolder>() {
+class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel> , private var  onClickSeePhoto: OnClickSeePhoto) : RecyclerView.Adapter<TaskDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val adapterItemMedicineBinding = ItemTaskUpdatesBinding.inflate(
@@ -34,7 +35,7 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
         return itemList.size
     }
 
-    class ViewHolder(val binding: ItemTaskUpdatesBinding) :
+   inner class ViewHolder(val binding: ItemTaskUpdatesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskUpdatesModel, position: Int) {
             var pointer = 1
@@ -94,9 +95,12 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel>) : Recycle
             if (checkNull(item.name_of_farmer)){
                 setTextOnView("Name With Farmer : " + item.reason.toString() , 5)
             }
-
-
-            //TODO :pHOTO SELECTING IS REMAINING
+            if (item.photo ==1){
+                binding.seePhotoId.visibility =View.VISIBLE
+                binding.seePhotoId.setOnClickListener {
+                    onClickSeePhoto.onClickSeePhoto(item.taskUpdateId!!)
+                }
+            }
 
         }
 

@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -199,11 +201,14 @@ class LoginActivity : AppCompatActivity()  {
     }
     fun showSnackBar(message: String , color :Int){
         val rootView: View = findViewById(android.R.id.content)
-        val snackBar =  Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
         snackBar.setBackgroundTint(color)
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
-
 
     }
     @Deprecated("Deprecated in Java")

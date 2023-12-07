@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -147,12 +149,15 @@ class ScheduleFragment : Fragment() , OnTaskSelected {
         _binding = null
     }
     private fun showSnackBar(message: String) {
-        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) }
-        if (snackBar != null) {
-            snackBar.setBackgroundTint(Color.RED)
-            snackBar.setTextColor(Color.WHITE)
-            snackBar.show()
-        }
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
+        snackBar.setBackgroundTint(Color.RED)
+        snackBar.setTextColor(Color.WHITE)
+        snackBar.show()
 
     }
     override fun onStop() {

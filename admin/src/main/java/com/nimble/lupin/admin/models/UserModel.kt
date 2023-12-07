@@ -11,7 +11,7 @@ data class UserModel(
     var emailId: String,
     var workStation:  String,
     var post: Int,
-    var employeeId: Int,
+    var employeeId: String,
     var reportAuthority: Int,
     var joiningDate:  String,
     var profilePhoto :String,
@@ -25,12 +25,11 @@ data class UserModel(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
-        parcel.readInt(),
+        parcel.readString()!!,
         parcel.readInt(),
         parcel.readString()!!,
         parcel.readString()!!
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(userId)
@@ -40,7 +39,7 @@ data class UserModel(
         parcel.writeString(emailId)
         parcel.writeString(workStation)
         parcel.writeInt(post)
-        parcel.writeInt(employeeId)
+        parcel.writeString(employeeId)
         parcel.writeInt(reportAuthority)
         parcel.writeString(joiningDate)
         parcel.writeString(profilePhoto)

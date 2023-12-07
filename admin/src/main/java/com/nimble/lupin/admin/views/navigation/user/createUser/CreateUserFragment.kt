@@ -15,9 +15,11 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.*
@@ -101,12 +103,17 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateUserBinding.inflate(inflater, container, false)
+        return binding.root
 
-        //TODO: api selected roll
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val bottomModelList = mutableListOf(
-            BottomSheetModel(2, "Project Manager"),
+           /* BottomSheetModel(2, "Project Manager"),
             BottomSheetModel(3, "PU Manager"),
-            BottomSheetModel(4, "Project Coordinator"),
+            BottomSheetModel(4, "Project Coordinator"),*/
             BottomSheetModel(5, "Field Facilitator")
         )
 
@@ -133,6 +140,36 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
             fragmentManager?.popBackStack()
         }
 
+
+        binding.joiningDateId.setOnClickListener() {
+            datePickerDialog.show()
+        }
+        binding.postId.setOnClickListener {
+            postBottomSheet.show()
+        }
+        binding.reportAuthorityId.setOnClickListener {
+            reportAuthorityBottomSheet.show()
+        }
+
+        val selectorDialog = BottomSheetDialog(requireContext())
+        selectorDialog.setContentView(R.layout.dialog_image_selector)
+        selectorDialog.findViewById<AppCompatImageView>(R.id.camera)?.setOnClickListener {
+            selectorDialog.cancel()
+            checkCameraPermission()
+
+        }
+        selectorDialog.findViewById<AppCompatImageView>(R.id.gallery)?.setOnClickListener {
+            selectorDialog.cancel()
+            val i = Intent()
+            i.type = "image/*"
+            i.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(i, "Select Picture"), 111)
+
+        }
+        binding.profileImage.setOnClickListener {
+            selectorDialog.show()
+        }
+
         binding.createUserId.setOnClickListener() {
 
 
@@ -140,7 +177,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
             val lastName = binding.lastNameId.text.toString().trim()
             val mobileNumber = binding.mobileNumberId.text.toString().trim()
             val emailId = binding.emailIdId.text.toString().trim()
-            val workStation = binding.workStationId.text.toString()
+//            val workStation = binding.workStationId.text.toString()
             val empIdNumber = binding.empIdNumberId.text.toString().trim()
             val joiningDate = binding.joiningDateId.text.toString()
 
@@ -175,11 +212,11 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 binding.emailIdId.requestFocus()
                 return@setOnClickListener
             }
-            if (isEmpty(workStation)) {
-                binding.workStationId.error = "WorkStation Should Not Be Empty."
-                binding.workStationId.requestFocus()
-                return@setOnClickListener
-            }
+//            if (isEmpty(workStation)) {
+//                binding.workStationId.error = "WorkStation Should Not Be Empty."
+//                binding.workStationId.requestFocus()
+//                return@setOnClickListener
+//            }
 
             if (isEmpty(empIdNumber)) {
                 binding.empIdNumberId.error = "Emp Id Number Should Not Be Empty."
@@ -191,6 +228,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 binding.reportAuthorityId.requestFocus()
                 return@setOnClickListener
             }
+            val workStation = binding.reportAuthorityId.text.toString().substringAfter("-").trim()
             if (isEmpty(joiningDate)) {
                 binding.joiningDateId.error = "Joining Date  Should Not Be Empty."
                 binding.joiningDateId.requestFocus()
@@ -222,7 +260,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                         emailId,
                         workStation,
                         postId,
-                        empIdNumber.toInt(),
+                        empIdNumber,
                         reportAuthorityId,
                         joiningDate,
                         imageUrl
@@ -234,15 +272,15 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                             response: Response<ResponseHandler<UserModel>>
                         ) {
                             val result = response.body()
-                            Log.d("sachinCreateUser", result?.response.toString())
+                            Log.d("sachinCreateUser", result?.message.toString())
                             if (result?.code == 200) {
                                 showSnackBar(result.message, Color.GREEN)
-                                Log.d("sachinCreateUser", result.response.toString())
+                                Log.d("sachinCreateUser", result.message.toString())
                                 val action =
                                     CreateUserFragmentDirections.createUserFragmentToNavigationUserList()
                                 findNavController().navigate(action)
                             } else if (result?.code == 409) {
-                                Log.d("sachinCreateUser", result.response.toString())
+                                Log.d("sachinCreateUser", result.message.toString())
                                 showSnackBar(result.message, Color.RED)
                             }
                             binding.createUserProgressBar.visibility = View.GONE
@@ -265,43 +303,6 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
 
 
         }
-        binding.joiningDateId.setOnClickListener() {
-            datePickerDialog.show()
-        }
-        binding.postId.setOnClickListener {
-            postBottomSheet.show()
-        }
-        binding.reportAuthorityId.setOnClickListener {
-            reportAuthorityBottomSheet.show()
-        }
-        return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-        val selectorDialog = BottomSheetDialog(requireContext())
-        selectorDialog.setContentView(R.layout.dialog_image_selector)
-        selectorDialog.findViewById<AppCompatImageView>(R.id.camera)?.setOnClickListener {
-            selectorDialog.cancel()
-            checkCameraPermission()
-
-        }
-        selectorDialog.findViewById<AppCompatImageView>(R.id.gallery)?.setOnClickListener {
-            selectorDialog.cancel()
-            val i = Intent()
-            i.type = "image/*"
-            i.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(i, "Select Picture"), 111)
-
-        }
-        binding.profileImage.setOnClickListener {
-            selectorDialog.show()
-        }
-
-
     }
 
     private fun openCamera() {
@@ -426,11 +427,15 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
     private fun showSnackBar(message: String, color: Int) {
-        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
         snackBar.setBackgroundTint(color)
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

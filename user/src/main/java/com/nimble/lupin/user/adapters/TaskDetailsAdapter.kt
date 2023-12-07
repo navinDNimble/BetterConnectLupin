@@ -99,7 +99,6 @@ class TaskDetailsAdapter(private var itemList: List<TaskUpdatesModel> , private 
                 }
             }
 
-
         }
 
         private fun checkNull( value : String?): Boolean {

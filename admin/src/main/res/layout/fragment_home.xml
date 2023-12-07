@@ -13,13 +13,16 @@ xmlns:tools="http://schemas.android.com/tools">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_60sdp"
         android:background="@color/primaryColor"
-        tools:context=".views.home.home.HomeFragment">
+
+        tools:context=".views.home.home.HomeFragment"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+
+            >
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/profile_admin_appBar"
@@ -224,16 +227,16 @@ xmlns:tools="http://schemas.android.com/tools">
                     </RelativeLayout>
 
                     <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/bar_chart_view"
+                        android:id="@+id/barChartView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginHorizontal="@dimen/_2sdp"
                         android:background="@drawable/corner_radius_10"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-
+                        android:layout_marginBottom="@dimen/_60sdp"
                         />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -76,14 +76,7 @@
                 android:name="TaskDetail"
                 app:argType="com.nimble.lupin.user.models.TaskModel" />
         </action>
-        <action
-            android:id="@+id/taskDetailFragment_to_ImageDetailFragment"
-            app:destination="@id/ImageDetailFragment"
-            app:popUpTo="@id/taskDetailFragment">
-            <argument
-                android:name="taskUpdateId"
-                app:argType="integer" />
-        </action>
+
 
     </fragment>
     <fragment
@@ -105,11 +98,5 @@
                 app:argType="com.nimble.lupin.user.models.TaskModel" />
         </action>
     </fragment>
-    <fragment
-        android:id="@+id/ImageDetailFragment"
-        android:name="com.nimble.lupin.user.views.home.task.imageDetailes.ImageDetailFragment"
-        android:label="Image Detail "
-        app:launchSingleTop="true"
-        app:enterAnim="@anim/pull_in_left"
-        app:exitAnim="@anim/push_out_right"/>
+
 </navigation>

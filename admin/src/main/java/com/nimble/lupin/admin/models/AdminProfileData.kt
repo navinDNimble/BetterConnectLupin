@@ -8,7 +8,7 @@ data class AdminProfileData(
     val emailId: String?,
     val workStation: String?,
     val post: Int,
-    val employeeId: Int,
+    val employeeId: String,
     val reportAuthority: Int,
     val joiningDate: String?,
     var profilePhoto :String,

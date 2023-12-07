@@ -5,9 +5,11 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -56,10 +58,6 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateTaskBinding.inflate(inflater, container, false)
-        dialog = ProgressDialog(context)
-        dialog.setMessage("Loading Activity and SubActivity") // Set the message for the dialog
-        dialog.setCanceledOnTouchOutside(false)
-
         return binding.root
     }
 
@@ -86,10 +84,6 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        getActivitySubActivityTaskMode()
-
-
-
 
         startDatePickerDialog = DatePickerDialog(
             requireContext(),
@@ -141,6 +135,12 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
             createTask()
         }
 
+        dialog = ProgressDialog(context)
+        dialog.setMessage("Loading Activity and SubActivity") // Set the message for the dialog
+        dialog.setCanceledOnTouchOutside(false)
+
+
+        getActivitySubActivityTaskMode()
 
     }
 
@@ -330,7 +330,12 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
     private fun showSnackBar(message: String, color: Int) {
-        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
         snackBar.setBackgroundTint(color)
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()

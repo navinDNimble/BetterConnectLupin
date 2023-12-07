@@ -1,6 +1,7 @@
 package com.nimble.lupin.user.views.home.task.taskDetail
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -16,9 +17,12 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nimble.lupin.user.R
+import com.nimble.lupin.user.adapters.ImagesAdapter
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.api.ResponseHandler
+import com.nimble.lupin.user.databinding.FragmentImageDetailBinding
 import com.nimble.lupin.user.databinding.FragmentTaskDetailBinding
 import com.nimble.lupin.user.interfaces.OnClickSeePhoto
 import com.nimble.lupin.user.models.TaskModel
@@ -169,9 +173,47 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
     }
 
     override fun onClickSeePhoto(taskUpdateId: Int) {
+        ImageDialog(taskUpdateId,requireContext()).show()
 
-        val action = TaskDetailFragmentDirections.taskDetailFragmentToImageDetailFragment(taskUpdateId)
-        findNavController().navigate(action)
 
     }
+    class ImageDialog (private val taskUpdateId: Int, bottomContext : Context): BottomSheetDialog(bottomContext){
+
+        lateinit var binding : FragmentImageDetailBinding
+        private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            binding =   FragmentImageDetailBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+
+            apiService.getPhotosUrl(taskUpdateId).enqueue(object :Callback<ResponseHandler<List<String>>>{
+                override fun onResponse(
+                    call: Call<ResponseHandler<List<String>>>,
+                    response: Response<ResponseHandler<List<String>>>
+                ) {
+                    val result = response.body()
+                    if (result?.code==200){
+                        val list = result.response
+                        val imagesAdapter = ImagesAdapter(list)
+                        binding.imageRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+                        binding.imageRecyclerView.adapter  = imagesAdapter
+                        binding.progressBarImages.visibility =View.GONE
+                    }else if (result?.code==400){
+                        Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                        binding.progressBarImages.visibility =View.GONE
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseHandler<List<String>>>, t: Throwable) {
+                    binding.progressBarImages.visibility =View.GONE
+                }
+
+            })
+
+        }
+
+    }
+
 }

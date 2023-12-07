@@ -17,7 +17,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("check_mobile_number")
+    @GET("check_manager_mobile_number")
     fun checkMobileNumber(@Query("mobileNumber") mobile: String): Call<ResponseHandler<AdminProfileData>>
     @GET("admin_task_counts")
     fun getAdminTaskCount(): Call<ResponseHandler<AdminTaskCountModel>>
@@ -36,6 +36,8 @@ interface ApiService {
     @GET("get_all_user")
     fun getAllUserList(@Query("page") page: Int , @Query("searchKey") searchKey: String ): Call<ResponseHandler<List<UserModel>>>
 
+    @GET("get_all_authority")
+    fun getAllAuthority(): Call<ResponseHandler<List<UserModel>>>
     @GET("get_user_task_pending")
     fun getPendingUserTask(@Query("userId") userId: Int,@Query("page") page: Int): Call<ResponseHandler<List<UserTasksListModel>>>
     @GET("get_user_task_completed")
@@ -55,4 +57,7 @@ interface ApiService {
 
     @POST("/assign_users_to_task")
     fun allotTaskToUser(@Body assignTaskModelList : AssignTaskBody): Call<ResponseHandler<AssignTaskBody>>
+
+    @GET("get_photos_url")
+    fun getPhotosUrl(@Query("taskUpdateId") taskUpdateId: Int): Call<ResponseHandler<List<String>>>
 }

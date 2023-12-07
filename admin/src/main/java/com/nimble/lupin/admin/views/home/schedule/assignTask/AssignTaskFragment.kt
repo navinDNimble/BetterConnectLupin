@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -346,10 +348,15 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
 
      fun showSnackBar(message: String  ,color :Int) {
-        val snackBar =  Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
-        snackBar.setBackgroundTint(color)
-        snackBar.setTextColor(Color.WHITE)
-        snackBar.show()
+         val rootView: View = requireActivity().findViewById(android.R.id.content)
+         val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+         val snackBarView = snackBar.view
+         val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+         params.gravity = Gravity.TOP
+         snackBarView.layoutParams = params
+         snackBar.setBackgroundTint(color)
+         snackBar.setTextColor(Color.WHITE)
+         snackBar.show()
 
     }
 

@@ -138,6 +138,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onVerificationFailed(e: FirebaseException) {
                 binding.progressBarMobileNumber.visibility = View.GONE
+                Log.d("sachin",e.message.toString())
                 when (e) {
                     is FirebaseAuthInvalidCredentialsException ->
                         showSnackBar("Invalid Number", Color.RED)
@@ -146,6 +147,7 @@ class LoginActivity : AppCompatActivity() {
                         showSnackBar("Too Many Request Try After Some Time", Color.RED)
 
                     else ->
+
                         showSnackBar("Failed" + e.message, Color.RED)
                 }
                 binding.sendOtpButton.visibility = View.VISIBLE

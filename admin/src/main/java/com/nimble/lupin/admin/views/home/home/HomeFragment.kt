@@ -8,9 +8,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -45,28 +47,12 @@ class HomeFragment : Fragment() {
         homeViewModel!!.responseError.observe(this) {
             showSnackBar(it)
         }
-
+        binding = FragmentHomeBinding.inflate(layoutInflater)
         homeViewModel!!.userName.set(sharedPref.getString(Constants.Admin_Username_Key, ""))
 
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.viewModel = homeViewModel
         Glide.with(this).load(sharedPref.getString(Constants.Admin_Image_Key, ""))
             .into(binding.adminProfileView)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("sachin", "onVIEWcREATED")
-
         val entries: MutableList<BarEntry> = ArrayList()
         entries.add(BarEntry(1f, 2f))
         entries.add(BarEntry(2f, 4f))
@@ -89,10 +75,21 @@ class HomeFragment : Fragment() {
         binding.barChartView.xAxis.setDrawGridLines(false)
         binding.barChartView.axisLeft.setDrawGridLines(false)
         binding.barChartView.description.text = ""
-
-// Set time labels on the x-axis
-
         binding.barChartView.invalidate()
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
 
     }
@@ -113,12 +110,15 @@ class HomeFragment : Fragment() {
 
 
     private fun showSnackBar(message: String) {
-        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) };
-        if (snackBar != null) {
-            snackBar.setBackgroundTint(Color.RED)
-            snackBar.setTextColor(Color.WHITE)
-            snackBar.show()
-        }
+        val rootView: View = requireActivity().findViewById(android.R.id.content)
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
+        val params = snackBarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackBarView.layoutParams = params
+        snackBar.setBackgroundTint(Color.RED)
+        snackBar.setTextColor(Color.WHITE)
+        snackBar.show()
 
     }
 }
