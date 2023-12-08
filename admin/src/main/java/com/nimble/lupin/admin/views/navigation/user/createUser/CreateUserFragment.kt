@@ -245,7 +245,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 selectedImage?.compress(Bitmap.CompressFormat.JPEG, quality, baos)
                 val dataSize = baos.toByteArray().size
                 quality -= 10
-            } while (dataSize > 100 * 1024 && quality > 0)
+            } while (dataSize > 200 * 1024 && quality > 0)
 
 
 

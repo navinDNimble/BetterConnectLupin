@@ -302,19 +302,23 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
             taskUpdateModel.update_date = binding.dateIdSelector.text.toString()
             viewModel.progressBarVisibility.set(true)
             binding.updateDetailsButton.visibility = View.GONE
-            val photoByteList = mutableListOf<ByteArray>()
-            photoList.forEach {
-                photoByteList.add(reduceImageSize(it))
-            }
+            if (viewModel.photoVisibility.get() == true){
+                val photoByteList = mutableListOf<ByteArray>()
+                photoList.forEach {
+                    photoByteList.add(reduceImageSize(it))
+                }
 
-            if (photoByteList.size == photoList.size){
+                if (photoByteList.size == photoList.size){
+                    uploadImages(photoByteList ,taskUpdateModel)
+                }
+                else{
+                    showSnackBar("Unable to Compress Selected Images",Color.RED)
+                    viewModel.progressBarVisibility.set(false)
+                    binding.updateDetailsButton.visibility = View.VISIBLE
+                }
 
-                uploadImages(photoByteList ,taskUpdateModel)
-            }
-            else{
-                showSnackBar("Unable to Compress Selected Images",Color.RED)
-                viewModel.progressBarVisibility.set(false)
-                binding.updateDetailsButton.visibility = View.VISIBLE
+            }else{
+                updateTask(taskUpdateModel)
             }
 
         }
@@ -369,7 +373,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
             val dataSize = baos.toByteArray().size
             quality -= 10
-        } while (dataSize > 100 * 1024 && quality > 0)
+        } while (dataSize > 300 * 1024 && quality > 0)
 
 
 

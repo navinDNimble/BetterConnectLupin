@@ -36,7 +36,6 @@ import org.koin.java.KoinJavaComponent
 
 
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
     private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     private var homeViewModel: HomeViewModel? = null
@@ -44,7 +43,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(context,"Called HomeFragment",Toast.LENGTH_LONG).show()
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         homeViewModel!!.responseError.observe(this) {
             showSnackBar(it)

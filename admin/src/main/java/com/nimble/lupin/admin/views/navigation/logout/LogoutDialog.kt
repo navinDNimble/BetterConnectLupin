@@ -40,7 +40,10 @@ class LogoutDialog : BottomSheetDialogFragment() {
             val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
             sharedPref.edit().clear().apply()
             FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 }

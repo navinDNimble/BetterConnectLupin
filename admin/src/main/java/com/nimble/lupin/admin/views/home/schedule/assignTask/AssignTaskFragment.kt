@@ -140,6 +140,8 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                         Constants.isChanged = true
                     }else{
                         showSnackBar(result.message , Color.RED)
+                        binding.assignTaskButton.visibility =View.VISIBLE
+                        binding.allotTaskProgress.visibility =View.GONE
                         Log.d("sachinAssignTask", result.message)
                     }
                 }
@@ -152,10 +154,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                 binding.assignTaskButton.visibility =View.VISIBLE
                 binding.allotTaskProgress.visibility =View.GONE
             }
-
         })
-
-
     }
 
     private fun changeVisibility(setInputDetailVisible :Boolean ){

@@ -35,14 +35,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
+class ScheduleUpdatesFragment : Fragment(), OnClickSeePhoto {
 
     private var _binding: FragmentScheduleUpdatesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var tasksUpdateList :MutableList<TaskUpdatesModel>
-    private lateinit var taskUserAdapter : TaskDetailsAdapter
-    private   var  userTaskModel : UserTaskModel? = null
-    private   var  task  : TaskModel? = null
+    private lateinit var tasksUpdateList: MutableList<TaskUpdatesModel>
+    private lateinit var taskUserAdapter: TaskDetailsAdapter
+    private var userTaskModel: UserTaskModel? = null
+    private var task: TaskModel? = null
 
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
 
@@ -51,8 +51,8 @@ class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
 
         userTaskModel = arguments?.getParcelable("UserTaskModel")
         task = arguments?.getParcelable("TaskDetail")
-       tasksUpdateList = mutableListOf()
-        taskUserAdapter = TaskDetailsAdapter(tasksUpdateList,this)
+        tasksUpdateList = mutableListOf()
+        taskUserAdapter = TaskDetailsAdapter(tasksUpdateList, this)
     }
 
     override fun onCreateView(
@@ -62,9 +62,11 @@ class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
         _binding = FragmentScheduleUpdatesBinding.inflate(inflater, container, false)
 
         binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
-        binding.includedLayout.textViewAssignTaskStartDateIn.text =   getString(R.string.date_combine_string, task?.startDate, task?.endDate)
-        binding.includedLayout.textViewActivityNameIn.text =  getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
-        binding.includedLayout.units.visibility =View.GONE
+        binding.includedLayout.textViewAssignTaskStartDateIn.text =
+            getString(R.string.date_combine_string, task?.startDate, task?.endDate)
+        binding.includedLayout.textViewActivityNameIn.text =
+            getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
+        binding.includedLayout.units.visibility = View.GONE
 
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -76,6 +78,7 @@ class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getTaskUpdates()
@@ -98,7 +101,7 @@ class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
                     } else if (result.code == 404) {
 
                         binding.scheduleUpdatesResultTextView.text = result.message
-                    } else if (result.code == 500){
+                    } else if (result.code == 500) {
                         showSnackBar(result.message)
                     }
                     binding.scheduleUpdatesProgressBar.visibility = View.GONE
@@ -128,6 +131,7 @@ class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
         snackBar.setTextColor(Color.WHITE)
         snackBar.show()
     }
+
     override fun onResume() {
         super.onResume()
         val mainActivity = requireActivity() as? MainActivity
@@ -136,46 +140,52 @@ class ScheduleUpdatesFragment : Fragment() ,OnClickSeePhoto{
 
     override fun onClickSeePhoto(taskUpdateId: Int) {
 
-      ImageDialog(taskUpdateId,requireContext()).show()
+        ImageDialog(taskUpdateId, requireContext()).show()
 
     }
 
-     class ImageDialog (private val taskUpdateId: Int , bottomContext :Context):BottomSheetDialog(bottomContext){
+    class ImageDialog(private val taskUpdateId: Int, bottomContext: Context) :
+        BottomSheetDialog(bottomContext) {
 
-       lateinit var binding : FragmentImageDetailBinding
-         private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
+        lateinit var binding: FragmentImageDetailBinding
+        private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
 
-         override fun onCreate(savedInstanceState: Bundle?) {
-             super.onCreate(savedInstanceState)
-             binding =   FragmentImageDetailBinding.inflate(layoutInflater)
-             setContentView(binding.root)
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            binding = FragmentImageDetailBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-             apiService.getPhotosUrl(taskUpdateId).enqueue(object :Callback<ResponseHandler<List<String>>>{
-                 override fun onResponse(
-                     call: Call<ResponseHandler<List<String>>>,
-                     response: Response<ResponseHandler<List<String>>>
-                 ) {
-                     val result = response.body()
-                     if (result?.code==200){
-                         val list = result.response
-                         val imagesAdapter = ImagesAdapter(list)
-                         binding.imageRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
-                         binding.imageRecyclerView.adapter  = imagesAdapter
-                         binding.progressBarImages.visibility =View.GONE
-                     }else if (result?.code==400){
-                         Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
-                         binding.progressBarImages.visibility =View.GONE
-                     }
+            apiService.getPhotosUrl(taskUpdateId)
+                .enqueue(object : Callback<ResponseHandler<List<String>>> {
+                    override fun onResponse(
+                        call: Call<ResponseHandler<List<String>>>,
+                        response: Response<ResponseHandler<List<String>>>
+                    ) {
+                        val result = response.body()
+                        if (result?.code == 200) {
+                            val list = result.response
+                            val imagesAdapter = ImagesAdapter(list)
+                            binding.imageRecyclerView.layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            binding.imageRecyclerView.adapter = imagesAdapter
+                            binding.progressBarImages.visibility = View.GONE
+                        } else if (result?.code == 400) {
+                            Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
+                            binding.progressBarImages.visibility = View.GONE
+                        }
 
-                 }
+                    }
 
-                 override fun onFailure(call: Call<ResponseHandler<List<String>>>, t: Throwable) {
-                     binding.progressBarImages.visibility =View.GONE
-                 }
+                    override fun onFailure(
+                        call: Call<ResponseHandler<List<String>>>,
+                        t: Throwable
+                    ) {
+                        binding.progressBarImages.visibility = View.GONE
+                    }
 
-             })
+                })
 
-         }
+        }
 
     }
 }

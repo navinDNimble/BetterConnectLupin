@@ -1,5 +1,6 @@
 package com.nimble.lupin.admin.views.navigation.user.userTaskList
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.nimble.lupin.admin.R
 import com.nimble.lupin.admin.adapters.TaskUsersAdapter
 import com.nimble.lupin.admin.adapters.UserTasksAdapter
@@ -23,7 +25,7 @@ import com.nimble.lupin.admin.views.home.MainActivity
 import com.nimble.lupin.admin.views.home.schedule.ScheduleFragmentDirections
 import com.nimble.lupin.admin.views.navigation.user.UserListFragmentDirections
 
-class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
+class UserTaskListFragment : Fragment(), OnUserTaskSelected {
 
     private lateinit var viewModel: UserTaskListViewModel
     private var _binding: FragmentUserTaskListBinding? = null
@@ -35,7 +37,7 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
     private lateinit var completedPaginationScrollListener: PaginationScrollListener
     private lateinit var progressPaginationScrollListener: PaginationScrollListener
 
-    private   var  userModel  : UserModel? = null
+    private var userModel: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +45,12 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
         userModel = arguments?.getParcelable("UserDetail")
         viewModel = ViewModelProvider(this)[UserTaskListViewModel::class.java]
 
-         resetVariables()
+        resetVariables()
 
         progressAdapter = UserTasksAdapter(taskListProgress, this)
         completedAdapter = UserTasksAdapter(taskListCompleted, this)
         viewModel.pendingTaskListResponse.observe(this, Observer {
-            if (viewModel.pendingPage==0){
+            if (viewModel.pendingPage == 0) {
                 taskListProgress.clear()
             }
             taskListProgress.addAll(it)
@@ -57,7 +59,7 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
             progressAdapter.notifyDataSetChanged()
         })
         viewModel.completedTaskListResponse.observe(this, Observer {
-            if (viewModel.completedPage==0){
+            if (viewModel.completedPage == 0) {
                 taskListCompleted.clear()
             }
             taskListCompleted.addAll(it)
@@ -70,16 +72,24 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
         viewModel.getCompletedUserTask(userModel!!.userId)
         _binding = FragmentUserTaskListBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
-        binding.textViewUserName.text = userModel?.firstName+" " + userModel?.lastName
+        binding.textViewUserName.text = userModel?.firstName + " " + userModel?.lastName
         binding.textViewUserPost.text = when (userModel?.post) {
-            1 -> "Field Facilitator"
+            1 -> "Admin"
+            2 -> "Project Manager"
+            3 -> "Project coordinator "
+            4 -> "PU Manager "
+            5 -> "Filed Facilitator"
             else -> "Unknown Post"
         }
+
+        Glide.with(requireContext()).load(userModel!!.profilePhoto)
+            .into(binding.roundedImageViewProfileUserTaskList)
         binding.imageViewBackArrow.setOnClickListener {
             fragmentManager?.popBackStack()
         }
         binding.assigntaskToUser.setOnClickListener {
-            val action =  UserTaskListFragmentDirections.userListFragmentToAssignTaskFragment(userModel!!)
+            val action =
+                UserTaskListFragmentDirections.userListFragmentToAssignTaskFragment(userModel!!)
             findNavController().navigate(action)
         }
         binding.progressTaskRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -167,30 +177,34 @@ class UserTaskListFragment : Fragment() ,OnUserTaskSelected{
     }
 
     fun resetVariables() {
-        viewModel.pendingPage =0
-        viewModel.completedPage=0
-        viewModel.isLastPageOfCompleted =false
+        viewModel.pendingPage = 0
+        viewModel.completedPage = 0
+        viewModel.isLastPageOfCompleted = false
         viewModel.isLastPageOfPending = false
 
         taskListProgress = mutableListOf()
         taskListCompleted = mutableListOf()
     }
+
     override fun onResume() {
         super.onResume()
 
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
-        if (Constants.isChanged){
+        if (Constants.isChanged) {
             resetVariables()
             viewModel.getPendingUserTask(userModel!!.userId)
             viewModel.getCompletedUserTask(userModel!!.userId)
-            Constants.isChanged =false
+            Constants.isChanged = false
 
         }
     }
 
     override fun onUserTaskSelected(userTaskListViewModel: UserTasksListModel) {
-        val action  = UserTaskListFragmentDirections.userTaskListFragmentToScheduleUpdatesFragment(userTaskListViewModel.userTask,userTaskListViewModel.task)
+        val action = UserTaskListFragmentDirections.userTaskListFragmentToScheduleUpdatesFragment(
+            userTaskListViewModel.userTask,
+            userTaskListViewModel.task
+        )
         findNavController().navigate(action)
     }
 

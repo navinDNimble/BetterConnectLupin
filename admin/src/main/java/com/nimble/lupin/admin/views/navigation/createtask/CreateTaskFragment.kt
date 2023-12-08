@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.admin.api.ApiService
@@ -53,6 +54,39 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
 
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
+    var viewModel  :CreateTaskViewModel? =null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+          viewModel = ViewModelProvider(this)[CreateTaskViewModel::class.java]
+        viewModel!!.responseError.observe(this){
+            showSnackBar(it,Color.RED)
+        }
+
+
+        viewModel!!.activityResponse.observe(this){ activityResponse ->
+            activityResponse.forEach {
+                activityList.add(BottomSheetModel(it.activityId, it.activityName))
+            }
+            activityBottomSheet.updateList(activityList)
+        }
+
+        viewModel!!.subActivityResponse.observe(this){
+            subActivityList.addAll(it)
+        }
+
+        viewModel!!.taskModeResponse.observe(this){ taskModeResponse ->
+            taskModeResponse.forEach {
+                taskModeList.add(BottomSheetModel(it.taskModeId, it.taskModeName))
+            }
+            taskModeBottomSheet.updateList(taskModeList)
+        }
+
+
+
+
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -136,9 +170,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         }
 
 
-
-
-        getActivitySubActivityTaskMode()
+        viewModel?.getActivitySubActivityTaskMode()
 
     }
 
@@ -229,49 +261,7 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
         })
     }
 
-    private fun getActivitySubActivityTaskMode() {
 
-        apiService.getActivitySubActivityTaskMode()
-            .enqueue(object : Callback<ResponseHandler<TaskCreateResponseModel>> {
-                override fun onResponse(
-                    call: Call<ResponseHandler<TaskCreateResponseModel>>,
-                    response: Response<ResponseHandler<TaskCreateResponseModel>>
-                ) {
-                    val result = response.body()
-                    if (result?.code == 200) {
-                        Log.d("sachinCreateTask", result.response.toString())
-                        result.response.activities.forEach {
-                            activityList.add(BottomSheetModel(it.activityId, it.activityName))
-                        }
-                        subActivityList.addAll(result.response.subActivities)
-                        result.response.taskModes.forEach {
-                            taskModeList.add(BottomSheetModel(it.taskModeId, it.taskModeName))
-                        }
-                        activityBottomSheet.updateList(activityList)
-                        taskModeBottomSheet.updateList(taskModeList)
-
-
-                    } else {
-                        Log.d("sachinCreateTask", result?.response.toString())
-                        showSnackBar(result?.message.toString(), Color.RED)
-
-                    }
-
-                }
-
-                override fun onFailure(
-                    call: Call<ResponseHandler<TaskCreateResponseModel>>,
-                    t: Throwable
-                ) {
-
-                    showSnackBar(t.message.toString(), Color.RED)
-
-                }
-
-            })
-
-
-    }
 
     private fun filterSubActivityList(activityId: Int) {
         subActivityBottomModelList.clear()

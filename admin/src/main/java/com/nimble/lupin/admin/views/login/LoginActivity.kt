@@ -36,8 +36,6 @@ import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity()  {
-
-
     private lateinit var binding: ActivityLoginBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var resendToken : PhoneAuthProvider.ForceResendingToken
@@ -104,7 +102,6 @@ class LoginActivity : AppCompatActivity()  {
                     }
 
                 })
-
 
         }
 

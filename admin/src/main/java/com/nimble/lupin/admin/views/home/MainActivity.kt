@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         Constants.Admin_ID = sharedPref.getInt(Constants.Admin_ID_Key,0)
         binding.adminNavigationView.getHeaderView(0).findViewById<AppCompatTextView>(R.id.header_userName).text =   sharedPref.getString(Constants.Admin_Username_Key,"")
        val navigationProfileView =  binding.adminNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.header_imageView)

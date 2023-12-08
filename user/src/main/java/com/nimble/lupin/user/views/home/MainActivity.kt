@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-
         setContentView(binding.root)
 
         Constants.userId = sharedPref.getInt(Constants.User_ID,0)
