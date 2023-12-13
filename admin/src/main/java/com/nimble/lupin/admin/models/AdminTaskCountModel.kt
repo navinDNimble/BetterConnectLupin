@@ -1,4 +1,0 @@
-package com.nimble.lupin.admin.models
-
-
-data class AdminTaskCountModel(val total_task : Int,val completed_task : Int,val pending_task : Int)

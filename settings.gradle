@@ -16,6 +16,6 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "BetterConnect"
-include ':admin'
-include ':user'
+rootProject.name = "BetterConnectManager"
+include ':app'
+
