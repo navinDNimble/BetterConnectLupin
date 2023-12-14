@@ -15,6 +15,8 @@ data class TaskModel(
     val modeId: Int,
     val startDate: String?,
     val endDate: String?,
+    val workStation: Int,
+    val workStationName: String?,
     val user_alloted: Int?,
     val user_completed_task: Int?,
     val createdBy: Int?, ):Parcelable {
@@ -29,12 +31,12 @@ data class TaskModel(
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readInt(),
+        parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int
-    ) {
-    }
-
+    )
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(taskId)
         parcel.writeString(taskName)
@@ -46,6 +48,8 @@ data class TaskModel(
         parcel.writeInt(modeId)
         parcel.writeString(startDate)
         parcel.writeString(endDate)
+        parcel.writeInt(workStation)
+        parcel.writeString(workStationName)
         parcel.writeValue(user_alloted)
         parcel.writeValue(user_completed_task)
         parcel.writeValue(createdBy)

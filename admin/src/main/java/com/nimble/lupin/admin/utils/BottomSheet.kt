@@ -135,7 +135,8 @@ class BottomSheet(
                                 list.add(
                                     BottomSheetModel(
                                         it.userId,
-                                        it.firstName + " " + it.lastName + " -" + it.workStation
+                                        it.firstName + " " + it.lastName + " -" + it.workStationName,
+                                        it.workStation
                                     )
                                 )
                             }
@@ -175,7 +176,7 @@ class BottomSheet(
         binding.progressBar.visibility = View.VISIBLE
         isLoading = true
         taskCall?.cancel()
-        taskCall = apiService.getTaskToAssign(page, searchKey)
+        taskCall = apiService.getTaskToAssign(Constants.AdminWorkStation_ID , page , searchKey)
         taskCall?.enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,

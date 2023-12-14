@@ -65,6 +65,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
     private lateinit var reportAuthorityBottomSheet: BottomSheet
     private var postId: Int = 5
     private var reportAuthorityId: Int = 0
+    private var workStation: Int = 0
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
     private  var  selectedImage  : Bitmap? = null
 
@@ -177,7 +178,6 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
             val lastName = binding.lastNameId.text.toString().trim()
             val mobileNumber = binding.mobileNumberId.text.toString().trim()
             val emailId = binding.emailIdId.text.toString().trim()
-//            val workStation = binding.workStationId.text.toString()
             val empIdNumber = binding.empIdNumberId.text.toString().trim()
             val joiningDate = binding.joiningDateId.text.toString()
 
@@ -212,11 +212,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 binding.emailIdId.requestFocus()
                 return@setOnClickListener
             }
-//            if (isEmpty(workStation)) {
-//                binding.workStationId.error = "WorkStation Should Not Be Empty."
-//                binding.workStationId.requestFocus()
-//                return@setOnClickListener
-//            }
+
 
             if (isEmpty(empIdNumber)) {
                 binding.empIdNumberId.error = "Emp Id Number Should Not Be Empty."
@@ -228,7 +224,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 binding.reportAuthorityId.requestFocus()
                 return@setOnClickListener
             }
-            val workStation = binding.reportAuthorityId.text.toString().substringAfter("-").trim()
+
             if (isEmpty(joiningDate)) {
                 binding.joiningDateId.error = "Joining Date  Should Not Be Empty."
                 binding.joiningDateId.requestFocus()
@@ -258,7 +254,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                         lastName,
                         mobileNumber,
                         emailId,
-                        workStation,
+                        workStation,null,
                         postId,
                         empIdNumber,
                         reportAuthorityId,
@@ -276,9 +272,8 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                             if (result?.code == 200) {
                                 showSnackBar(result.message, Color.GREEN)
                                 Log.d("sachinCreateUser", result.message.toString())
-                                val action =
-                                    CreateUserFragmentDirections.createUserFragmentToNavigationUserList()
-                                findNavController().navigate(action)
+                                 fragmentManager?.popBackStack()
+                                Constants.isChanged = true
                             } else if (result?.code == 409) {
                                 Log.d("sachinCreateUser", result.message.toString())
                                 showSnackBar(result.message, Color.RED)
@@ -415,6 +410,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
             "authority" -> {
                 binding.reportAuthorityId.text = bottomSheetItem.title
                 reportAuthorityId = bottomSheetItem.id
+                workStation = bottomSheetItem.optionalChooser
                 reportAuthorityBottomSheet.cancel()
             }
         }

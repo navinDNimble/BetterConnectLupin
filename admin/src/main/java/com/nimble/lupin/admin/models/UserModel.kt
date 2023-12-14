@@ -9,7 +9,8 @@ data class UserModel(
     var lastName:  String,
     var mobileNumber:  String,
     var emailId: String,
-    var workStation:  String,
+    var workStation:  Int,
+    var workStationName: String?,
     var post: Int,
     var employeeId: String,
     var reportAuthority: Int,
@@ -23,6 +24,7 @@ data class UserModel(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readInt(),
         parcel.readString()!!,
         parcel.readInt(),
         parcel.readString()!!,
@@ -37,7 +39,8 @@ data class UserModel(
         parcel.writeString(lastName)
         parcel.writeString(mobileNumber)
         parcel.writeString(emailId)
-        parcel.writeString(workStation)
+        parcel.writeInt(workStation)
+        parcel.writeString(workStationName)
         parcel.writeInt(post)
         parcel.writeString(employeeId)
         parcel.writeInt(reportAuthority)

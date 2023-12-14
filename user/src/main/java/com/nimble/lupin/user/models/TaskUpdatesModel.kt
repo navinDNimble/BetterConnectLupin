@@ -1,5 +1,7 @@
 package com.nimble.lupin.user.models
 
+import com.nimble.lupin.user.utils.Constants
+
 data class TaskUpdatesModel(
     var taskUpdateId: Int? = null,
     var userId: Int? = null,
@@ -21,5 +23,6 @@ data class TaskUpdatesModel(
     var name_of_farmer: String? = null,
     var photo: Int? = 0, // is photo available 1 else 0
     var photoList: List<String>? = null, // List of photo Url
-    var update_date : String? =  null
+    var update_date : String? =  null,
+    var workStation : Int
 )

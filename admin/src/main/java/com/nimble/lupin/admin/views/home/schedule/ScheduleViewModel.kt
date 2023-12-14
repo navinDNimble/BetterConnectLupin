@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.nimble.lupin.admin.api.ApiService
 import com.nimble.lupin.admin.api.ResponseHandler
 import com.nimble.lupin.admin.models.TaskModel
+import com.nimble.lupin.admin.utils.Constants
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Response
@@ -22,7 +23,7 @@ class ScheduleViewModel : ViewModel() {
 
     fun getTaskList(){
         loadingProgressBar.postValue(true)
-        apiService.getScheduleTask(page , searchKey).enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
+        apiService.getScheduleTask(Constants.AdminWorkStation_ID,page , searchKey).enqueue(object : retrofit2.Callback<ResponseHandler<List<TaskModel>>>{
             override fun onResponse(
                 call: Call<ResponseHandler<List<TaskModel>>>,
                 response: Response<ResponseHandler<List<TaskModel>>>

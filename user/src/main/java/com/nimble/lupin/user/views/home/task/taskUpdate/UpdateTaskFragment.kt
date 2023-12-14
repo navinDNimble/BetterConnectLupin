@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -72,7 +73,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private val settingCameraCode  = 210
-
+    val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[UpdateTaskViewModel::class.java]
@@ -160,7 +161,8 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
 
 
         binding.updateDetailsButton.setOnClickListener {
-            val taskUpdateModel  = TaskUpdatesModel()
+            val workStation = sharedPref.getInt(Constants.User_workStation,0)
+            val taskUpdateModel  = TaskUpdatesModel(workStation = workStation)
               taskUpdateModel.taskId = task?.task?.taskId
               taskUpdateModel.userId = task?.userTask?.userId
               taskUpdateModel.userTaskId = task?.userTask?.userTaskId
@@ -739,7 +741,6 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
         else if (requestCode == 110 &&resultCode == Activity.RESULT_OK ){
            val  selectedImage = data?.extras?.get("data") as Bitmap
             photoList.add(selectedImage)
-            Toast.makeText(context,"image selected", Toast.LENGTH_SHORT).show()
             imageAdapter.notifyItemInserted(photoList.size-1)
 
         }

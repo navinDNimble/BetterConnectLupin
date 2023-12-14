@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Constants.Admin_ID = sharedPref.getInt(Constants.Admin_ID_Key,0)
+        Constants.AdminWorkStation_ID = sharedPref.getInt(Constants.Admin_WorkstationId_Key,0)
+        Constants.AdminWorkStation_Name = sharedPref.getString(Constants.Admin_WorkStationName_Key,"").toString()
         binding.adminNavigationView.getHeaderView(0).findViewById<AppCompatTextView>(R.id.header_userName).text =   sharedPref.getString(Constants.Admin_Username_Key,"")
        val navigationProfileView =  binding.adminNavigationView.getHeaderView(0).findViewById<CircleImageView>(R.id.header_imageView)
         Glide.with(this).load(sharedPref.getString(Constants.Admin_Image_Key,"")).into(navigationProfileView)

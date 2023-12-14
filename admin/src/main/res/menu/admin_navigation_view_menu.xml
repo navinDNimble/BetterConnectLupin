@@ -11,6 +11,7 @@
         <item
             android:id="@+id/navigation_create_task"
             android:icon="@drawable/icon_create_task"
+            android:visible="false"
             android:title="@string/tittle_create_task" />
         <item
             android:id="@+id/navigation_setting"

@@ -24,7 +24,7 @@ class HomeViewModel : ViewModel() {
     var responseError : MutableLiveData<String> = MutableLiveData()
 
     fun getTasksStatus (){
-        apiService.getAdminTaskCount().enqueue(object :
+        apiService.getAdminTaskCount(Constants.AdminWorkStation_ID).enqueue(object :
             Callback<ResponseHandler<AdminTaskCountModel>> {
             override fun onResponse(
                 call: Call<ResponseHandler<AdminTaskCountModel>>,

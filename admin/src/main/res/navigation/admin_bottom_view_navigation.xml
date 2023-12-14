@@ -117,12 +117,6 @@
         android:label="Create User"
         tools:layout="@layout/fragment_create_user" >
 
-        <action
-            android:id="@+id/createUserFragment_to_navigation_user_list"
-            app:destination="@+id/navigation_user_list"
-            app:popUpTo="@id/navigation_user_list"
-            app:popUpToInclusive="true"
-            />
     </fragment>
 
     <fragment

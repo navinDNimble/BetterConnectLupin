@@ -1,11 +1,7 @@
 package com.nimble.lupin.user.views.home.task.taskDetail
 
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.nimble.lupin.user.adapters.TaskDetailsAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -14,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.user.R
 import com.nimble.lupin.user.adapters.ImagesAdapter
+import com.nimble.lupin.user.adapters.TaskDetailsAdapter
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.api.ResponseHandler
 import com.nimble.lupin.user.databinding.FragmentImageDetailBinding
@@ -29,7 +27,6 @@ import com.nimble.lupin.user.models.TaskModel
 import com.nimble.lupin.user.models.TaskUpdatesModel
 import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.views.home.MainActivity
-import com.nimble.lupin.user.views.home.task.TaskFragment
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,14 +60,11 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        setUpdateTaskButton()
         binding.updateTaskButton.setOnClickListener {
-            if (task?.userTask!!.completedUnit<task?.userTask!!.totalUnits){
+
                 val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)
                 findNavController().navigate(action)
-            }else{
-                showSnackBar("Task Is Already Completed")
-            }
+
         }
         getTaskUpdates()
     }
@@ -82,11 +76,7 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
         return binding.root
     }
 
-    private fun setUpdateTaskButton() {
-        if (task?.userTask!!.completedUnit==task?.userTask!!.totalUnits){
-            binding.updateTaskButton.visibility = View.GONE
-        }
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -111,24 +101,18 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
                         val taskDetailsAdapter = TaskDetailsAdapter(resultList , this@TaskDetailFragment)
                         binding.taskDetailRecyclerView.layoutManager = LinearLayoutManager(context)
                         binding.taskDetailRecyclerView.adapter = taskDetailsAdapter
-
                         val size = resultList.size
-                        if (size < task?.userTask!!.totalUnits){
-                            binding.updateTaskButton.isEnabled = true
-                        }
                         if (size != task!!.userTask?.completedUnit ){
                             task!!.userTask?.completedUnit = size
                             Constants.changedSize = size
                             binding.includedLayout.units.text = getString(R.string.units_combine_String,size.toString(),task?.userTask!!.totalUnits.toString())
                         }
-                        setUpdateTaskButton()
-                        binding.updateTaskButton.isEnabled = true
+
+
                     } else if (result.code == 404) {
-                        binding.updateTaskButton.isEnabled = true
                         binding.taskDetailTextView.text = result.message
                     } else if (result.code == 500){
                         showSnackBar(result.message)
-                        binding.updateTaskButton.isEnabled =false
                     }
                     binding.taskDetailProgressBar.visibility = View.GONE
                 }
@@ -138,7 +122,6 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
                     t: Throwable
                 ) {
                     binding.taskDetailProgressBar.visibility = View.GONE
-                    binding.updateTaskButton.isEnabled =false
                     showSnackBar(t.message.toString())
                 }
 

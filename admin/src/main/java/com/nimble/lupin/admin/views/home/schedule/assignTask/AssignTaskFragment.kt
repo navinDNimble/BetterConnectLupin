@@ -106,7 +106,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
                    return
             }
-            selectedItemList.add(AssignTaskModel(userModel!!.userId,"","" ,singleUserUnit.toString(),true))
+            selectedItemList.add(AssignTaskModel(userModel!!.userId,"","" ,userModel!!.workStation,singleUserUnit.toString(),true))
         }
        if (selectedItemList.isEmpty()) {
            binding.selectFiledFacilitator.requestFocus()
@@ -163,8 +163,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
    }
     fun setTextOnFiledFacilitator(){
-        val selectedList = adapter?.getSelectedList()
-        selectedItemList.addAll(selectedList!!)
+
         val size = selectedItemList.size.toString()
         Log.d("sachin",size.toString())
         if (selectedItemList.size==0){
@@ -242,7 +241,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
         binding.progressBar.visibility = View.VISIBLE
         isLoading = true
         userCall?.cancel()
-        userCall = apiService.getAllUserForSelectionList(page, searchKey)
+        userCall = apiService.getAllUserForSelectionList(Constants.AdminWorkStation_ID,page, searchKey)
         userCall?.enqueue(object : Callback<ResponseHandler<List<AssignTaskModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<AssignTaskModel>>>,
@@ -256,7 +255,8 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                             isLastPage = result.isLastPage
                             val responseList = result.response
                             val selectedList = adapter?.getSelectedList()
-                            selectedItemList.addAll(selectedList!!)
+
+                            selectedItemList.addAll(selectedList!!) // set of unique users for searching area
                             Log.d("sachinAdminTASK", selectedItemList.toString())
                             selectedItemList.forEach { item1 ->
                                 responseList.find { it.userId == item1.userId }?.let { matchingItem ->

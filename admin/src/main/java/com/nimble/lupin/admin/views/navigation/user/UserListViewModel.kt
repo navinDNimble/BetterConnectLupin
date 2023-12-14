@@ -7,6 +7,7 @@ import com.nimble.lupin.admin.api.ApiService
 import com.nimble.lupin.admin.api.ResponseHandler
 import com.nimble.lupin.admin.models.TaskModel
 import com.nimble.lupin.admin.models.UserModel
+import com.nimble.lupin.admin.utils.Constants
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Response
@@ -25,7 +26,7 @@ class UserListViewModel : ViewModel(){
     fun getUsersList(){
         loadingProgressBar.postValue(true)
         call?.cancel()
-        call = apiService.getAllUserList(page, searchKey)
+        call = apiService.getAllUserList(Constants.AdminWorkStation_ID,page, searchKey)
         call?.enqueue(object : retrofit2.Callback<ResponseHandler<List<UserModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<UserModel>>>,

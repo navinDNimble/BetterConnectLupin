@@ -9,7 +9,8 @@ data class UserProfileModel(
     val lastName: String?,
     val mobileNumber: String?,
     val emailId: String?,
-    val workStation: String?,
+    val workStation: Int,
+    val workStationName: String?,
     val post: Int,
     val employeeId: String?,
     val reportAuthority: Int,
@@ -22,6 +23,7 @@ data class UserProfileModel(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readInt(),
         parcel.readString(),
         parcel.readInt(),
         parcel.readString(),
@@ -36,7 +38,8 @@ data class UserProfileModel(
         parcel.writeString(lastName)
         parcel.writeString(mobileNumber)
         parcel.writeString(emailId)
-        parcel.writeString(workStation)
+        parcel.writeInt(workStation)
+        parcel.writeString(workStationName)
         parcel.writeInt(post)
         parcel.writeString(employeeId)
         parcel.writeInt(reportAuthority)

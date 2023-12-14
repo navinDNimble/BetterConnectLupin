@@ -176,6 +176,7 @@ class LoginActivity : AppCompatActivity() {
                             +userProfileModel.lastName)
                     sharedPreferences.putString(Constants.User_IMAGE,userProfileModel.profilePhoto)
                     sharedPreferences.putString(Constants.User_Profile,userProfileModel.toString())
+                    sharedPreferences.putInt(Constants.User_workStation,userProfileModel.workStation)
                     sharedPreferences.apply()
                     showSnackBar("Log In Success", Color.GREEN)
                     changeActivity()

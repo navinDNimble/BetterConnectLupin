@@ -27,5 +27,6 @@ data class TaskUpdatesModel(
 
 
     var photo: Int? = null,
-    var update_date : String? =  null
+    var update_date : String? =  null,
+
 )

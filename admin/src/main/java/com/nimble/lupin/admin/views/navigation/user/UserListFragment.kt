@@ -143,6 +143,11 @@ class UserListFragment : Fragment()  ,OnUserSelected {
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
         binding.searchViewUserList.setOnQueryTextListener(textListener)
+        if (Constants.isChanged){
+            userListViewModel?.page = 0
+            userListViewModel!!.getUsersList()
+            Constants.isChanged =false
+        }
     }
 
     override fun onStop() {

@@ -39,9 +39,9 @@ class TaskAdapter(private var itemList: List<TaskModel>, private val onTaskSelec
     class ViewHolder(val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TaskModel, position: Int) {
-            binding.textViewActivityNameIn.text = item.activityName +" - "+ item.subActivityName
-            binding.textViewAssignTaskTaskTitleIn.text = item.taskName
+            binding.textViewAssignTaskTaskTitleIn.text = item.taskId.toString()+" " + item.taskName
             binding.textViewAssignTaskStartDateIn.text ="${item.startDate} ${" To "+item.endDate}"
+            binding.textViewActivityNameIn.text =  item.activityName +" - "+ item.subActivityName
             binding.units.visibility =View.GONE
         }
     }

@@ -81,7 +81,6 @@
             android:backgroundTint="@color/primaryColor"
             android:text="@string/update_task_detail"
             android:textColor="@color/white"
-            android:enabled="false"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
