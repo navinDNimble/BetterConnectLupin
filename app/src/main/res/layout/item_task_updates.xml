@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/corner_radius_10"
+    android:paddingHorizontal="@dimen/_5sdp"
+    android:layout_marginTop="10dp"
+    android:layout_marginHorizontal="1dp"
+    android:elevation="3dp"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingVertical="10dp"
+        android:orientation="vertical"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:layout_weight="1"
+            tools:text="Male : "
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+
+            />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView1Update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:layout_weight="1"
+                tools:text="Date : "
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView2Update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                tools:text="Female : "
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+
+            android:weightSum="2">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView3Update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                tools:text="Male :"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:visibility="gone"
+
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView4Update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+
+                tools:text="Female : "
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView5Update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            tools:text="Reason : "
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/seePhotoId"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="Tap To See Photos"
+            android:backgroundTint="@color/primaryColor"
+            android:background="@drawable/edit_text_black"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+</RelativeLayout>
