@@ -197,6 +197,8 @@ class TaskFragment : Fragment(), OnTaskSelected  {
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.showBottomView()
         if (Constants.changedSize!=0){
+            taskListProgress.clear()
+            progressAdapter.notifyDataSetChanged()
             resetVariables()
             Constants.changedSize = 0
         }
