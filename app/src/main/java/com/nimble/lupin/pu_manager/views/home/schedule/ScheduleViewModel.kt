@@ -45,7 +45,7 @@ class ScheduleViewModel : ViewModel() {
                         Log.d("sachinAdminTASK",result.toString())
                         isLastPage = result.isLastPage
                     }else if(result?.code == 500){
-                        responseError.postValue("Error in Loading  Task"+result.message)
+                        responseError.postValue("Error in Loading"+result.message)
                     }
 
                 }
