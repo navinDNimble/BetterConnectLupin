@@ -44,6 +44,7 @@ import com.nimble.lupin.user.interfaces.OnImageUnselected
 import com.nimble.lupin.user.models.TaskModel
 import com.nimble.lupin.user.models.TaskUpdatesModel
 import com.nimble.lupin.user.utils.Constants
+import com.nimble.lupin.user.views.home.MainActivity
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
@@ -166,7 +167,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
               taskUpdateModel.taskId = task?.task?.taskId
               taskUpdateModel.userId = task?.userTask?.userId
               taskUpdateModel.userTaskId = task?.userTask?.userTaskId
-
+              taskUpdateModel.activityId = task?.task?.activityId
 
             if (viewModel.maleCountVisibility.get() == true){
 
@@ -654,6 +655,12 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        val mainActivity = requireActivity() as? MainActivity
+        mainActivity?.hideBottomView()
+    }
+
     private fun checkCameraPermission() {
 
         when {
@@ -721,7 +728,6 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
         dialog.show()
     }
     fun showSnackBar(message: String , color :Int) {
-
         val rootView: View = requireActivity().findViewById(android.R.id.content)
         val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
         val snackBarView = snackBar.view
@@ -766,7 +772,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
 
     override fun onImageUnselected(position: Int) {
         Log.d("sachin",position.toString())
-         photoList.removeAt(position)
+        photoList.removeAt(position)
         imageAdapter.notifyItemRemoved(position)
         imageAdapter.notifyItemRangeChanged(position, photoList.size)
     }

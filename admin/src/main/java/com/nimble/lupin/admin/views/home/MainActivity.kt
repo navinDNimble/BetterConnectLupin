@@ -96,11 +96,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showBottomView() {
-
         binding.toolbar.visibility = View.VISIBLE
         binding.bottomBarView.visibility = View.VISIBLE
         binding.bottomBarView.animate().translationY(0f).setDuration(800).start()
-
     }
 
 

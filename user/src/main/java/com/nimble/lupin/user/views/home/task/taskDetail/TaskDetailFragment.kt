@@ -101,13 +101,21 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
                         val taskDetailsAdapter = TaskDetailsAdapter(resultList , this@TaskDetailFragment)
                         binding.taskDetailRecyclerView.layoutManager = LinearLayoutManager(context)
                         binding.taskDetailRecyclerView.adapter = taskDetailsAdapter
-                        val size = resultList.size
+                         var size = 0
+                         if (task!!.task?.activityId!=11){
+                            size = resultList.size
+
+                         }else{
+                             resultList.forEach {
+                                 size += it.survey_count!!
+                             }
+                         }
+
                         if (size != task!!.userTask?.completedUnit ){
                             task!!.userTask?.completedUnit = size
                             Constants.changedSize = size
                             binding.includedLayout.units.text = getString(R.string.units_combine_String,size.toString(),task?.userTask!!.totalUnits.toString())
                         }
-
 
                     } else if (result.code == 404) {
                         binding.taskDetailTextView.text = result.message

@@ -161,6 +161,7 @@ class LoginActivity : AppCompatActivity()  {
 
 
         }
+
         val options = PhoneAuthOptions.newBuilder(mAuth)
             .setPhoneNumber("+91$phoneNumber")       // Phone number to verify
             .setTimeout(30, TimeUnit.SECONDS) // Timeout and unit

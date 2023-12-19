@@ -9,7 +9,7 @@ class Constants {
 //        private const val  serverPort = 5000 // Replace with your server's port
 //        const val BASE_URL = "http://$serverIpAddress:$serverPort"
      // const val BASE_URL = "http://192.168.1.19:5000/"
-        const val BASE_URL = "http://18.209.7.6:5000/"
+        const val BASE_URL = "http://54.236.196.205:5000/"
         const val SHARED_PREF_KEY = "USER_KEY"
         const val Admin_ID_Key = "ADMIN_ID"
         const val Admin_Username_Key = "ADMIN_USER_NAME"

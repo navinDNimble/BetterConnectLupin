@@ -156,6 +156,8 @@ class LoginActivity : AppCompatActivity() {
 
 
         }
+
+
         val options = PhoneAuthOptions.newBuilder(mAuth)
             .setPhoneNumber("+91$phoneNumber")       // Phone number to verify
             .setTimeout(30, TimeUnit.SECONDS) // Timeout and unit
@@ -226,5 +228,8 @@ class LoginActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("saching", "onDestroy")
+    }
 }

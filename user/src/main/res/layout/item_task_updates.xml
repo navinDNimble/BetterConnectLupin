@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/corner_radius_10"
     android:paddingHorizontal="@dimen/_5sdp"
-
     android:layout_marginTop="10dp"
     android:layout_marginHorizontal="1dp"
     android:elevation="3dp"
@@ -36,8 +35,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="2"
             app:layout_constraintTop_toTopOf="parent">
@@ -74,7 +73,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
-
+             android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView

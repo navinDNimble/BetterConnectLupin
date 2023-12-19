@@ -6,6 +6,7 @@ data class TaskUpdatesModel(
     var taskUpdateId: Int? = null,
     var userId: Int? = null,
     var taskId: Int? = null,
+    var activityId: Int? = null,
     var userTaskId: Int? =null,
 
     var male_count: Int? =null,

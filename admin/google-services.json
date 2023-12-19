@@ -45,6 +45,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:390762162866:android:567146e78d621a7bafb7ab",
+        "android_client_info": {
+          "package_name": "com.nimble.lupin.pu_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC255b6Ll0Y-SjH6xT5YlEImN0wlu1NpOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:390762162866:android:faf10713bb835796afb7ab",
         "android_client_info": {
           "package_name": "com.nimble.lupin.user"
