@@ -138,7 +138,7 @@ class BottomSheet(
                         }
                         404 -> {
                             isLastPage = result.isLastPage
-                            showSnackBar("No Users Available" + result.message)
+                            showSnackBar(result.message)
 
                         }
 
@@ -196,7 +196,7 @@ class BottomSheet(
 
                         404 -> {
                             isLastPage = result.isLastPage
-                            showSnackBar("No Users Available" + result.message)
+                            showSnackBar( result.message)
 
                         }
 

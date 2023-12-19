@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import com.nimble.lupin.pu_manager.api.ApiService
 import com.nimble.lupin.pu_manager.api.ResponseHandler
 import com.nimble.lupin.pu_manager.databinding.ActivityLoginBinding
@@ -34,7 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
-class LoginActivity : AppCompatActivity()  {
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var resendToken : PhoneAuthProvider.ForceResendingToken
@@ -123,7 +124,7 @@ class LoginActivity : AppCompatActivity()  {
 
     }
     private fun sendOtp(phoneNumber: String) {
-        val mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        val mCallbacks = object : OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 signInWithPhoneAuthCredential(credential)
             }
@@ -157,9 +158,8 @@ class LoginActivity : AppCompatActivity()  {
                 binding.sendOtpButton.visibility = View.VISIBLE
                 binding.progressBarMobileNumber.visibility = View.GONE
             }
-
-
         }
+
         val options = PhoneAuthOptions.newBuilder(mAuth)
             .setPhoneNumber("+91$phoneNumber")       // Phone number to verify
             .setTimeout(30, TimeUnit.SECONDS) // Timeout and unit
@@ -172,7 +172,6 @@ class LoginActivity : AppCompatActivity()  {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-
                     val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
                     val sharedPreferences = sharedPref.edit()
                     sharedPreferences.putInt(Constants.Admin_ID_Key,adminProfileModel.userId)
@@ -226,4 +225,13 @@ class LoginActivity : AppCompatActivity()  {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("saching", "onDestroy")
+    }
 }

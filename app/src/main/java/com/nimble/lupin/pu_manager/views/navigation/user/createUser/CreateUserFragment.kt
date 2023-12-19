@@ -22,14 +22,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -229,6 +228,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
             }
             binding.createUserProgressBar.visibility = View.VISIBLE
             binding.createUserId.visibility = View.GONE
+
             val baos = ByteArrayOutputStream()
             var quality = 100 // initial quality
             var compressedBitmap: Bitmap? = null
@@ -239,8 +239,6 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 val dataSize = baos.toByteArray().size
                 quality -= 10
             } while (dataSize > 200 * 1024 && quality > 0)
-
-
 
             val compressedData = baos.toByteArray()
             uploadProfileImage(compressedData) { imageUrl ->
@@ -268,11 +266,11 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                             Log.d("sachinCreateUser", result?.message.toString())
                             if (result?.code == 200) {
                                 showSnackBar(result.message, Color.GREEN)
-                                Log.d("sachinCreateUser", result.message.toString())
+                                Log.d("sachinCreateUser", result.message)
                                 Constants.isChanged =  true
                                 fragmentManager?.popBackStack()
                             } else if (result?.code == 409) {
-                                Log.d("sachinCreateUser", result.message.toString())
+                                Log.d("sachinCreateUser", result.message)
                                 showSnackBar(result.message, Color.RED)
                             }
                             binding.createUserProgressBar.visibility = View.GONE

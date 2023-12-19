@@ -282,7 +282,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
                         404 -> {
                             isLastPage = result.isLastPage
-                            showSnackBar("No Users Available" + result.message  , Color.RED)
+                            showSnackBar( result.message  , Color.RED)
 
                         }
 
