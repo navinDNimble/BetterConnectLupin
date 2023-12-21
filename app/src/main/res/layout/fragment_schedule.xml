@@ -34,31 +34,6 @@
             android:layout_marginTop="10dp"
             android:weightSum="1">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/assignTaskScheduleButton_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.76"
-                android:background="@drawable/corner_radius_10"
-                android:backgroundTint="@color/orange_600"
-                android:gravity="center"
-                android:paddingVertical="@dimen/_5sdp"
-                android:text="@string/assign_task"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold" />
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="10dp"
-            android:weightSum="1">
-
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchTaskView"
                 android:layout_width="0dp"

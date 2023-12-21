@@ -64,6 +64,7 @@
                 android:layout_marginTop="5dp"
                 android:editable="false"
                 android:hint="@string/title"
+                android:textColor="@color/black"
                 android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_12ssp" />
             <androidx.appcompat.widget.AppCompatTextView

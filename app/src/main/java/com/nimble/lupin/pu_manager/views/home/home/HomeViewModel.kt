@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.nimble.lupin.pu_manager.api.ApiService
 import com.nimble.lupin.pu_manager.api.ResponseHandler
 import com.nimble.lupin.pu_manager.models.AdminTaskCountModel
+import com.nimble.lupin.pu_manager.models.GraphModel
 import com.nimble.lupin.pu_manager.utils.Constants
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
@@ -21,7 +22,7 @@ class HomeViewModel : ViewModel() {
     var pendingTask  = ObservableField("0")
     var completedTask  = ObservableField("0")
     var responseError : MutableLiveData<String> = MutableLiveData()
-
+    var graphResponse : MutableLiveData<List<GraphModel>?> = MutableLiveData()
     fun getTasksStatus (){
         apiService.getManagerTaskCount(Constants.AdminWorkStation_ID).enqueue(object :
             Callback<ResponseHandler<AdminTaskCountModel>> {
@@ -40,11 +41,38 @@ class HomeViewModel : ViewModel() {
                         responseError.postValue(result?.message)
 
                     }
-                    Log.d("sachinHome",result.toString())
+
                 }
             }
 
             override fun onFailure(call: Call<ResponseHandler<AdminTaskCountModel>>, t: Throwable) {
+                Log.d("sachinHome",t.message.toString())
+                responseError.postValue(t.message.toString())
+            }
+
+        })
+    }
+    fun getGraphData(activityId: Int)
+    {
+
+        apiService.getUserGraph(Constants.AdminWorkStation_ID,activityId).enqueue(object :
+            Callback<ResponseHandler<List<GraphModel>>> {
+            override fun onResponse(
+                call: Call<ResponseHandler<List<GraphModel>>>,
+                response: Response<ResponseHandler<List<GraphModel>>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result?.code == 200) {
+                        graphResponse.postValue(result.response)
+                    } else {
+                        responseError.postValue(result?.message)
+                    }
+                    Log.d("sachinHome",result.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHandler<List<GraphModel>>>, t: Throwable) {
                 Log.d("sachinHome",t.message.toString())
                 responseError.postValue(t.message.toString())
             }

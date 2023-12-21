@@ -48,16 +48,18 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
         taskUsersList = mutableListOf()
 
         taskUserAdapter = TaskUsersAdapter(taskUsersList ,this )
-
         _binding = FragmentScheduleDetailBinding.inflate(layoutInflater)
-
-        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
+        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskId.toString()+" " + task?.taskName
         binding.includedLayout.textViewAssignTaskStartDateIn.text =   getString(R.string.date_combine_string, task?.startDate, task?.endDate)
         binding.includedLayout.textViewActivityNameIn.text =  getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
         binding.includedLayout.units.visibility =View.GONE
 
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
+        }
+        binding.assignTaskScheduleButtonId.setOnClickListener {
+            val  action = ScheduleDetailFragmentDirections.scheduleDetailFragmentToAssignTaskFragment(task!!)
+            findNavController().navigate(action)
         }
         binding.scheduleUserRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.scheduleUserRecyclerView.adapter = taskUserAdapter
@@ -165,6 +167,13 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
         super.onResume()
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
+        if (Constants.isChanged){
+            taskUsersList.clear()
+            page = 0
+            taskUserAdapter.notifyDataSetChanged()
+            getTaskUsers()
+            Constants.isChanged = false
+        }
     }
     private fun showSnackBar(message: String) {
         val rootView: View = requireActivity().findViewById(android.R.id.content)

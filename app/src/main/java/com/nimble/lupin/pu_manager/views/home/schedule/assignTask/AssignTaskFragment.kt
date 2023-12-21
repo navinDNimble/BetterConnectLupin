@@ -24,6 +24,7 @@ import com.nimble.lupin.pu_manager.interfaces.OnBottomSheetItemSelected
 import com.nimble.lupin.pu_manager.models.AssignTaskBody
 import com.nimble.lupin.pu_manager.models.AssignTaskModel
 import com.nimble.lupin.pu_manager.models.BottomSheetModel
+import com.nimble.lupin.pu_manager.models.TaskModel
 import com.nimble.lupin.pu_manager.models.UserModel
 import com.nimble.lupin.pu_manager.utils.BottomSheet
 import com.nimble.lupin.pu_manager.utils.Constants
@@ -61,6 +62,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
     private   var  userModel  : UserModel? = null
+    private   var  taskModel  : TaskModel? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,16 +73,37 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
         selectedItemList.clear()
         taskBottomSheet = BottomSheet(mutableListOf(), this, "task", true, requireContext())
         userModel = arguments?.getParcelable("UserDetail")
+        taskModel = arguments?.getParcelable("TaskDetail")
+
         if (userModel!=null){
             binding.selectFiledFacilitator.isEnabled = false
             binding.editTextUnits.visibility =View.VISIBLE
             binding.selectFiledFacilitator.text = userModel!!.firstName + " " + userModel!!.lastName
         }
+        if (taskModel!=null){
+            selectedTaskId = taskModel?.taskId!!
+
+            binding.taskNameTextView.isEnabled = false
+            binding.taskNameTextView.text = taskModel?.taskId.toString() + " " + taskModel?.taskName
+            binding.activityTextView.text =taskModel?.activityName
+            binding.subActivityTextView.text = taskModel?.subActivityName
+            binding.modeOfTraining.text = taskModel?.modeName
+            binding.dateTextView.text = getString(
+                R.string.date_combine_string,
+                taskModel?.startDate,
+                taskModel?.endDate
+            )
+        }
         binding.taskNameTextView.setOnClickListener {
             taskBottomSheet.show()
         }
         binding.selectFiledFacilitator.setOnClickListener {
-            changeVisibility(false)
+            if(selectedTaskId!=0){
+                changeVisibility(false)
+            }else{
+                showSnackBar("Select Task First To Allot Users",Color.RED)
+            }
+
         }
         binding.backButtonMain.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -240,73 +263,76 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
         binding.progressBar.visibility = View.VISIBLE
         isLoading = true
         userCall?.cancel()
-        userCall = apiService.getAllUserForSelectionList(Constants.AdminWorkStation_ID,page, searchKey)
-        userCall?.enqueue(object : Callback<ResponseHandler<List<AssignTaskModel>>> {
-            override fun onResponse(
-                call: Call<ResponseHandler<List<AssignTaskModel>>>,
-                response: Response<ResponseHandler<List<AssignTaskModel>>>
-            ) {
-                if (response.isSuccessful) {
-                    val result = response.body()
-                    Log.d("sachinAdminTASK", result.toString())
-                    when (result?.code) {
-                        200 -> {
-                            isLastPage = result.isLastPage
-                            val responseList = result.response
-                            val selectedList = adapter?.getSelectedList()
+
+            userCall = apiService.getAllUserForSelectionList(Constants.AdminWorkStation_ID ,selectedTaskId,page, searchKey)
+            userCall?.enqueue(object : Callback<ResponseHandler<List<AssignTaskModel>>> {
+                override fun onResponse(
+                    call: Call<ResponseHandler<List<AssignTaskModel>>>,
+                    response: Response<ResponseHandler<List<AssignTaskModel>>>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.d("sachinAdminTASK", result.toString())
+                        when (result?.code) {
+                            200 -> {
+                                isLastPage = result.isLastPage
+                                val responseList = result.response
+                                val selectedList = adapter?.getSelectedList()
 //                            selectedItemList.addAll(selectedList!!)
-                            Log.d("sachinAdminTASK", selectedItemList.toString())
-                            selectedItemList.forEach { item1 ->
-                                responseList.find { it.userId == item1.userId }?.let { matchingItem ->
-                                    matchingItem.total_units = item1.total_units
-                                    matchingItem.isSelected = true
-                                    Log.d("sachinMatching",item1.toString())
+                                Log.d("sachinAdminTASK", selectedItemList.toString())
+                                selectedItemList.forEach { item1 ->
+                                    responseList.find { it.userId == item1.userId }?.let { matchingItem ->
+                                        matchingItem.total_units = item1.total_units
+                                        matchingItem.isSelected = true
+                                        Log.d("sachinMatching",item1.toString())
+                                    }
                                 }
+
+                                if (page ==0){
+                                    Log.d("sachinMatching",page.toString())
+                                    userList.clear()
+                                    userList.addAll(responseList)
+                                    binding.recyclerViewUser.adapter = null
+                                    adapter =null
+                                    adapter = UsersSelectionAdapter(userList)
+                                    binding.recyclerViewUser.adapter = adapter
+                                }else{
+                                    val size = userList.size
+                                    userList.addAll(responseList)
+                                    adapter?.notifyItemRangeInserted(size , responseList.size)
+                                }
+
                             }
 
-                            if (page ==0){
-                                Log.d("sachinMatching",page.toString())
-                                userList.clear()
-                                userList.addAll(responseList)
-                                binding.recyclerViewUser.adapter = null
-                                adapter =null
-                                adapter = UsersSelectionAdapter(userList)
-                                binding.recyclerViewUser.adapter = adapter
-                            }else{
-                               val size = userList.size
-                                userList.addAll(responseList)
-                                adapter?.notifyItemRangeInserted(size , responseList.size)
+                            404 -> {
+                                isLastPage = result.isLastPage
+                                showSnackBar( result.message  , Color.RED)
+
                             }
 
-                        }
+                            409 -> {
+                                isLastPage = result.isLastPage
+                            }
 
-                        404 -> {
-                            isLastPage = result.isLastPage
-                            showSnackBar( result.message  , Color.RED)
+                            500 -> {
+                                showSnackBar("Error in Loading Users" + result.message  , Color.RED)
 
-                        }
-
-                        409 -> {
-                            isLastPage = result.isLastPage
-                        }
-
-                        500 -> {
-                            showSnackBar("Error in Loading Users" + result.message  , Color.RED)
-
+                            }
                         }
                     }
+                    binding.progressBar.visibility= View.GONE
+                    isLoading = false
                 }
-                binding.progressBar.visibility= View.GONE
-                isLoading = false
-            }
 
-            override fun onFailure(call: Call<ResponseHandler<List<AssignTaskModel>>>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseHandler<List<AssignTaskModel>>>, t: Throwable) {
 
-                binding.progressBar.visibility= View.GONE
-                showSnackBar("Error in Loading Users" + t.message.toString() , Color.RED)
-                isLoading = false
-            }
-        })
+                    binding.progressBar.visibility= View.GONE
+                    showSnackBar("Error in Loading Users" + t.message.toString() , Color.RED)
+                    isLoading = false
+                }
+            })
+
+
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -339,6 +365,12 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                     selectedtask?.endDate
                 )
                 taskBottomSheet.cancel()
+
+                selectedItemList.clear()
+                userList.clear()
+                adapter?.notifyDataSetChanged()
+                page = 0
+                getUsersList()
             }
         }
     }
@@ -354,12 +386,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
          snackBar.setBackgroundTint(color)
          snackBar.setTextColor(Color.WHITE)
          snackBar.show()
-
     }
-
-
-
-
 
 }
 

@@ -39,8 +39,9 @@ class UserTasksAdapter(private var itemList: List<UserTasksListModel> , private 
     class ViewHolder(val binding: ItemTasksAllocatedToUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: UserTasksListModel, position: Int) {
+            binding.textViewAssignTaskTaskTitleIn.text =  item.task.taskId.toString()+" "+item.task?.taskName
             binding.textViewActivityNameIn.text = item.task?.activityName +" - "+ item.task?.subActivityName
-            binding.textViewAssignTaskTaskTitleIn.text = item.task?.taskName
+
             binding.textViewAssignTaskStartDateIn.text ="${item.task?.startDate} ${" To "+item.task?.endDate}"
             binding.units.text = "${item.userTask?.completedUnit} ${"/"+item.userTask?.totalUnits}"
 

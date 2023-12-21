@@ -188,6 +188,8 @@ class UserTaskListFragment : Fragment(), OnUserTaskSelected {
         mainActivity?.hideBottomView()
         if (Constants.isChanged) {
             resetVariables()
+            completedAdapter.notifyDataSetChanged()
+            progressAdapter.notifyDataSetChanged()
             viewModel.getPendingUserTask(userModel!!.userId)
             viewModel.getCompletedUserTask(userModel!!.userId)
             Constants.isChanged = false

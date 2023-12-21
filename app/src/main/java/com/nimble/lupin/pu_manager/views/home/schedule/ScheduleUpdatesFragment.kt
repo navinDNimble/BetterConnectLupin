@@ -57,7 +57,7 @@ class ScheduleUpdatesFragment : Fragment(), OnClickSeePhoto {
     ): View {
         _binding = FragmentScheduleUpdatesBinding.inflate(inflater, container, false)
 
-        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
+        binding.includedLayout.textViewAssignTaskTaskTitleIn.text =  task?.taskId.toString()+" "+task?.taskName
         binding.includedLayout.textViewAssignTaskStartDateIn.text =
             getString(R.string.date_combine_string, task?.startDate, task?.endDate)
         binding.includedLayout.textViewActivityNameIn.text =

@@ -126,10 +126,7 @@ class ScheduleFragment : Fragment() , OnTaskSelected {
             )
         }
 
-        binding.assignTaskScheduleButtonId.setOnClickListener {
-            ScheduleFragmentDirections.scheduleFragmentToAssignTaskFragment()
-        }
-        binding.assignTaskScheduleButtonId.setOnClickListener { findNavController().navigate(R.id.scheduleFragment_to_AssignTaskFragment) }
+
     }
 
     override fun onResume() {

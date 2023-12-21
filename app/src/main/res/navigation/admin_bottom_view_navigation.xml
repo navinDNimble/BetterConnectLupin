@@ -9,6 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.nimble.lupin.pu_manager.views.home.home.HomeFragment"
         android:label="@string/title_home"
+
         tools:layout="@layout/fragment_home" />
 
     <fragment
@@ -23,9 +24,7 @@
                 android:name="TaskDetail"
                 app:argType="com.nimble.lupin.pu_manager.models.TaskModel" />
         </action>
-        <action
-            android:id="@+id/scheduleFragment_to_AssignTaskFragment"
-            app:destination="@+id/assignTaskFragment"/>
+
     </fragment>
 
     <fragment
@@ -96,6 +95,14 @@
                 android:name="TaskDetail"
                 app:argType="com.nimble.lupin.pu_manager.models.TaskModel" />
         </action>
+     <action android:id="@+id/scheduleDetailFragment_to_assignTaskFragment"
+         app:destination="@+id/assignTaskFragment"
+         >
+         <argument
+             android:name="TaskDetail"
+             app:argType="com.nimble.lupin.pu_manager.models.TaskModel" />
+     </action>
+
     </fragment>
     <fragment
         android:id="@+id/scheduleUpdatesFragment"
