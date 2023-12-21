@@ -43,7 +43,7 @@ class UserListViewModel : ViewModel(){
                         404 -> {
                             Log.d("sachinAdminTASK", result.toString())
                             isLastPage = result.isLastPage
-                            responseError.postValue("No Users Available" + result.message)
+                            responseError.postValue(result.message)
                         }
                         409 -> {
                             Log.d("sachinAdminTASK", result.toString())

@@ -51,7 +51,7 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
 
         _binding = FragmentScheduleDetailBinding.inflate(layoutInflater)
 
-        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskName
+        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskId.toString()+" "+task?.taskName
         binding.includedLayout.textViewAssignTaskStartDateIn.text =   getString(R.string.date_combine_string, task?.startDate, task?.endDate)
         binding.includedLayout.textViewActivityNameIn.text =  getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
         binding.includedLayout.units.visibility =View.GONE

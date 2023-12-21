@@ -4,6 +4,7 @@ import com.nimble.lupin.admin.models.AdminProfileData
 import com.nimble.lupin.admin.models.AdminTaskCountModel
 import com.nimble.lupin.admin.models.AssignTaskBody
 import com.nimble.lupin.admin.models.AssignTaskModel
+import com.nimble.lupin.admin.models.GraphModel
 import com.nimble.lupin.admin.models.TaskCreateResponseModel
 import com.nimble.lupin.admin.models.TaskModel
 import com.nimble.lupin.admin.models.TaskUpdatesModel
@@ -21,6 +22,8 @@ interface ApiService {
     fun checkMobileNumber(@Query("mobileNumber") mobile: String): Call<ResponseHandler<AdminProfileData>>
     @GET("manager_task_counts")
     fun getAdminTaskCount(@Query("workStation") workStation: Int): Call<ResponseHandler<AdminTaskCountModel>>
+    @GET("manager_graph")
+    fun getUserGraph(@Query("workStation") workStation: Int ,@Query("activityId") activityId: Int): Call<ResponseHandler<List<GraphModel>>>
     @GET("get_schedule_task")
     fun getScheduleTask(@Query("workStation") workStation: Int ,@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
     @GET("get_task_users")
@@ -52,7 +55,7 @@ interface ApiService {
     fun getActivitySubActivityTaskMode(): Call<ResponseHandler<TaskCreateResponseModel>>
 
 
-    @GET("get_all_user")
+    @GET("get_users_for_assigned_task")
     fun getAllUserForSelectionList(@Query("workStation") workStation: Int,@Query("page") page: Int , @Query("searchKey") searchKey: String ): Call<ResponseHandler<List<AssignTaskModel>>>
 
     @POST("/assign_users_to_task")

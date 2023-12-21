@@ -81,7 +81,12 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
             taskBottomSheet.show()
         }
         binding.selectFiledFacilitator.setOnClickListener {
-            changeVisibility(false)
+            if(selectedTaskId!=0){
+                changeVisibility(false)
+            }else{
+                showSnackBar("Select Task To Allot Users",Color.RED)
+            }
+
         }
         binding.backButtonMain.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -341,7 +346,15 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                     selectedtask?.endDate
                 )
                 taskBottomSheet.cancel()
+
+                selectedItemList.clear()
+                userList.clear()
+                adapter?.notifyDataSetChanged()
+                page = 0
+                getUsersList()
+
             }
+
         }
     }
 

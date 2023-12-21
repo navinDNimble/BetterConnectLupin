@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.nimble.lupin.admin.api.ApiService
 import com.nimble.lupin.admin.api.ResponseHandler
 import com.nimble.lupin.admin.models.AdminTaskCountModel
+import com.nimble.lupin.admin.models.GraphModel
 import com.nimble.lupin.admin.utils.Constants
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
@@ -22,7 +23,7 @@ class HomeViewModel : ViewModel() {
     var pendingTask  = ObservableField("0")
     var completedTask  = ObservableField("0")
     var responseError : MutableLiveData<String> = MutableLiveData()
-
+    var graphResponse : MutableLiveData<List<GraphModel>?> = MutableLiveData()
     fun getTasksStatus (){
         apiService.getAdminTaskCount(Constants.AdminWorkStation_ID).enqueue(object :
             Callback<ResponseHandler<AdminTaskCountModel>> {
@@ -46,6 +47,34 @@ class HomeViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<ResponseHandler<AdminTaskCountModel>>, t: Throwable) {
+                Log.d("sachinHome",t.message.toString())
+                responseError.postValue(t.message.toString())
+            }
+
+        })
+    }
+
+    fun getGraphData(activityId: Int)
+    {
+
+        apiService.getUserGraph(2,11).enqueue(object :
+            Callback<ResponseHandler<List<GraphModel>>> {
+            override fun onResponse(
+                call: Call<ResponseHandler<List<GraphModel>>>,
+                response: Response<ResponseHandler<List<GraphModel>>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result?.code == 200) {
+                        graphResponse.postValue(result.response)
+                    } else {
+                        responseError.postValue(result?.message)
+                    }
+                    Log.d("sachinHome",result.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHandler<List<GraphModel>>>, t: Throwable) {
                 Log.d("sachinHome",t.message.toString())
                 responseError.postValue(t.message.toString())
             }

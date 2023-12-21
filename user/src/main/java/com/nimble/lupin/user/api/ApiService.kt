@@ -1,5 +1,6 @@
 package com.nimble.lupin.user.api
 
+import com.nimble.lupin.user.models.GraphModel
 import com.nimble.lupin.user.models.TaskModel
 import com.nimble.lupin.user.models.TaskUpdatesModel
 import com.nimble.lupin.user.models.UserProfileModel
@@ -17,6 +18,8 @@ interface ApiService {
    fun checkMobileNumber(@Query("mobileNumber") mobile: String): Call<ResponseHandler<UserProfileModel>>
    @GET("user_task_counts")
    fun getUserTaskCount(@Query("userId") userId: Int): Call<ResponseHandler<UserTaskCountModel>>
+   @GET("user_graph")
+   fun getUserGraph(@Query("userId") userId: Int ,@Query("activityId") activityId: Int): Call<ResponseHandler<List<GraphModel>>>
    @GET("get_user_task_pending")
    fun getPendingUserTask(@Query("userId") userId: Int,@Query("page") page: Int): Call<ResponseHandler<List<TaskModel>>>
    @GET("get_user_task_completed")

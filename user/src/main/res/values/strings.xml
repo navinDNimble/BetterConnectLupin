@@ -23,7 +23,7 @@
     <string name="review_the_activity_status">Review The Activity Status</string>
     <string name="assigned_task_progress">Assigned Task Progress</string>
     <string name="update_task_detail">Update Task Detail</string>
-    <string name="better_connect">BETTER CONNECT</string>
+    <string name="better_connect">Better Cotton</string>
     <string name="mobile_number_verification">Mobile Number Verification</string>
     <string name="enter_mobile_number">Enter Mobile number</string>
     <string name="send_otp">Send OTP</string>
@@ -39,6 +39,29 @@
     <string name="update_details">Update Details</string>
     <string-array name="graph_selector">
         <item>Farmer Training</item>
-        <item>Farmer Visit</item>
+        <item>Farm Labour Training</item>
+        <item>Co-Farmers Training</item>
+        <item>Disadvantaged Group Training</item>
+        <item>Farmers Field Visit</item>
+        <item>Farmers Home Visit</item>
+        <item>Demo Observation</item>
+        <item>Field Demonstration</item>
+        <item>Field Day Event</item>
+        <item>Data Collection</item>
+        <item>Survey</item>
+        <item>TCD</item>
+        <item>Vermi Compost</item>
+        <item>Soil Testing</item>
+        <item>Meeting</item>
+        <item>Farmers Feedback</item>
+        <item>Audio Campaigning</item>
+        <item>Water Budgeting Exercise</item>
+        <item>Adoption Data Collection</item>
+        <item>IPNM</item>
+        <item>Goat Unit</item>
+        <item>Backyard Poultry </item>
+        <item>Drum Support </item>
+        <item>PPE kit Support </item>
+        <item>Demo Support </item>
     </string-array>
 </resources>

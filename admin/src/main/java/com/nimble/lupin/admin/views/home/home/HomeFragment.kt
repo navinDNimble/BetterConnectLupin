@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -33,6 +34,9 @@ import com.nimble.lupin.admin.utils.Constants
 import com.nimble.lupin.admin.views.home.MainActivity
 
 import org.koin.java.KoinJavaComponent
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class HomeFragment : Fragment() {
@@ -40,6 +44,16 @@ class HomeFragment : Fragment() {
     private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     private var homeViewModel: HomeViewModel? = null
 
+    private var graphActivityId = 1
+    val entries: MutableList<BarEntry> = ArrayList()
+    val colorList: MutableList<Int> = mutableListOf(
+        Color.parseColor("#ACDDDE"),
+//        Color.parseColor("#CAF1DE"),
+//        Color.parseColor("#E1F8DC"),
+//        Color.parseColor("#FEF8DD"),
+//        Color.parseColor("#FFE7C7"),
+//        Color.parseColor("#F7D8BA")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,30 +67,64 @@ class HomeFragment : Fragment() {
         binding.viewModel = homeViewModel
         Glide.with(this).load(sharedPref.getString(Constants.Admin_Image_Key, ""))
             .into(binding.adminProfileView)
-        val entries: MutableList<BarEntry> = ArrayList()
-        entries.add(BarEntry(1f, 2f))
-        entries.add(BarEntry(2f, 4f))
-        entries.add(BarEntry(3f, 3f))
-        entries.add(BarEntry(4f, 1f))
-        entries.add(BarEntry(5f, 1f))
-        entries.add(BarEntry(6f, 2f))
-        entries.add(BarEntry(7f, 7f))
-        entries.add(BarEntry(8f, 4f))
-        entries.add(BarEntry(9f, 3f))
-        entries.add(BarEntry(10f, 1f))
 
-        val dataSet = BarDataSet(entries, "December")
-        val barData = BarData(dataSet)
-        binding.barChartView.data = barData
-        binding.barChartView.axisLeft.isEnabled = false
-        binding.barChartView.axisRight.isEnabled = false
-        binding.barChartView.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        binding.barChartView.xAxis.isEnabled = true
-        binding.barChartView.xAxis.setDrawGridLines(false)
-        binding.barChartView.axisLeft.setDrawGridLines(false)
-        binding.barChartView.description.text = ""
-        binding.barChartView.invalidate()
 
+        binding.activitySpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>,
+                    selectedItemView: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    graphActivityId = position + 1
+                    homeViewModel?.getGraphData(graphActivityId)
+                    Log.d("sachin", "onItemSelected")
+                }
+
+                override fun onNothingSelected(parentView: AdapterView<*>) {
+
+                }
+            }
+
+        homeViewModel?.graphResponse?.observe(this) {
+            entries.clear()
+            if (it != null) {
+                val labels = mutableListOf<String>()
+                for ((index, item) in it.withIndex()) {
+                    entries.add(BarEntry(index.toFloat(), item.unit.toFloat()))
+                    labels.add(item.date)
+                }
+                val dataSet = BarDataSet(entries, "")
+                dataSet.colors = colorList
+                val barData = BarData(dataSet)
+                binding.barChartView.data = barData
+                binding.barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+                val barWidth = 0.9f
+                barData.barWidth = barWidth
+                binding.barChartView.setVisibleXRangeMaximum(7f)
+                binding.barChartView.invalidate()
+                binding.barChartView.moveViewToX(0f)
+            }else{
+                showSnackBar("No Graph Data Found For Activity")
+            }
+
+
+        }
+
+        val barChart = binding.barChartView
+        barChart.isScaleYEnabled =false
+        barChart.setScaleEnabled(false)
+        barChart.axisLeft.axisMinimum = 0f
+        barChart.axisLeft.isEnabled = false
+        barChart.axisRight.isEnabled = false
+        barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        barChart.xAxis.setDrawGridLines(false)
+        barChart.axisLeft.setDrawGridLines(false)
+        val calendar: Calendar = Calendar.getInstance()
+        val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+        val currentMonthName: String = monthFormat.format(calendar.time)
+        barChart.description.text = currentMonthName
     }
 
     override fun onCreateView(

@@ -103,7 +103,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
         _binding = FragmentUpdateTaskBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         task = arguments?.getParcelable("TaskDetail")
-        binding.taskNameTaskUpdate.text =  task?.task!!.taskName
+        binding.taskNameTaskUpdate.text =  task?.task?.taskId.toString()+ " " +task?.task!!.taskName
         binding.dateTaskUpdate.text =  getString(R.string.date_combine_string,task?.task!!.startDate , task?.task!!.endDate)
         binding.activityTaskUpdate.text = getString(R.string.activity_combine_String,task?.task!!.activityName , task?.task!!.subActivityName)
         startDatePickerDialog = DatePickerDialog(

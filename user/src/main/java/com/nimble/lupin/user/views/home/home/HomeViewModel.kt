@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.user.api.ApiService
 import com.nimble.lupin.user.api.ResponseHandler
+import com.nimble.lupin.user.models.GraphModel
 import com.nimble.lupin.user.models.UserTaskCountModel
 import com.nimble.lupin.user.utils.Constants
 import org.koin.java.KoinJavaComponent
@@ -26,6 +27,7 @@ open class HomeViewModel() : ViewModel() {
     var completedTask  = ObservableField("0")
 
     var responseError : MutableLiveData<String> = MutableLiveData()
+    var graphResponse : MutableLiveData<List<GraphModel>?> = MutableLiveData()
 
     fun getTasksStatus (){
        apiService.getUserTaskCount(Constants.userId).enqueue(object :
@@ -55,4 +57,32 @@ open class HomeViewModel() : ViewModel() {
 
        })
    }
+
+    fun getGraphData(activityId: Int)
+    {
+
+        apiService.getUserGraph(Constants.userId,activityId).enqueue(object :
+            Callback<ResponseHandler<List<GraphModel>>> {
+            override fun onResponse(
+                call: Call<ResponseHandler<List<GraphModel>>>,
+                response: Response<ResponseHandler<List<GraphModel>>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result?.code == 200) {
+                        graphResponse.postValue(result.response)
+                    } else {
+                        responseError.postValue(result?.message)
+                    }
+                    Log.d("sachinHome",result.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHandler<List<GraphModel>>>, t: Throwable) {
+                Log.d("sachinHome",t.message.toString())
+                responseError.postValue(t.message.toString())
+            }
+
+        })
+    }
 }

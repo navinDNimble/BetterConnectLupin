@@ -44,7 +44,7 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
         _binding =  FragmentTaskDetailBinding.inflate(layoutInflater)
         task = arguments?.getParcelable("TaskDetail")
 
-        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.task?.taskName
+        binding.includedLayout.textViewAssignTaskTaskTitleIn.text =   task?.task?.taskId.toString()+ " " +task?.task?.taskName
         binding.includedLayout.textViewAssignTaskStartDateIn.text =
             getString(R.string.date_combine_string, task?.task?.startDate, task?.task?.endDate)
         binding.includedLayout.textViewActivityNameIn.text = getString(
