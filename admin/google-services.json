@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "390762162866",
-    "project_id": "demoapplication-87fd5",
-    "storage_bucket": "demoapplication-87fd5.appspot.com"
+    "project_number": "84080903219",
+    "project_id": "better-cotton-c35e1",
+    "storage_bucket": "better-cotton-c35e1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:390762162866:android:efaf210b858ef50aafb7ab",
+        "mobilesdk_app_id": "1:84080903219:android:2718fec3278aa447fd4f46",
         "android_client_info": {
           "package_name": "com.nimble.lupin.admin"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC255b6Ll0Y-SjH6xT5YlEImN0wlu1NpOk"
+          "current_key": "AIzaSyCmFnABzCz7-bctUy--eFYittug2ZkFQUA"
         }
       ],
       "services": {
@@ -26,26 +26,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:390762162866:android:d2f1a9f9579c7c8eafb7ab",
-        "android_client_info": {
-          "package_name": "com.nimble.lupin.demoapplication"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC255b6Ll0Y-SjH6xT5YlEImN0wlu1NpOk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:390762162866:android:567146e78d621a7bafb7ab",
+        "mobilesdk_app_id": "1:84080903219:android:61705e441b8adbdbfd4f46",
         "android_client_info": {
           "package_name": "com.nimble.lupin.pu_manager"
         }
@@ -53,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC255b6Ll0Y-SjH6xT5YlEImN0wlu1NpOk"
+          "current_key": "AIzaSyCmFnABzCz7-bctUy--eFYittug2ZkFQUA"
         }
       ],
       "services": {
@@ -64,7 +45,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:390762162866:android:faf10713bb835796afb7ab",
+        "mobilesdk_app_id": "1:84080903219:android:f8599bb017588b30fd4f46",
         "android_client_info": {
           "package_name": "com.nimble.lupin.user"
         }
@@ -72,7 +53,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC255b6Ll0Y-SjH6xT5YlEImN0wlu1NpOk"
+          "current_key": "AIzaSyCmFnABzCz7-bctUy--eFYittug2ZkFQUA"
         }
       ],
       "services": {

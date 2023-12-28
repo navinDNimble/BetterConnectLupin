@@ -57,7 +57,7 @@ class HomeViewModel : ViewModel() {
     fun getGraphData(activityId: Int)
     {
 
-        apiService.getUserGraph(2,11).enqueue(object :
+        apiService.getUserGraph(Constants.AdminWorkStation_ID,activityId).enqueue(object :
             Callback<ResponseHandler<List<GraphModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<GraphModel>>>,

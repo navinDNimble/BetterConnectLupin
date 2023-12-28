@@ -78,7 +78,7 @@ class UserTaskListFragment : Fragment(), OnUserTaskSelected {
             2 -> "Project Manager"
             3 -> "Project coordinator "
             4 -> "PU Manager "
-            5 -> "Filed Facilitator"
+            5 -> "Field Facilitator"
             else -> "Unknown Post"
         }
 

@@ -36,7 +36,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="let_s_allot_the_task">Let\'s Allot The Task</string>
     <string name="title">Title</string>
-    <string name="filed_facilitator">Filed Facilitator</string>
+    <string name="filed_facilitator">Field Facilitator</string>
     <string name="select_field_facilitator">Select Field Facilitator</string>
     <string name="activity">Activity</string>
     <string name="select_activity">Select Activity</string>
@@ -98,5 +98,9 @@
         <item>Drum Support </item>
         <item>PPE kit Support </item>
         <item>Demo Support </item>
+        <item>Drip Irrigation </item>
+        <item>Plantation </item>
+        <item>Vegetable Cultivation </item>
+        <item>Waste Decomposer</item>
     </string-array>
 </resources>

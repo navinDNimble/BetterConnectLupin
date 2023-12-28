@@ -4,12 +4,13 @@ import com.google.firebase.storage.FirebaseStorage
 
 class Constants {
     companion object {
-      //  const val  serverIpAddress = "3.80.184.59" // Replace with your server's IP address
+        //  const val  serverIpAddress = "3.80.184.59" // Replace with your server's IP address
 //        private const val  serverIpAddress = "10.0.2.2" //Testing local Ip Address
 //        private const val  serverPort = 5000 // Replace with your server's port
 //        const val BASE_URL = "http://$serverIpAddress:$serverPort"
-      const val BASE_URL = "http://192.168.1.19:5000/"
-       // const val BASE_URL = "http://54.91.93.34:5000/"
+      //    const val BASE_URL = "http://192.168.1.7:5000/"
+
+        const val BASE_URL = "http://13.201.86.137:5000/"
         const val SHARED_PREF_KEY = "USER_KEY"
         const val Admin_ID_Key = "ADMIN_ID"
         const val Admin_Username_Key = "ADMIN_USER_NAME"
@@ -24,5 +25,8 @@ class Constants {
         const val PAGE_SIZE = 1
         var isChanged = false
         val storageRef = FirebaseStorage.getInstance().reference
+        val ACCESS_ID:String = "AKIA3PVIINNRR72CJHVM"
+        val SECRET_KEY:String = "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"
+        val BUCKET_NAME: String = "bettercotton"
     }
 }

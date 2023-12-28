@@ -1,7 +1,6 @@
 package com.nimble.lupin.admin.views.navigation.user.createUser
 
 import android.Manifest
-import android.R.attr
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -29,8 +28,21 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.plugin.Plugin
+import com.amplifyframework.storage.StorageAccessLevel
+import com.amplifyframework.storage.options.StorageUploadInputStreamOptions
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.bumptech.glide.Glide
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.nimble.lupin.admin.R
@@ -47,7 +59,10 @@ import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -148,10 +163,10 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
         binding.postId.setOnClickListener {
             postBottomSheet.show()
         }
-        binding.reportAuthorityId.setOnClickListener {
+ /*       binding.reportAuthorityId.setOnClickListener {
             reportAuthorityBottomSheet.show()
         }
-
+*/
         val selectorDialog = BottomSheetDialog(requireContext())
         selectorDialog.setContentView(R.layout.dialog_image_selector)
         selectorDialog.findViewById<AppCompatImageView>(R.id.camera)?.setOnClickListener {
@@ -172,7 +187,6 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
         }
 
         binding.createUserId.setOnClickListener() {
-
 
             val firstName = binding.firstNameId.text.toString().trim()
             val lastName = binding.lastNameId.text.toString().trim()
@@ -246,7 +260,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
 
 
             val compressedData = baos.toByteArray()
-            uploadProfileImage(compressedData) { imageUrl ->
+            awsUploadImage(compressedData) { imageUrl ->
                 if (imageUrl != null) {
                     val userModel = UserModel(
                         0,
@@ -271,11 +285,11 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                             Log.d("sachinCreateUser", result?.message.toString())
                             if (result?.code == 200) {
                                 showSnackBar(result.message, Color.GREEN)
-                                Log.d("sachinCreateUser", result.message.toString())
+                                Log.d("sachinCreateUser", result.message)
                                  fragmentManager?.popBackStack()
                                 Constants.isChanged = true
                             } else if (result?.code == 409) {
-                                Log.d("sachinCreateUser", result.message.toString())
+                                Log.d("sachinCreateUser", result.message)
                                 showSnackBar(result.message, Color.RED)
                             }
                             binding.createUserProgressBar.visibility = View.GONE
@@ -292,25 +306,23 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 } else {
                     binding.createUserProgressBar.visibility = View.GONE
                     binding.createUserId.visibility = View.VISIBLE
-                    return@uploadProfileImage
+                    return@awsUploadImage
                 }
             }
-
 
         }
     }
 
-    private fun openCamera() {
 
+    private fun openCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivityForResult(cameraIntent, 110)
         }
-
     }
 
-    private fun checkCameraPermission() {
 
+    private fun checkCameraPermission() {
         when {
             ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -326,8 +338,9 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
               askPermission()
             }
         }
-
     }
+
+
     private fun askPermission() {
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
@@ -368,6 +381,49 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
         dialog.show()
     }
 
+
+    private fun awsUploadImage(image: ByteArray, callback: (String?) -> Unit) {
+         val creds = BasicAWSCredentials(Constants.ACCESS_ID, Constants.SECRET_KEY)
+         val s3Client = AmazonS3Client(creds)
+        val randomName = "profile/" + UUID.randomUUID().toString()
+        val trans = TransferUtility.builder().context(requireContext()).s3Client(s3Client).build()
+        try {
+            val file = File.createTempFile("tempImage", null, context?.cacheDir)
+            val outputStream = FileOutputStream(file)
+            outputStream.write(image)
+            outputStream.close()
+
+            val observer: TransferObserver = trans.upload(Constants.BUCKET_NAME, randomName, file)
+            observer.setTransferListener(object : TransferListener {
+                override fun onStateChanged(id: Int, state: TransferState) {
+                    if (state == TransferState.COMPLETED) {
+                        val url = "https://${Constants.BUCKET_NAME}.s3.amazonaws.com/$randomName"
+                        Log.d("msg", "Upload completed. URL: $url")
+                        callback(url)
+                    } else if (state == TransferState.FAILED) {
+                        showSnackBar("failed to upload Image",Color.RED)
+                        callback(null)
+                    }
+                }
+                override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
+                    if (bytesCurrent == bytesTotal) {
+                        Log.e("sachin", "Upload successful")
+                    }
+                }
+
+                override fun onError(id: Int, ex: Exception) {
+                    Log.d("sachinerror", ex.toString())
+                    showSnackBar(ex.message.toString(),Color.RED)
+                    callback(null)
+                }
+            })
+
+        } catch (e: Exception) {
+            Log.e("sachnexcpation", "Failed to create temporary file: ${e.message}")
+            callback(null)
+        }
+
+    }
     private fun uploadProfileImage(image: ByteArray, callback: (String?) -> Unit) {
         val randomName = UUID.randomUUID().toString()
         val ref = Constants.storageRef.child("Profile/$randomName")
@@ -446,9 +502,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
 
         } else if (requestCode ==111&&resultCode == Activity.RESULT_OK) {
             val selectedImageUri : Uri = data?.data!!
-
             val selectedImageBitmap: Bitmap?
-
             try {
                 selectedImageBitmap = MediaStore.Images.Media.getBitmap(
                     requireContext().contentResolver,
@@ -461,6 +515,5 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 Toast.makeText(requireContext(),"Image Not Found", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }

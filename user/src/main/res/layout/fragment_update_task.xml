@@ -141,6 +141,7 @@
                                 android:gravity="center"
                                 android:inputType="number"
                                 android:padding="8dp"
+                                android:maxLength="6"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold"
                                 android:visibility="@{viewModel.maleCountVisibility ? View.VISIBLE : View.GONE}"
@@ -168,6 +169,7 @@
                                 android:id="@+id/femaleFarmersId"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:maxLength="6"
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
@@ -203,6 +205,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:minWidth="100dp"
+
                                 android:background="@drawable/edit_text_background_black"
                                 android:gravity="center"
                                 android:inputType="number"
@@ -238,6 +241,7 @@
                                 android:background="@drawable/edit_text_background_black"
                                 android:gravity="center"
                                 android:inputType="number"
+                                android:maxLength="6"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
@@ -272,6 +276,7 @@
                                 android:background="@drawable/edit_text_background_black"
                                 android:gravity="center"
                                 android:inputType="number"
+                                android:maxLength="6"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
@@ -304,6 +309,7 @@
                                 android:background="@drawable/edit_text_background_black"
                                 android:gravity="center"
                                 android:inputType="number"
+                                android:maxLength="6"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"
                                 android:textStyle="bold" />
@@ -336,6 +342,7 @@
                                 android:minWidth="100dp"
                                 android:background="@drawable/edit_text_background_black"
                                 android:gravity="center"
+                                android:maxLength="6"
                                 android:inputType="number"
                                 android:padding="8dp"
                                 android:textSize="@dimen/_12sdp"

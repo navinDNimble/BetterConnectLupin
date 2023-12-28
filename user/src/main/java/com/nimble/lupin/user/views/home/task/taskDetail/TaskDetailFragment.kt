@@ -2,6 +2,7 @@ package com.nimble.lupin.user.views.home.task.taskDetail
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -31,10 +32,10 @@ import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
 
 
 class TaskDetailFragment : Fragment() , OnClickSeePhoto {
-
     private var _binding: FragmentTaskDetailBinding? = null
     private val binding get() = _binding!!
     private var task: TaskModel? = null
@@ -60,12 +61,30 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        binding.updateTaskButton.setOnClickListener {
 
-                val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)
-                findNavController().navigate(action)
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val currentDate = LocalDate.now()
+            val startDate = LocalDate.parse( task?.task?.startDate)
+            val endDate = LocalDate.parse(task?.task?.endDate).plusDays(3)
+            Log.d("sachin Dates" , currentDate.toString())
+            Log.d("sachin Dates" , startDate.toString())
+            Log.d("sachin Dates" , endDate.toString())
+
+            if (currentDate in startDate..endDate) {
+                Log.d("sachin Dates", "In of range")
+            } else {
+                binding.updateTaskButton.visibility = View.GONE
+
+            }
 
         }
+        binding.updateTaskButton.setOnClickListener {
+                val action = TaskDetailFragmentDirections.taskDetailFragmentToTaskUpdateFragment(task!!)
+                findNavController().navigate(action)
+        }
+
         getTaskUpdates()
     }
     override fun onCreateView(
@@ -204,7 +223,5 @@ class TaskDetailFragment : Fragment() , OnClickSeePhoto {
             })
 
         }
-
     }
-
 }

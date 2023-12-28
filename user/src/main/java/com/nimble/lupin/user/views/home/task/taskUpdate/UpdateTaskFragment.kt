@@ -31,6 +31,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
+import com.amazonaws.services.s3.AmazonS3Client
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -45,16 +51,26 @@ import com.nimble.lupin.user.models.TaskModel
 import com.nimble.lupin.user.models.TaskUpdatesModel
 import com.nimble.lupin.user.utils.Constants
 import com.nimble.lupin.user.views.home.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.UUID
+import java.util.concurrent.Executors
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 class UpdateTaskFragment : Fragment() ,OnImageUnselected{
@@ -312,7 +328,26 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
                 }
 
                 if (photoByteList.size == photoList.size){
-                    uploadImages(photoByteList ,taskUpdateModel)
+
+                    awsUploadImages(photoByteList){
+                        val imageUrlList = mutableListOf<String>()
+                        it.forEach { imageUrl ->
+                            if (imageUrl!=null){
+                                imageUrlList.add(imageUrl)
+                            }
+                        }
+
+                        if (imageUrlList.size==photoByteList.size){
+                            taskUpdateModel.photoList = imageUrlList
+                            taskUpdateModel.photo = 1
+                            updateTask(taskUpdateModel)
+                        }else{
+                           showSnackBar("Error In Uploading Images",Color.RED)
+                            viewModel.progressBarVisibility.set(false)
+                            binding.updateDetailsButton.visibility = View.VISIBLE
+                        }
+
+                    }
                 }
                 else{
                     showSnackBar("Unable to Compress Selected Images",Color.RED)
@@ -323,11 +358,76 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
             }else{
                 updateTask(taskUpdateModel)
             }
-
         }
 
     }
-    private fun uploadImages(
+
+    private fun awsUploadImages(images: List<ByteArray>, callback: (List<String?>) -> Unit) {
+        val creds = BasicAWSCredentials(Constants.ACCESS_ID, Constants.SECRET_KEY)
+        val s3Client = AmazonS3Client(creds)
+        val trans = TransferUtility.builder().context(requireContext()).s3Client(s3Client).build()
+
+        val uploadResults: MutableList<String?> = mutableListOf()
+
+        val uploadImage = { image: ByteArray, callback: (String?) -> Unit ->
+            val randomName = "UploadTask/" + UUID.randomUUID().toString()
+            try {
+                val file = File.createTempFile("tempImage", null, context?.cacheDir)
+                val outputStream = FileOutputStream(file)
+                outputStream.write(image)
+                outputStream.close()
+
+                val observer: TransferObserver = trans.upload(Constants.BUCKET_NAME, randomName, file)
+                observer.setTransferListener(object : TransferListener {
+                    override fun onStateChanged(id: Int, state: TransferState) {
+                        if (state == TransferState.COMPLETED) {
+                            val url = "https://${Constants.BUCKET_NAME}.s3.amazonaws.com/$randomName"
+                            Log.d("msg", "Upload completed. URL: $url")
+                            callback(url)
+                        } else if (state == TransferState.FAILED) {
+                            Log.e("msg", "Failed to upload Image")
+                            callback(null)
+                        }
+                    }
+
+                    override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
+                        if (bytesCurrent == bytesTotal) {
+                            Log.e("sachin", "Upload successful")
+                        }
+                    }
+
+                    override fun onError(id: Int, ex: Exception) {
+                        Log.d("sachinerror", ex.toString())
+                        callback(null)
+                    }
+                })
+
+            } catch (e: Exception) {
+                Log.e("sachnexcpation", "Failed to create temporary file: ${e.message}")
+                callback(null)
+            }
+        }
+
+        val coroutineScope = CoroutineScope(Executors.newFixedThreadPool(images.size).asCoroutineDispatcher())
+
+        val uploadJobs = images.map { image ->
+            coroutineScope.async {
+                return@async suspendCoroutine<String?> { cont ->
+                    uploadImage(image) { url ->
+                        cont.resume(url)
+                    }
+                }
+            }
+        }
+
+        coroutineScope.launch {
+            val results = uploadJobs.awaitAll()
+            callback(results)
+        }
+    }
+
+
+ /*   private fun uploadImages(
         photoByteList: MutableList<ByteArray>,
         taskUpdateModel: TaskUpdatesModel
     ) {
@@ -365,7 +465,7 @@ class UpdateTaskFragment : Fragment() ,OnImageUnselected{
                 showSnackBar("Failed To Upload Images ${e.message}", Color.RED)
             }
 
-    }
+    }*/
 
     private fun reduceImageSize(bitmap: Bitmap)  :ByteArray {
         val baos = ByteArrayOutputStream()

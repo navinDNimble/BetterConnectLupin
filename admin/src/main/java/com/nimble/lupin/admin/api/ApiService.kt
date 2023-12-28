@@ -29,13 +29,11 @@ interface ApiService {
     @GET("get_task_users")
     fun getTaskUsers(@Query("taskId") taskId: Int, @Query("page") page: Int): Call<ResponseHandler<List<TaskUsersModel>>>
 
-
     @GET("get_task_to_assign")
     fun getTaskToAssign(@Query("workStation") workStation: Int ,@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
 
     @GET("get_all_user")
     fun getAllUserList(@Query("workStation") workStation: Int,@Query("page") page: Int , @Query("searchKey") searchKey: String ): Call<ResponseHandler<List<UserModel>>>
-
 
     @POST("create_task")
     fun createTask(@Body taskModel: TaskModel): Call<ResponseHandler<TaskModel>>

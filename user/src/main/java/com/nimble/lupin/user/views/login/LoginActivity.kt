@@ -129,11 +129,16 @@ class LoginActivity : AppCompatActivity() {
                 showSnackBar("Verification Code Send", Color.GREEN)
                 storedVerificationId = verificationId
                 resendToken = token
-                binding.mobileNumberLayout.visibility = View.GONE
-                binding.verifyOtpLayout.visibility = View.VISIBLE
-                binding.sendOtpButton.visibility = View.GONE
-                binding.verifyOtpButton.visibility = View.VISIBLE
+
                 binding.progressBarMobileNumber.visibility = View.GONE
+                binding.mobileNumberLayout.visibility = View.GONE
+
+                binding.verifyOtpLayout.visibility = View.VISIBLE
+                binding.verifyOtpButton.visibility = View.VISIBLE
+                binding.progressBarOtp.visibility =View.GONE
+
+                binding.sendOtpButton.visibility = View.GONE
+
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
@@ -221,7 +226,9 @@ class LoginActivity : AppCompatActivity() {
             binding.mobileNumberLayout.visibility = View.VISIBLE
             binding.progressBarOtp.visibility = View.GONE
             binding.verifyOtpButton.visibility = View.GONE
+
             binding.sendOtpButton.visibility = View.VISIBLE
+            binding.progressBarMobileNumber.visibility =View.GONE
             return
 
         } else {

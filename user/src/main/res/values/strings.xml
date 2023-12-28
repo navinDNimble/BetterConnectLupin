@@ -63,5 +63,10 @@
         <item>Drum Support </item>
         <item>PPE kit Support </item>
         <item>Demo Support </item>
+        <item>Drip Irrigation </item>
+        <item>Plantation </item>
+        <item>Vegetable Cultivation </item>
+        <item>Waste Decomposer</item>
+
     </string-array>
 </resources>
