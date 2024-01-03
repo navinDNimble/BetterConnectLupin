@@ -1,5 +1,6 @@
 package com.nimble.lupin.pu_manager.views.home.schedule.scheduleDetail
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -29,42 +30,48 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
+class ScheduleDetailFragment : Fragment(), OnTaskUserSelected {
     private var _binding: FragmentScheduleDetailBinding? = null
     private val binding get() = _binding!!
-    private   var  task  : TaskModel? = null
+    private var task: TaskModel? = null
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
-    private var page =0
+    private var page = 0
     private var isLastPage = false
     private var isLoading = false
-    private lateinit var taskUsersList :MutableList<TaskUsersModel>
-    private lateinit var taskUserAdapter : TaskUsersAdapter
+    private lateinit var taskUsersList: MutableList<TaskUsersModel>
+    private lateinit var taskUserAdapter: TaskUsersAdapter
     private lateinit var paginationScrollListener: PaginationScrollListener
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         task = arguments?.getParcelable("TaskDetail")
+        task = arguments?.getParcelable("TaskDetail")
         page = 0
         isLastPage = false
         taskUsersList = mutableListOf()
 
-        taskUserAdapter = TaskUsersAdapter(taskUsersList ,this )
+        taskUserAdapter = TaskUsersAdapter(taskUsersList, this)
         _binding = FragmentScheduleDetailBinding.inflate(layoutInflater)
-        binding.includedLayout.textViewAssignTaskTaskTitleIn.text = task?.taskId.toString()+" " + task?.taskName
-        binding.includedLayout.textViewAssignTaskStartDateIn.text =   getString(R.string.date_combine_string, task?.startDate, task?.endDate)
-        binding.includedLayout.textViewActivityNameIn.text =  getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
-        binding.includedLayout.units.visibility =View.GONE
+        binding.includedLayout.textViewAssignTaskTaskTitleIn.text =
+            task?.taskId.toString() + " " + task?.taskName
+        binding.includedLayout.textViewAssignTaskStartDateIn.text =
+            getString(R.string.date_combine_string, task?.startDate, task?.endDate)
+        binding.includedLayout.textViewActivityNameIn.text =
+            getString(R.string.activity_combine_String, task?.activityName, task?.subActivityName)
+        binding.includedLayout.units.visibility = View.GONE
 
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
         binding.assignTaskScheduleButtonId.setOnClickListener {
-            val  action = ScheduleDetailFragmentDirections.scheduleDetailFragmentToAssignTaskFragment(task!!)
+            val action =
+                ScheduleDetailFragmentDirections.scheduleDetailFragmentToAssignTaskFragment(task!!)
             findNavController().navigate(action)
         }
         binding.scheduleUserRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.scheduleUserRecyclerView.adapter = taskUserAdapter
 
-        paginationScrollListener = object : PaginationScrollListener(binding.scheduleUserRecyclerView.layoutManager as LinearLayoutManager) {
+        paginationScrollListener = object :
+            PaginationScrollListener(binding.scheduleUserRecyclerView.layoutManager as LinearLayoutManager) {
 
             override fun isLastPage(): Boolean {
                 return isLastPage
@@ -97,69 +104,74 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
     ): View {
 
 
-
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val role = sharedPref.getInt(Constants.Admin_Role_Key,0)
+        if (role == 3){
+            binding.assignTaskScheduleButtonId.visibility = View.GONE
+        }
     }
+
     private fun getTaskUsers() {
         binding.scheduleDetailProgressBar.visibility = View.VISIBLE
         isLoading = true
-        apiService.getManagerTaskUsers(task?.taskId!!,page).enqueue(object :Callback<ResponseHandler<List<TaskUsersModel>>>{
-            override fun onResponse(
-                call: Call<ResponseHandler<List<TaskUsersModel>>>,
-                response: Response<ResponseHandler<List<TaskUsersModel>>>
-            ) {
-                val result = response.body()
-                if (response.isSuccessful){
-                    Log.d("sachinScheduleDetails",result.toString())
-                    when (result?.code) {
-                        200 -> {
-                            isLastPage = result.isLastPage
-                            if (page==0) {
-                                taskUsersList.clear()
+        apiService.getManagerTaskUsers(task?.taskId!!, page)
+            .enqueue(object : Callback<ResponseHandler<List<TaskUsersModel>>> {
+                override fun onResponse(
+                    call: Call<ResponseHandler<List<TaskUsersModel>>>,
+                    response: Response<ResponseHandler<List<TaskUsersModel>>>
+                ) {
+                    val result = response.body()
+                    if (response.isSuccessful) {
+                        Log.d("sachinScheduleDetails", result.toString())
+                        when (result?.code) {
+                            200 -> {
+                                isLastPage = result.isLastPage
+                                if (page == 0) {
+                                    taskUsersList.clear()
+                                }
+                                taskUsersList.addAll(result.response)
+                                taskUserAdapter.updateList(taskUsersList)
+                                taskUserAdapter.notifyDataSetChanged()
+                                binding.scheduleDetailResultTextView.visibility = View.GONE
                             }
-                            taskUsersList.addAll(result.response)
-                            taskUserAdapter.updateList(taskUsersList)
-                            taskUserAdapter.notifyDataSetChanged()
-                            binding.scheduleDetailResultTextView.visibility =View.GONE
-                        }
-                        404 -> {
-                            Log.d("sachinScheduleDetails",result.toString())
-                            isLastPage = result.isLastPage
-                            binding.scheduleDetailResultTextView.text = result.message
-                            binding.scheduleDetailResultTextView.visibility =View.VISIBLE
-                        }
-                        409 -> {
-                            Log.d("sachinScheduleDetails",result.toString())
-                            isLastPage = result.isLastPage
 
+                            404 -> {
+                                Log.d("sachinScheduleDetails", result.toString())
+                                isLastPage = result.isLastPage
+                                binding.scheduleDetailResultTextView.text = result.message
+                                binding.scheduleDetailResultTextView.visibility = View.VISIBLE
+                            }
+
+                            409 -> {
+                                Log.d("sachinScheduleDetails", result.toString())
+                                isLastPage = result.isLastPage
+
+                            }
+
+                            500 -> {
+                                Log.d("sachinScheduleDetails", result.toString())
+                                showSnackBar("Error in Loading  Task")
+                            }
                         }
-                        500 -> {
-                            Log.d("sachinScheduleDetails",result.toString())
-                            showSnackBar("Error in Loading  Task")
-                        }
+                        binding.scheduleDetailProgressBar.visibility = View.GONE
+                        isLoading = false
+
                     }
-                    binding.scheduleDetailProgressBar.visibility = View.GONE
-                    isLoading = false
-
                 }
-            }
 
-            override fun onFailure(
-                call: Call<ResponseHandler<List<TaskUsersModel>>>,
-                t: Throwable
-            ) {
-                binding.scheduleDetailProgressBar.visibility = View.GONE
-                showSnackBar(t.message.toString())
-                isLoading = false
-            }
-        })
+                override fun onFailure(
+                    call: Call<ResponseHandler<List<TaskUsersModel>>>,
+                    t: Throwable
+                ) {
+                    binding.scheduleDetailProgressBar.visibility = View.GONE
+                    showSnackBar(t.message.toString())
+                    isLoading = false
+                }
+            })
     }
 
 
@@ -167,7 +179,7 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
         super.onResume()
         val mainActivity = requireActivity() as? MainActivity
         mainActivity?.hideBottomView()
-        if (Constants.isChanged){
+        if (Constants.isChanged) {
             taskUsersList.clear()
             page = 0
             taskUserAdapter.notifyDataSetChanged()
@@ -175,6 +187,7 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
             Constants.isChanged = false
         }
     }
+
     private fun showSnackBar(message: String) {
         val rootView: View = requireActivity().findViewById(android.R.id.content)
         val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
@@ -188,9 +201,12 @@ class ScheduleDetailFragment : Fragment()  ,OnTaskUserSelected{
     }
 
 
-
     override fun onTaskUserSelected(taskUsersModel: TaskUsersModel) {
-        val action =  ScheduleDetailFragmentDirections.scheduleDetailFragmentToScheduleUpdateFragment(taskUsersModel.userTask!!,task!!)
+        val action =
+            ScheduleDetailFragmentDirections.scheduleDetailFragmentToScheduleUpdateFragment(
+                taskUsersModel.userTask!!,
+                task!!
+            )
         findNavController().navigate(action)
     }
 }

@@ -245,6 +245,8 @@ class CreateTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
                     val action = CreateTaskFragmentDirections.createTaskFragmentToScheduleFragment()
                     findNavController().navigate(action)
+
+
                 } else {
                     Log.d("sachinCreateTask", result?.response.toString())
                     showSnackBar(result?.message.toString(), Color.RED)

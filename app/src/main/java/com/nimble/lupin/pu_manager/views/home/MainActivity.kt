@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
 
         actionBarDrawerToggle.syncState()
 
+        if (sharedPref.getInt(Constants.Admin_Role_Key,0)==3){
+            binding.adminNavigationView.menu.findItem(R.id.navigation_create_task).isVisible = false
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

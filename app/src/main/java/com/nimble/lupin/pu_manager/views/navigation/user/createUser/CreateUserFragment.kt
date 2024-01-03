@@ -29,6 +29,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
+import com.amazonaws.services.s3.AmazonS3Client
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -47,6 +53,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -63,8 +71,8 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
     private lateinit var postBottomSheet: BottomSheet
 
     private var postId: Int = 5
-    private var reportAuthorityId: Int = Constants.Admin_ID
-    private val workStation = Constants.AdminWorkStation_ID
+    private var reportAuthorityId: Int = 0
+    private var workStation :Int = 0
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
     private  var  selectedImage  : Bitmap? = null
     private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
@@ -104,7 +112,6 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
     ): View {
         binding = FragmentCreateUserBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,8 +125,11 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
         )
 
         postBottomSheet = BottomSheet(bottomModelList, this, "post", false, requireContext())
-        binding.reportAuthorityId.text = sharedPref.getString(Constants.Admin_Username_Key,"") +" "+ Constants.AdminWorkStation_Name
-        Log.d("saching", Constants.AdminWorkStation_Name)
+        val workStationName = sharedPref.getString(Constants.Admin_WorkStationName_Key,"No WorkStation Found").toString()
+        reportAuthorityId = sharedPref.getInt(Constants.Admin_ID_Key,0)
+        workStation = sharedPref.getInt(Constants.Admin_WorkstationId_Key,0)
+        binding.reportAuthorityId.text = sharedPref.getString(Constants.Admin_Username_Key,"") +" " + workStationName
+
 
         datePickerDialog = DatePickerDialog(
             requireContext(),
@@ -217,10 +227,16 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 return@setOnClickListener
             }
             if (reportAuthorityId == 0) {
-                binding.reportAuthorityId.error = "Select ReportAuthority "
+                binding.reportAuthorityId.error = "Report Authority Not Found"
                 binding.reportAuthorityId.requestFocus()
                 return@setOnClickListener
             }
+            if (workStation==0){
+                binding.reportAuthorityId.error = "Workstation Not Found For Report Authority"
+                binding.reportAuthorityId.requestFocus()
+                return@setOnClickListener
+            }
+
             if (isEmpty(joiningDate)) {
                 binding.joiningDateId.error = "Joining Date  Should Not Be Empty."
                 binding.joiningDateId.requestFocus()
@@ -241,7 +257,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
             } while (dataSize > 200 * 1024 && quality > 0)
 
             val compressedData = baos.toByteArray()
-            uploadProfileImage(compressedData) { imageUrl ->
+            awsUploadImage(compressedData) { imageUrl ->
                 if (imageUrl != null) {
                     val userModel = UserModel(
                         0,
@@ -282,17 +298,57 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                             binding.createUserProgressBar.visibility = View.GONE
                             binding.createUserId.visibility = View.VISIBLE
                         }
-
                     })
                 } else {
                     binding.createUserProgressBar.visibility = View.GONE
                     binding.createUserId.visibility = View.VISIBLE
-                    return@uploadProfileImage
+                    return@awsUploadImage
                 }
             }
-
-
         }
+    }
+
+    fun awsUploadImage(image: ByteArray, callback: (String?) -> Unit) {
+        val creds = BasicAWSCredentials(Constants.ACCESS_ID, Constants.SECRET_KEY)
+        val s3Client = AmazonS3Client(creds)
+        val randomName = "profile/" + UUID.randomUUID().toString()
+        val trans = TransferUtility.builder().context(requireContext()).s3Client(s3Client).build()
+        try {
+            val file = File.createTempFile("tempImage", null, context?.cacheDir)
+            val outputStream = FileOutputStream(file)
+            outputStream.write(image)
+            outputStream.close()
+
+            val observer: TransferObserver = trans.upload(Constants.BUCKET_NAME, randomName, file)
+            observer.setTransferListener(object : TransferListener {
+                override fun onStateChanged(id: Int, state: TransferState) {
+                    if (state == TransferState.COMPLETED) {
+                        val url = "https://${Constants.BUCKET_NAME}.s3.amazonaws.com/$randomName"
+                        Log.d("msg", "Upload completed. URL: $url")
+                        callback(url)
+                    } else if (state == TransferState.FAILED) {
+                        showSnackBar("failed to upload Image",Color.RED)
+                        callback(null)
+                    }
+                }
+                override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
+                    if (bytesCurrent == bytesTotal) {
+                        Log.e("sachin", "Upload successful")
+                    }
+                }
+
+                override fun onError(id: Int, ex: Exception) {
+                    Log.d("sachinerror", ex.toString())
+                    showSnackBar(ex.message.toString(),Color.RED)
+                    callback(null)
+                }
+            })
+
+        } catch (e: Exception) {
+            Log.e("sachnexcpation", "Failed to create temporary file: ${e.message}")
+            callback(null)
+        }
+
     }
 
     private fun openCamera() {
@@ -363,25 +419,7 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
         dialog.show()
     }
 
-    private fun uploadProfileImage(image: ByteArray, callback: (String?) -> Unit) {
-        val randomName = UUID.randomUUID().toString()
-        val ref = Constants.storageRef.child("Profile/$randomName")
-        val uploadTask = ref.putBytes(image)
 
-        uploadTask.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                ref.downloadUrl.addOnSuccessListener { downloadUri ->
-                    val imageUrl = downloadUri.toString()
-                    Log.d("Sachin", "Download URL: $imageUrl")
-                    callback(imageUrl)
-                }
-            } else {
-                showSnackBar("Image upload failed: ${task.exception?.message}", Color.RED)
-                Log.e("Sachin", "Image upload failed: ${task.exception?.message}")
-                callback(null)
-            }
-        }
-    }
     private fun isEmpty(userInputValue: String): Boolean {
         if (TextUtils.isEmpty(userInputValue)) {
             return true
@@ -401,8 +439,6 @@ class CreateUserFragment : Fragment(), OnBottomSheetItemSelected {
                 postId = bottomSheetItem.id
                 postBottomSheet.cancel()
             }
-
-
         }
     }
 

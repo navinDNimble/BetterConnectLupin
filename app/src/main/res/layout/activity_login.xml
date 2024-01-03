@@ -42,6 +42,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="@string/enter_mobile_number"
             android:inputType="number"
+            android:maxLength="10"
             android:padding="15dp"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"

@@ -103,7 +103,6 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
             }else{
                 showSnackBar("Select Task First To Allot Users",Color.RED)
             }
-
         }
         binding.backButtonMain.setOnClickListener {
             fragmentManager?.popBackStack()
@@ -114,7 +113,6 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
     }
 
     private fun assignTask() {
-
        if (selectedTaskId == 0){
            binding.taskNameTextView.requestFocus()
            binding.taskNameTextView.error = "Please Select a task"
@@ -137,7 +135,7 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
        }
 
         for (item in selectedItemList) {
-            if (item.total_units.isNullOrEmpty()){
+            if (item.total_units.isNullOrEmpty() ||item.total_units?.toInt()==0){
                 showSnackBar("Unit Not Assigned to "+item.firstName+" - " + item.lastName,Color.RED)
                 return
             }
@@ -185,7 +183,6 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
    }
     fun setTextOnFiledFacilitator(){
-
         val size = selectedItemList.size.toString()
         Log.d("sachin",size.toString())
         if (selectedItemList.size==0){
@@ -258,8 +255,6 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
 
     }
     fun getUsersList() {
-
-
         binding.progressBar.visibility = View.VISIBLE
         isLoading = true
         userCall?.cancel()
@@ -301,7 +296,6 @@ class AssignTaskFragment : Fragment(), OnBottomSheetItemSelected {
                                     userList.addAll(responseList)
                                     adapter?.notifyItemRangeInserted(size , responseList.size)
                                 }
-
                             }
 
                             404 -> {

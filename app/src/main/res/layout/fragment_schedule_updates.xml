@@ -41,18 +41,13 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-
-
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:background="@color/primaryColor">
+
             <include
                 android:id="@+id/includedLayout"
                 layout="@layout/item_task"
@@ -88,6 +83,7 @@
             tools:itemCount="5"
             tools:listitem="@layout/item_task_updates"
             />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/scheduleUpdatesResultTextView"

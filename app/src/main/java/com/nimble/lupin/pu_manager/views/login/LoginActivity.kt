@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("sachinLogin",result.toString())
                             if (result?.code == 200) {
                                 adminProfileModel = result.response
-                                if (adminProfileModel.post==4){
+                                if (adminProfileModel.post==4 || adminProfileModel.post == 3){
                                     sendOtp(phoneNumber)
                                 }else{
                                     binding.sendOtpButton.visibility = View.VISIBLE
@@ -137,10 +137,19 @@ class LoginActivity : AppCompatActivity() {
                 showSnackBar("Verification Code Send", Color.GREEN)
                 storedVerificationId = verificationId
                 resendToken = token
-                binding.mobileNumberLayout.visibility = View.GONE
-                binding.verifyOtpLayout.visibility = View.VISIBLE
-                binding.sendOtpButton.visibility = View.VISIBLE
+
                 binding.progressBarMobileNumber.visibility = View.GONE
+                binding.mobileNumberLayout.visibility = View.GONE
+
+                binding.verifyOtpLayout.visibility = View.VISIBLE
+                binding.verifyOtpButton.visibility = View.VISIBLE
+                binding.progressBarOtp.visibility =View.GONE
+
+                binding.sendOtpButton.visibility = View.VISIBLE
+
+
+
+
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
@@ -182,7 +191,7 @@ class LoginActivity : AppCompatActivity() {
                     sharedPreferences.putString(Constants.Admin_WorkStationName_Key,adminProfileModel.workStationName)
                     Log.d("saching admin",adminProfileModel.workStationName)
                     sharedPreferences.putString(Constants.adminProfileModel,adminProfileModel.toString())
-
+                    sharedPreferences.putInt(Constants.Admin_Role_Key,adminProfileModel.post)
                     sharedPreferences.apply()
                     showSnackBar("Log In Success", Color.GREEN)
                     CoroutineScope(Dispatchers.Main).launch {
@@ -215,9 +224,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (binding.verifyOtpLayout.visibility == View.VISIBLE) {
             binding.verifyOtpLayout.visibility = View.GONE
-            binding.mobileNumberLayout.visibility = View.VISIBLE
+            binding.verifyOtpButton.visibility = View.VISIBLE
             binding.progressBarOtp.visibility = View.GONE
-            binding.verifyOtpButton.visibility = View.GONE
+
+            binding.mobileNumberLayout.visibility = View.VISIBLE
+            binding.progressBarMobileNumber.visibility = View.GONE
+            binding.sendOtpButton.visibility = View.VISIBLE
             return
 
         } else {

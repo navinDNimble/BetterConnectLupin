@@ -1,5 +1,6 @@
 package com.nimble.lupin.pu_manager.views.navigation.user
 
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -24,6 +25,7 @@ import com.nimble.lupin.pu_manager.models.UserModel
 import com.nimble.lupin.pu_manager.utils.Constants
 import com.nimble.lupin.pu_manager.utils.PaginationScrollListener
 import com.nimble.lupin.pu_manager.views.home.MainActivity
+import org.koin.java.KoinJavaComponent
 
 class UserListFragment : Fragment()  ,OnUserSelected {
 
@@ -36,6 +38,8 @@ class UserListFragment : Fragment()  ,OnUserSelected {
     private lateinit var userList: MutableList<UserModel>
 
     private var _binding: FragmentUserListBinding? = null
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
+
     private val binding get() = _binding!!
     private val handler = Handler(Looper.getMainLooper())
     private var searchDelayMillis = 500L  // 500 milliseconds
@@ -103,6 +107,10 @@ class UserListFragment : Fragment()  ,OnUserSelected {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val role = sharedPref.getInt(Constants.Admin_Role_Key,0)
+        if (role == 3){
+            binding.createUserButtonId.visibility = View.GONE
+        }
         binding.createUserButtonId.setOnClickListener {
             val action = UserListFragmentDirections.userListFragmentToCreateUserFragment()
             findNavController().navigate(action)

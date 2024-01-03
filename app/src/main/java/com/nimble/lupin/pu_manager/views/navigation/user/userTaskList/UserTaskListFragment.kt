@@ -1,5 +1,6 @@
 package com.nimble.lupin.pu_manager.views.navigation.user.userTaskList
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -19,9 +20,9 @@ import com.nimble.lupin.pu_manager.models.UserTasksListModel
 import com.nimble.lupin.pu_manager.utils.Constants
 import com.nimble.lupin.pu_manager.utils.PaginationScrollListener
 import com.nimble.lupin.pu_manager.views.home.MainActivity
+import org.koin.java.KoinJavaComponent
 
 class UserTaskListFragment : Fragment(), OnUserTaskSelected {
-
     private lateinit var viewModel: UserTaskListViewModel
     private var _binding: FragmentUserTaskListBinding? = null
     private val binding get() = _binding!!
@@ -31,8 +32,8 @@ class UserTaskListFragment : Fragment(), OnUserTaskSelected {
     private lateinit var completedAdapter: UserTasksAdapter
     private lateinit var completedPaginationScrollListener: PaginationScrollListener
     private lateinit var progressPaginationScrollListener: PaginationScrollListener
-
     private var userModel: UserModel? = null
+    private val sharedPref: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,9 +72,9 @@ class UserTaskListFragment : Fragment(), OnUserTaskSelected {
         binding.textViewUserPost.text = when (userModel?.post) {
             1 -> "Admin"
             2 -> "Project Manager"
-            3 -> "Project coordinator "
-            4 -> "PU Manager "
-            5 -> "Filed Facilitator"
+            3 -> "Project Coordinator"
+            4 -> "PU Manager"
+            5 -> "Field Facilitator"
             else -> "Unknown Post"
         }
 
@@ -81,6 +82,10 @@ class UserTaskListFragment : Fragment(), OnUserTaskSelected {
             .into(binding.roundedImageViewProfileUserTaskList)
         binding.imageViewBackArrow.setOnClickListener {
             fragmentManager?.popBackStack()
+        }
+        val role = sharedPref.getInt(Constants.Admin_Role_Key,0)
+        if (role == 3){
+            binding.assigntaskToUser.visibility = View.GONE
         }
         binding.assigntaskToUser.setOnClickListener {
             val action =
@@ -204,5 +209,4 @@ class UserTaskListFragment : Fragment(), OnUserTaskSelected {
         )
         findNavController().navigate(action)
     }
-
 }

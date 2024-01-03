@@ -15,6 +15,7 @@
         <item
             android:id="@+id/navigation_setting"
             android:icon="@drawable/icon_setting"
+            android:visible="false"
             android:title="@string/setting" />
         <item
             android:id="@+id/navigation_logout"

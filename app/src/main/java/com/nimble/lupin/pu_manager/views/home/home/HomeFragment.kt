@@ -44,6 +44,7 @@ class HomeFragment : Fragment() {
 //        Color.parseColor("#F7D8BA")
     )
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentHomeBinding.inflate(layoutInflater)

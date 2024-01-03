@@ -11,21 +11,21 @@ import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Response
 
-class UserListViewModel : ViewModel(){
-    var page =0
-    var searchKey =""
+class UserListViewModel : ViewModel() {
+    var page = 0
+    var searchKey = ""
     var isLastPage = false
-    var responseError : MutableLiveData<String> = MutableLiveData()
+    var responseError: MutableLiveData<String> = MutableLiveData()
 
-    var loadingProgressBar : MutableLiveData<Boolean> = MutableLiveData()
+    var loadingProgressBar: MutableLiveData<Boolean> = MutableLiveData()
     val taskListResponse = MutableLiveData<List<UserModel>>()
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
 
     private var call: Call<ResponseHandler<List<UserModel>>>? = null
-    fun getUsersList(){
+    fun getUsersList() {
         loadingProgressBar.postValue(true)
         call?.cancel()
-        call = apiService.getManagerUserList(Constants.AdminWorkStation_ID,page, searchKey)
+        call = apiService.getManagerUserList(Constants.AdminWorkStation_ID, page, searchKey)
         call?.enqueue(object : retrofit2.Callback<ResponseHandler<List<UserModel>>> {
             override fun onResponse(
                 call: Call<ResponseHandler<List<UserModel>>>,
@@ -39,17 +39,20 @@ class UserListViewModel : ViewModel(){
                             isLastPage = result.isLastPage
                             taskListResponse.postValue(result.response!!)
                         }
+
                         404 -> {
                             //No users Available
                             Log.d("sachinAdminTASK", result.toString())
                             isLastPage = result.isLastPage
                             responseError.postValue(result.message)
                         }
+
                         409 -> {
                             //No users list ended with all users
                             Log.d("sachinAdminTASK", result.toString())
                             isLastPage = result.isLastPage
                         }
+
                         500 -> {
                             Log.d("sachinAdminTASK", result.toString())
                             responseError.postValue("Error in Loading Users" + result.message)

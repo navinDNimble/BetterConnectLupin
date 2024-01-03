@@ -5,19 +5,19 @@ import android.os.Parcelable
 
 data class UserModel(
     var userId: Int,
-    var firstName:  String,
-    var lastName:  String,
-    var mobileNumber:  String,
+    var firstName: String,
+    var lastName: String,
+    var mobileNumber: String,
     var emailId: String,
-    var workStation:  Int,
+    var workStation: Int,
     var workStationName: String?,
     var post: Int,
     var employeeId: String,
     var reportAuthority: Int,
-    var joiningDate:  String,
-    var profilePhoto :String,
+    var joiningDate: String,
+    var profilePhoto: String,
 
-    ):Parcelable {
+    ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,

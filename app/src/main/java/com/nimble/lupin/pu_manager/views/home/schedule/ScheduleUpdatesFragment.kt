@@ -39,8 +39,9 @@ class ScheduleUpdatesFragment : Fragment(), OnClickSeePhoto {
     private lateinit var taskUserAdapter: TaskDetailsAdapter
     private var userTaskModel: UserTaskModel? = null
     private var task: TaskModel? = null
-
     private val apiService: ApiService by KoinJavaComponent.inject(ApiService::class.java)
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +72,8 @@ class ScheduleUpdatesFragment : Fragment(), OnClickSeePhoto {
 
         binding.taskUpdatesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.taskUpdatesRecyclerView.adapter = taskUserAdapter
-
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,7 +92,6 @@ class ScheduleUpdatesFragment : Fragment(), OnClickSeePhoto {
                     val result = response.body()
                     if (result?.code!! == 200) {
                         val resultList = result.response
-
                         taskUserAdapter.updateList(resultList)
 
                     } else if (result.code == 404) {
@@ -116,7 +116,6 @@ class ScheduleUpdatesFragment : Fragment(), OnClickSeePhoto {
     }
 
     fun showSnackBar(message: String) {
-
         val rootView: View = requireActivity().findViewById(android.R.id.content)
         val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
         val snackBarView = snackBar.view
