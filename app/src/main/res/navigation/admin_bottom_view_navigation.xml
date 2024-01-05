@@ -31,9 +31,29 @@
         android:id="@+id/navigation_report"
         android:name="com.nimble.lupin.pu_manager.views.home.report.ReportFragment"
         android:label="@string/title_report"
+        tools:layout="@layout/fragment_report">
+        <action
+            android:id="@+id/completedTaskFragment_to_TaskDetailFragment"
+            app:destination="@+id/scheduleDetailFragment">
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.pu_manager.models.TaskModel" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/completedTaskFragment"
+        android:name="com.nimble.lupin.pu_manager.views.home.report.CompletedTaskFragment"
+        android:label="Completed Task Fragment"
+        tools:layout="@layout/fragment_task_report" >
 
-        tools:layout="@layout/fragment_report" />
-
+        <action
+            android:id="@+id/completedTaskFragment_to_TaskDetailFragment"
+            app:destination="@+id/scheduleDetailFragment">
+            <argument
+                android:name="TaskDetail"
+                app:argType="com.nimble.lupin.pu_manager.models.TaskModel" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/navigation_user_list"
         android:name="com.nimble.lupin.pu_manager.views.navigation.user.UserListFragment"
@@ -151,5 +171,6 @@
                 app:argType="com.nimble.lupin.pu_manager.models.UserModel" />
         </action>
     </fragment>
+
 
 </navigation>

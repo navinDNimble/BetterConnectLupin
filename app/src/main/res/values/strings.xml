@@ -71,6 +71,7 @@
     <string name="pending_task">Pending Task</string>
     <string name="let_s_create_the_task">Let\'s Create The Task</string>
     <string name="task_name">Task Name</string>
+    <string name="lbl_pdf_title">tittle is here\n</string>
     <string-array name="graph_selector">
         <item>Farmer Training</item>
         <item>Farm Labour Training</item>

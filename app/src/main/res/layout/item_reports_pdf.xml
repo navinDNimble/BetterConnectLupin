@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_10sdp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/corner_radius_10"
+    android:paddingVertical="@dimen/_7sdp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reportDateRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_20sdp"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        tools:text="04-01-2024 To 30-01-2024" />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_toStartOf="@+id/downloadReport_Id"
+        android:backgroundTint="@color/primaryColor"
+        android:background="@android:drawable/ic_menu_view"
+
+        />
+
+    <ImageButton
+        android:id="@+id/downloadReport_Id"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/icon_download" />
+
+
+</RelativeLayout>

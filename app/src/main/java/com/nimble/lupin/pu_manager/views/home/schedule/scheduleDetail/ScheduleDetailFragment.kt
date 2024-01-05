@@ -2,6 +2,7 @@ package com.nimble.lupin.pu_manager.views.home.schedule.scheduleDetail
 
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -28,6 +29,7 @@ import org.koin.java.KoinJavaComponent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
 
 
 class ScheduleDetailFragment : Fragment(), OnTaskUserSelected {
@@ -102,8 +104,6 @@ class ScheduleDetailFragment : Fragment(), OnTaskUserSelected {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         return binding.root
     }
 
@@ -113,6 +113,22 @@ class ScheduleDetailFragment : Fragment(), OnTaskUserSelected {
         if (role == 3){
             binding.assignTaskScheduleButtonId.visibility = View.GONE
         }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val currentDate = LocalDate.now()
+//            val startDate = LocalDate.parse( task?.startDate)
+//            val endDate = LocalDate.parse(task?.endDate)
+//            Log.d("sachin Dates" , currentDate.toString())
+//            Log.d("sachin Dates" , startDate.toString())
+//            Log.d("sachin Dates" , endDate.toString())
+//
+//            if (currentDate in startDate..endDate) {
+//                Log.d("sachin Dates", "In of range")
+//            } else {
+//                binding.assignTaskScheduleButtonId.visibility = View.GONE
+//            }
+//        }
+
     }
 
     private fun getTaskUsers() {
