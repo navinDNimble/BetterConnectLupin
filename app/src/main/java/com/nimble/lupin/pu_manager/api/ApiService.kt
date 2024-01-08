@@ -28,6 +28,9 @@ interface ApiService {
     @GET("get_schedule_task")
     fun getScheduleTask(@Query("workStation") workStation: Int ,@Query("page") page: Int ,@Query("searchKey") searchKey: String ): Call<ResponseHandler<List<TaskModel>>>
 
+    @GET("get_yet_to_start_task")
+    fun getYetToStartTask(@Query("workStation") workStation: Int ,@Query("page") page: Int): Call<ResponseHandler<List<TaskModel>>>
+
     @GET("get_task_users")
     fun getManagerTaskUsers(@Query("taskId") taskId: Int, @Query("page") page: Int): Call<ResponseHandler<List<TaskUsersModel>>>
 

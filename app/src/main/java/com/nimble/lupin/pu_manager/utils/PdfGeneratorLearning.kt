@@ -239,9 +239,8 @@ class PdfGeneratorLearning(private val context: Context){
         amt.paddingRight  = TABLE_HORIZONTAL_PADDING
         amt.paddingLeft = TABLE_HORIZONTAL_PADDING
         titleTable.addCell(amt)
-
-
         doc.add(titleTable)
+
     }
 
     private fun initItemsTable(doc: Document) {
@@ -315,22 +314,6 @@ class PdfGeneratorLearning(private val context: Context){
             doc.add(itemsTable)
         }
     }
-
-//    private fun initFooter(doc: Document) {
-//        appFontRegular.color = getColor("#AD2040")
-//        appFontRegular.size = 11f
-//        val footerTable = PdfPTable(1)
-//        footerTable.totalWidth = PageSize.A4.width
-//        footerTable.isLockedWidth = true
-//        val thankYouCell =
-//            PdfPCell(Phrase("invoiceFooterDataSource.message", appFontRegular))
-//        thankYouCell.border = Rectangle.NO_BORDER
-//        thankYouCell.paddingLeft = PADDING_EDGE
-//        thankYouCell.paddingTop = PADDING_EDGE
-//        thankYouCell.horizontalAlignment = Rectangle.ALIGN_LEFT
-//        footerTable.addCell(thankYouCell)
-//        doc.add(footerTable)
-//    }
 
 
     private fun addLine(

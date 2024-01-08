@@ -11,5 +11,15 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_reports_pdf"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonId"
+        android:text="generate Pdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </FrameLayout>

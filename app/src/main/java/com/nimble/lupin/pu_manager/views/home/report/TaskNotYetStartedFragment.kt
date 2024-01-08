@@ -7,7 +7,7 @@ import com.nimble.lupin.pu_manager.utils.Constants
 
 class TaskNotYetStartedFragment : ReportBaseFragment(){
     override fun getTaskList() {
-        handleApiResult(apiService.getScheduleTask(Constants.AdminWorkStation_ID,page, ""))
+        handleApiResult(apiService.getYetToStartTask(Constants.AdminWorkStation_ID,page))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
